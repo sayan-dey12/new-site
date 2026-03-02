@@ -16,6 +16,7 @@ export default function Footer(){
                         <Link
                             href="https://github.com/sayan-dey12"
                             target="_blank"
+                            rel="noopener noreferrer"
                             className="hover:text-foreground transition-colors"
                         >
                             <FaGithub />
@@ -23,6 +24,7 @@ export default function Footer(){
                         <Link
                             href="https://www.instagram.com/sayan_.dey_"
                             target="_blank"
+                            rel="noopener noreferrer"
                             className="hover:text-pink-500 transition-colors"
                         >
                             <FaInstagram />
@@ -30,6 +32,7 @@ export default function Footer(){
                         <Link
                             href="https://x.com/sayan_dey12"
                             target="_blank"
+                            rel="noopener noreferrer"
                             className="hover:text-blue-400 transition-colors"
                         >
                             <FaXTwitter />
@@ -37,6 +40,7 @@ export default function Footer(){
                         <Link
                             href="https://www.linkedin.com/in/sayan-dey-b37843378/"
                             target="_blank"
+                            rel="noopener noreferrer"
                             className="hover:text-blue-600 transition-colors"
                         >
                             <FaLinkedin />
