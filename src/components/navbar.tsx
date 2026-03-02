@@ -23,7 +23,7 @@ export default function Navbar() {
     const pathname = usePathname();
     
     const isActive = (path: string) => {
-        return pathname === path ? "text-accent text-semibold" : "text-foreground"
+        return pathname === path ? "text-accent font-semibold" : "text-foreground"
     }
 
     const handleComingSoon = () => {
