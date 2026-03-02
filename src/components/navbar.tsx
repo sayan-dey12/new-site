@@ -64,7 +64,14 @@ export default function Navbar() {
                         >
                         AI Lab
                     </button>
+                    <Link href="/about"
+                        className={`hover:text-accent transition-colors ${isActive("/about")}`}
+                    > 
+                        About
+                    </Link>  
 
+                </div>
+                <div className="flex items-center space-x-6 text-sm">
                     {/* toggle button for theme */}
                     <Button
                         variant="outline"
@@ -76,7 +83,6 @@ export default function Navbar() {
                         :( <Sun className="h-5 w-5"/>)
                     }    
                     </Button>
-
                 </div>
                 {/* X for mobile */}
                 <button className="md:hidden" 
@@ -84,8 +90,52 @@ export default function Navbar() {
                         {!menuOpen ? <Menu className="w-6 h-6"/> : <X className="w-6 h-6"/>}
                     </button>
             </div>
-
         </nav>
+
+        {/* mobile dropdown menu */}
+        {menuOpen && (
+            <div 
+                className="md:hidden 
+                fixed inset-x-0 top-16 z-40 
+                px-5 py-5 space-y-5 bg-background/80 
+                shadow-lg backdrop-blur-xl 
+                border-b border-border 
+                text-foreground"
+            >
+                <Link href="/blogs" 
+                    onClick={()=>{setMenuOpen(false)}}
+                    className={`block text-sm font-medium hover:text-accent transition-colors ${isActive("/blogs")}`}>
+                        Blogs
+                </Link>
+
+                <button 
+                    onClick={()=>{
+                        handleComingSoon();
+                        setMenuOpen(false);
+                        }}
+                        className={`block text-sm font-medium hover:text-accent transition-colors ${isActive("/projects")}`}>
+                            Projects
+                </button>
+                <button 
+                    onClick={()=>{
+                        handleComingSoon();
+                        setMenuOpen(false);
+                        }}
+                        className={`block text-sm font-medium hover:text-accent transition-colors ${isActive("/ai-lab")}`}>
+                            AI Lab
+                </button>
+                <button 
+                    onClick={()=>{
+                        handleComingSoon();
+                        setMenuOpen(false);
+                        }}
+                        className={`block text-sm font-medium hover:text-accent transition-colors ${isActive("/about")}`}>
+                            About
+                </button>
+            </div>
+        )}
+
+
         </>
     );
 }
