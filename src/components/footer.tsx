@@ -56,7 +56,7 @@ export default function Footer(){
 
                     {/* copyright */}
                     <p className="text-xs text-muted-foreground">
-                        © 2026 Sayan Dey . All rights reserved.
+                        © {new Date().getFullYear()} Sayan Dey . All rights reserved.
                     </p>
 
                 </div>
