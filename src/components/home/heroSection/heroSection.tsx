@@ -3,7 +3,7 @@ import HeroVisual from "./heroVisual";
 
 export default function HeroSection() {
   return (
-    <section className="relative bg-background text-foreground">
+    <section className="relative bg-primary text-primary-foreground py-10">
 
       <div className="
         max-w-7xl
