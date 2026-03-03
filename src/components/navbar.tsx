@@ -72,7 +72,7 @@ export default function Navbar() {
                     </Link>  
 
                 </div>
-                <div className=" hidden md:flex items-center space-x-6 text-sm">
+                <div className=" hidden md:flex items-center space-x-6 text-sm ">
                     {/* toggle button for theme */}
                     <Button
                         variant="outline"
@@ -80,7 +80,7 @@ export default function Navbar() {
                         className="rounded-full"
                         onClick={() => setTheme(theme === "light" ? "dark" : "light")}
                     >
-                        { theme === "light" ? ( <Moon className="h-5 w-5"/>)
+                        { theme === "light" ? ( <Moon className="h-5 w-5 "/>)
                         :( <Sun className="h-5 w-5"/>)
                     }    
                     </Button>

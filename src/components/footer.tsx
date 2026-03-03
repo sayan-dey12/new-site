@@ -6,7 +6,7 @@ export default function Footer(){
         <>
             <footer
                 className="
-                    mt-6 border-t border-border
+                    border-t border-border
                     bg-background/95 text-muted-foreground
                     py-10"
             >
@@ -56,7 +56,7 @@ export default function Footer(){
 
                     {/* copyright */}
                     <p className="text-xs text-muted-foreground">
-                        © {new Date().getFullYear()} Sayan Dey . All rights reserved.
+                        © {new Date().getFullYear()}  Sayan Dey . All rights reserved.
                     </p>
 
                 </div>
