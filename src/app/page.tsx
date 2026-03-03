@@ -1,6 +1,7 @@
 "use client";
 
 import AiLabSection from "@/components/home/AiLabSection/AiLabSection";
+import BlogSection from "@/components/home/BlogsSection/BlogSection";
 import FeaturedProjectCard from "@/components/home/FeaturedProjectSection/FeaturedProjectCard";
 import FeaturedProjectsSection from "@/components/home/FeaturedProjectSection/FeaturedProjectsSection";
 import HeroSection from "@/components/home/heroSection/heroSection";
@@ -11,10 +12,11 @@ import ProofOfWorkSection from "@/components/home/proofOfWorkSection/ProofOfWork
 export default function Home() {
   return (
     <>
-      <HeroSection></HeroSection>
-      <ProofOfWorkSection></ProofOfWorkSection>
-      <AiLabSection></AiLabSection>
-      <FeaturedProjectsSection></FeaturedProjectsSection>
+      <HeroSection/>
+      <ProofOfWorkSection/>
+      <AiLabSection/>
+      <FeaturedProjectsSection/>
+      <BlogSection/>
     </>
   );
 }

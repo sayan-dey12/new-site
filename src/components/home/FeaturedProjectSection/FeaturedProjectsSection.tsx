@@ -8,7 +8,7 @@ export default function FeaturedProjectsSection() {
   const others = projects.filter(p => !p.featured);
 
   return (
-    <section className="py-24 bg-background">
+    <section className="py-10 bg-background">
 
       <div className="max-w-7xl mx-auto px-5">
 
