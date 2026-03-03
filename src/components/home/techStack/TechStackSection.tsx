@@ -3,7 +3,7 @@ import { techStack } from "./stackData";
 
 export default function TechStackSection() {
   return (
-    <section className="py-10 bg-background">
+    <section className="py-10 bg-primary">
 
       <div className="max-w-7xl mx-auto px-5">
 

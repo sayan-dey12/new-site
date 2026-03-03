@@ -3,7 +3,7 @@ import { proofItems } from "./proofData";
 
 export default function ProofOfWorkSection() {
   return (
-    <section className="bg-background py-10">
+    <section className="bg-primary py-10">
 
       <div className="max-w-7xl mx-auto px-5">
 
