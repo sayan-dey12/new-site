@@ -7,7 +7,7 @@ import { usePathname} from "next/navigation";
 import { Sun , Moon , X , Loader2 , Menu} from "lucide-react";
 import { useTheme } from "next-themes";
 import {Button} from "@/components/ui/button";
-
+import handleComingSoon from "@/lib/handleCommingSoon";
 
 
 export default function Navbar() {
@@ -26,11 +26,6 @@ export default function Navbar() {
     const isActive = (path: string) => {
         return pathname === path ? "text-accent font-semibold" : "text-foreground"
     }
-
-    const handleComingSoon = () => {
-        toast("🚧 Coming Soon!")
-    }
-
 
     return(
         <>
