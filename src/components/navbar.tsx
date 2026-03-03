@@ -14,6 +14,7 @@ export default function Navbar() {
     const {theme , setTheme} = useTheme();
     const [mounted, setMounted] = useState(false);
     const [menuOpen , setMenuOpen] = useState(false);
+    const pathname = usePathname();
 
 
     useEffect(() => {
@@ -21,8 +22,6 @@ export default function Navbar() {
     }, []);
 
     if (!mounted) return null;
-
-    const pathname = usePathname();
     
     const isActive = (path: string) => {
         return pathname === path ? "text-accent font-semibold" : "text-foreground"
@@ -38,16 +37,16 @@ export default function Navbar() {
         <nav
             className = "w-full sticky top-0 z-50 border-b border-border bg-background/70 shadow-sm backdrop-blur-2xl"
         >
-            <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
                 {/* main name */}
                 <Link href="/" 
-                    className="text-xl font-bold text-foreground hover:text-accent transition-colors"
+                    className="text-2xl font-bold text-foreground hover:text-accent transition-colors"
                 >
                      Sayan Dey
                 </Link>
 
                 {/*menu for desktop*/}
-                <div className="hidden md:flex items-center space-x-6 text-sm">
+                <div className="hidden md:flex items-center gap-x-12  text-md">
 
                     <Link href="/blogs"
                         className={`hover:text-accent transition-colors ${isActive("/blogs")}`}
@@ -73,7 +72,7 @@ export default function Navbar() {
                     </Link>  
 
                 </div>
-                <div className="flex items-center space-x-6 text-sm">
+                <div className=" hidden md:flex items-center space-x-6 text-sm">
                     {/* toggle button for theme */}
                     <Button
                         variant="outline"
@@ -86,11 +85,26 @@ export default function Navbar() {
                     }    
                     </Button>
                 </div>
-                {/* X for mobile */}
-                <button className="md:hidden" 
-                    onClick={() => setMenuOpen(!menuOpen)}>
+                <div className="flex items-center gap-4 md:hidden">
+                     {/* toggle button for theme */}
+                    <Button
+                        variant="outline"
+                        size="icon"
+                        className="rounded-full"
+                        onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+                    >
+                        { theme === "light" ? ( <Moon className="h-5 w-5"/>)
+                        :( <Sun className="h-5 w-5"/>)
+                    }    
+                    </Button>
+                    {/* X for mobile */}
+                    <button className="md:hidden" 
+                        onClick={() => setMenuOpen(!menuOpen)}>
                         {!menuOpen ? <Menu className="w-6 h-6"/> : <X className="w-6 h-6"/>}
                     </button>
+
+                </div>
+                
             </div>
         </nav>
 
