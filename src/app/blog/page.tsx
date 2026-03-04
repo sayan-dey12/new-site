@@ -50,6 +50,7 @@ export default function BlogsPage() {
               gap-8
               sm:grid-cols-2
               lg:grid-cols-3
+              mt-8
             "
           >
             {blogs.map((blog) => (

@@ -19,6 +19,7 @@ export default function BlogCard({blog}:{blog:BlogType}) {
         hover:-translate-y-1
         hover:shadow-lg
         cursor-pointer
+        bg-secondary
       ">
 
         {/* Image */}
