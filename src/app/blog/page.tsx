@@ -1,3 +1,4 @@
+import HeroBlogs from "@/components/blog/HeroSection";
 import BlogCard from "@/components/utils/blogs/BlogCard";
 import { blogs } from "@/components/utils/blogs/blogData";
 
@@ -5,19 +6,12 @@ export default function BlogsPage() {
   return (
     <main className="bg-primary min-h-screen">
 
-      <div className="max-w-7xl mx-auto px-6 py-16">
+      <div className="max-w-6xl mx-auto px-6 py-6">
 
         {/* Hero Section */}
         <section className="text-center mb-16">
 
-          <h1 className="text-4xl md:text-5xl font-bold">
-            Blog
-          </h1>
-
-          <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
-            Thoughts on AI, backend engineering, DevOps, and building
-            modern software systems.
-          </p>
+          <HeroBlogs/>
 
           {/* Search */}
           <div className="mt-8">
