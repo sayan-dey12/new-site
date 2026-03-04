@@ -4,6 +4,8 @@ import FeaturedProjectCard from "@/components/utils/project/FeaturedProjectCard"
 import ProjectCard from "@/components/utils/project/ProjectCard"
 import HeroProjects from "@/components/projects/HeaderSection"
 import SectionHeader from "@/components/utils/SectionHeader"
+import ShowMore from "@/components/utils/ShowMore";
+
 
 export default function ProjectsPage() {
 
@@ -67,21 +69,15 @@ export default function ProjectsPage() {
 
         </div>
 
-        <div
-          className="
-          grid
-          gap-6
-          sm:grid-cols-2
-          lg:grid-cols-3
-          "
-        >
+        <div>
 
-          {otherProjects.map((project) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-            />
-          ))}
+          <ShowMore initialCount={3}>
+          
+                        {projects.map((project) => (
+                          <ProjectCard key={project.id} project={project} />
+                        ))}
+          
+                      </ShowMore>
 
         </div>
 

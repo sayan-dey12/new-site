@@ -2,9 +2,13 @@ import FeaturedSection from "@/components/blog/FeaturedSection";
 import HeroBlogs from "@/components/blog/HeroSection";
 import BlogCard from "@/components/utils/blogs/BlogCard";
 import { blogs } from "@/components/utils/blogs/blogData";
+import ShowMore from "@/components/utils/ShowMore";
+import { BlogType } from "@/types/blog";
 
 export default function BlogsPage() {
+  
   return (
+    
     <main className="bg-primary min-h-screen">
 
       <div className="max-w-6xl mx-auto px-6 py-6">
@@ -44,19 +48,13 @@ export default function BlogsPage() {
         {/* Blog Grid */}
         <section>
 
-          <div
-            className="
-              grid
-              gap-8
-              sm:grid-cols-2
-              lg:grid-cols-3
-              mt-8
-            "
-          >
-            {blogs.map((blog) => (
-              <BlogCard key={blog._id} blog={blog} />
-            ))}
-          </div>
+            <ShowMore initialCount={6}>
+
+              {blogs.map((blog) => (
+                <BlogCard key={blog._id} blog={blog} />
+              ))}
+
+            </ShowMore>
 
         </section>
 
