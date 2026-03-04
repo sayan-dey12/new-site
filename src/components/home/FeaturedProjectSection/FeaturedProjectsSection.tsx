@@ -1,13 +1,16 @@
 import BorderModern from "@/components/utils/BorderModern";
 import SectionHeader from "../SectionHeader";
-import FeaturedProjectCard from "./FeaturedProjectCard";
-import ProjectCard from "./ProjectCard";
-import { projects } from "./projectData";
+import FeaturedProjectCard from "@/components/utils/project/FeaturedProjectCard";
+import ProjectCard from "@/components/utils/project/ProjectCard";
+
+import { projects } from "@/data/project"
+
 
 export default function FeaturedProjectsSection() {
 
-  const featured = projects.find(p => p.featured);
-  const others = projects.filter(p => !p.featured);
+  const featuredProjects = projects.filter(
+      (p) => p.visibility === "featured"
+    )
 
   return (
     <section className="pb-5 bg-primary">
@@ -20,16 +23,16 @@ export default function FeaturedProjectsSection() {
           />
 
         {/* Featured */}
-        {featured && (
-          <FeaturedProjectCard project={featured} />
-        )}
-
-        {/* Grid */}
-        <div className="grid gap-6 md:grid-cols-2 mt-10">
-          {others.map((p) => (
-            <ProjectCard key={p.title} project={p} />
+        <div className="space-y-10">
+          {featuredProjects.map((project) => (
+           <FeaturedProjectCard
+              key={project.id}
+              project={project}
+            />
           ))}
-        </div>
+          </div>
+        
+
 
       </div>
       <br /><br />
