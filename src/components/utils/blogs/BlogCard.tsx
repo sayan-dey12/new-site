@@ -6,26 +6,11 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
+import { BlogType } from "@/types/blog";
 
-interface BlogProps {
-  title: string;
-  description: string;
-  date: string;
-  readTime: string;
-  image: string;
-  slug: string;
-}
-
-export default function BlogCard({
-  title,
-  description,
-  date,
-  readTime,
-  image,
-  slug,
-}: BlogProps) {
+export default function BlogCard({blog}:{blog:BlogType}) {
   return (
-    <Link href={`/blogs/${slug}`}>
+    <Link href={`/blog/${blog.slug}`}>
 
       <Card className="
         overflow-hidden
@@ -39,8 +24,8 @@ export default function BlogCard({
         {/* Image */}
         <div className="relative h-44">
           <Image
-            src={image}
-            alt={title}
+            src={blog.coverImage || "/images/fallback.png"}
+            alt={blog.title}
             fill
             className="object-cover"
           />
@@ -50,13 +35,13 @@ export default function BlogCard({
 
           {/* Meta */}
           <p className="text-xs text-muted-foreground">
-            {date} • {readTime}
+            {new Date(blog.createdAt).toLocaleDateString()} • {blog.readingTime || "5 min read"}
           </p>
 
-          <CardTitle>{title}</CardTitle>
+          <CardTitle>{blog.title}</CardTitle>
 
           <CardDescription>
-            {description}
+            {blog.excerpt}
           </CardDescription>
 
         </CardHeader>

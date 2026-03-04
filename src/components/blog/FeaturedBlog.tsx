@@ -1,75 +1,44 @@
-import Link from "next/link"
+import Link from "next/link";
+import type { BlogType } from "@/types/blog";
 
-interface Blog {
-  title: string
-  excerpt: string
-  slug: string
-  date: string
-  readTime: string
-  image: string
-}
-
-export default function FeaturedBlog({ post }: { post: Blog }) {
+export default function FeaturedBlog({ blog }: { blog: BlogType }) {
   return (
-    <Link href={`/blog/${post.slug}`}>
-
+    <Link href={`/blog/${blog.slug}`} className="group block w-full">
       <article
         className="
-          grid
-          md:grid-cols-2
-          bg-card
-          border
-          rounded-2xl
-          overflow-hidden
-          group
-          hover:shadow-xl
-          transition
+          max-w-3xl mx-auto
+          rounded-2xl overflow-hidden
+          relative
+          shadow-lg hover:shadow-xl
+          transition-transform duration-300
+          hover:-translate-y-1
         "
       >
-
-        {/* Image */}
-        <div className="h-64 md:h-auto overflow-hidden">
+        <div className="relative w-full aspect-video">
           <img
-            src={post.image}
-            alt={post.title}
-            className="
-              w-full
-              h-full
-              object-cover
-              group-hover:scale-105
-              transition
-              duration-300
-            "
+            src={blog.coverImage || "/images/fallback.png"}
+            alt={blog.title}
+            className="w-full h-full object-cover"
           />
+
+          <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/40 to-transparent" />
         </div>
 
-        {/* Content */}
-        <div className="p-8 flex flex-col justify-center">
-
-          <span className="text-sm text-accent font-medium">
-            Featured Article
-          </span>
-
-          <h2 className="text-2xl font-bold mt-2">
-            {post.title}
+        <div className="absolute bottom-0 left-0 p-6 z-20 w-full">
+          <h2 className="text-2xl sm:text-3xl font-bold text-foreground leading-tight line-clamp-2">
+            {blog.title}
           </h2>
 
-          <p className="text-muted-foreground mt-3">
-            {post.excerpt}
-          </p>
-
-          <div className="text-sm text-muted-foreground mt-4">
-            {post.date} • {post.readTime}
+          <div className="mt-2 text-sm text-muted-foreground">
+            {blog.authorName || "Admin"} • {blog.readingTime || "5 min read"} •{" "}
+            {new Date(blog.createdAt).toLocaleDateString()}
           </div>
 
-          <span className="mt-4 text-accent font-medium">
-            Read Article →
-          </span>
-
+          <p className="mt-2 text-foreground text-sm line-clamp-2">
+            {blog.excerpt}
+          </p>
         </div>
-
       </article>
-
     </Link>
-  )
+  );
 }

@@ -1,3 +1,4 @@
+import FeaturedSection from "@/components/blog/FeaturedSection";
 import HeroBlogs from "@/components/blog/HeroSection";
 import BlogCard from "@/components/utils/blogs/BlogCard";
 import { blogs } from "@/components/utils/blogs/blogData";
@@ -35,6 +36,11 @@ export default function BlogsPage() {
 
         </section>
 
+        {/* Featured Articles */}
+        <section>
+          <FeaturedSection blog={{...blogs[0]}} />
+        </section>
+
         {/* Blog Grid */}
         <section>
 
@@ -47,7 +53,7 @@ export default function BlogsPage() {
             "
           >
             {blogs.map((blog) => (
-              <BlogCard key={blog._id} {...blog} />
+              <BlogCard key={blog._id} blog={blog} />
             ))}
           </div>
 
