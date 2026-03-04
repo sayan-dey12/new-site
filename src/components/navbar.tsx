@@ -57,12 +57,11 @@ export default function Navbar() {
                         >
                         Projects
                     </Link>
-                    <button
-                        onClick={handleComingSoon}
+                    <Link href="/ai-lab"
                         className={`hover:text-accent transition-colors ${isActive("/ai-lab")}`}
                         >
                         AI Lab
-                    </button>
+                    </Link>
                     <Link href="/about"
                         className={`hover:text-accent transition-colors ${isActive("/about")}`}
                     > 

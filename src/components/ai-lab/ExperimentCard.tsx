@@ -11,51 +11,36 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Github, ExternalLink } from "lucide-react"
+import { AIElement } from "@/types/ai-lab"
 
-interface ExperimentCardProps {
-  title: string
-  description: string
-  tech: string[]
-  image: string
-  github?: string
-  demo?: string
-}
-
-export default function ExperimentCard({
-  title,
-  description,
-  tech,
-  image,
-  github,
-  demo,
-}: ExperimentCardProps) {
+export default function ExperimentCard({aiElement}: {aiElement:AIElement}) {
   return (
-    <Card className="group overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+    <Card className="group bg-card overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
 
       {/* image */}
       <div className="relative h-44 w-full overflow-hidden">
         <Image
-          src={image}
-          alt={title}
+          src={aiElement.image || "/images/fallback.png"}
+          alt={aiElement.title}
           fill
-          className="object-cover transition-transform duration-300 group-hover:scale-105"
+          className="object-cover rounded-2xl px-1 transition-transform duration-300 group-hover:scale-105"
         />
       </div>
 
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
-          {title}
-          <Badge variant="secondary">Experiment</Badge>
+          {aiElement.title}
+          <Badge variant="secondary" className="bg-primary">{aiElement.category}</Badge>
         </CardTitle>
       </CardHeader>
 
       <CardContent className="space-y-4">
         <p className="text-sm text-muted-foreground">
-          {description}
+          {aiElement.description}
         </p>
 
         <div className="flex flex-wrap gap-2">
-          {tech.map((t) => (
+          {aiElement.tech.map((t) => (
             <Badge key={t} variant="outline">
               {t}
             </Badge>
@@ -64,17 +49,17 @@ export default function ExperimentCard({
       </CardContent>
 
       <CardFooter className="flex gap-3">
-        {demo && (
+        {aiElement.demo && (
           <Button size="sm" asChild>
-            <a href={demo} target="_blank">
+            <a href={aiElement.demo} target="_blank" rel="noopener noreferrer">
               Demo <ExternalLink size={16} />
             </a>
           </Button>
         )}
 
-        {github && (
+        {aiElement.github && (
           <Button size="sm" variant="outline" asChild>
-            <a href={github} target="_blank">
+            <a href={aiElement.github} target="_blank" rel="noopener noreferrer">
               GitHub <Github size={16} />
             </a>
           </Button>
