@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect , useState} from "react";
-import { toast} from "react-hot-toast";
 import { usePathname} from "next/navigation";
 import { Sun , Moon , X , Loader2 , Menu} from "lucide-react";
 import { useTheme } from "next-themes";
@@ -43,17 +42,21 @@ export default function Navbar() {
                 {/*menu for desktop*/}
                 <div className="hidden md:flex items-center gap-x-12  text-md">
 
+                    <Link href="/"
+                        className={`hover:text-accent transition-colors ${isActive("/")}`}
+                    > 
+                        Home
+                    </Link>
                     <Link href="/blogs"
                         className={`hover:text-accent transition-colors ${isActive("/blogs")}`}
                     > 
                         Blogs
                     </Link>
-                    <button
-                        onClick={handleComingSoon}
+                    <Link href="/projects"
                         className={`hover:text-accent transition-colors ${isActive("/projects")}`}
                         >
                         Projects
-                    </button>
+                    </Link>
                     <button
                         onClick={handleComingSoon}
                         className={`hover:text-accent transition-colors ${isActive("/ai-lab")}`}

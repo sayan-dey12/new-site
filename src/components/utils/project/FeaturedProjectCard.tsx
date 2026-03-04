@@ -43,7 +43,7 @@ export default function FeaturedProjectCard({
             src={project.image}
             alt={project.title}
             fill
-            className="object-cover"
+            className="object-cover rounded-2xl "
           />
         </div>
 

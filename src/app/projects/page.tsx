@@ -72,12 +72,10 @@ export default function ProjectsPage() {
         <div>
 
           <ShowMore initialCount={3}>
-          
-                        {projects.map((project) => (
-                          <ProjectCard key={project.id} project={project} />
-                        ))}
-          
-                      </ShowMore>
+            {projects.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </ShowMore>
 
         </div>
 

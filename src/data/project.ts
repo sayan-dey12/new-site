@@ -6,7 +6,7 @@ export const projects: Project[] = [
     title: "Real-time Chat Application",
     description:
       "A scalable real-time chat system built using WebSockets and Redis Pub/Sub to enable fast messaging across multiple clients.",
-    image: "/projects/chat-app.png",
+    image: "https://images.pexels.com/photos/5426403/pexels-photo-5426403.jpeg",
     category: "backend",
     status: "completed",
     tags: ["Next.js", "Socket.io", "Redis", "TypeScript"],
@@ -22,7 +22,7 @@ export const projects: Project[] = [
     title: "Video Calling Platform",
     description:
       "A real-time video communication platform with room-based calling using WebRTC and a signaling server.",
-    image: "/projects/video-call.png",
+    image: "https://images.pexels.com/photos/5876447/pexels-photo-5876447.jpeg",
     category: "systems",
     status: "in-progress",
     tags: ["WebRTC", "Node.js", "Socket.io", "Next.js"],
@@ -37,7 +37,7 @@ export const projects: Project[] = [
     title: "AI Tool Platform",
     description:
       "A platform combining multiple AI tools including text generation, prompt assistants, and automation agents.",
-    image: "/projects/ai-platform.png",
+    image: "https://images.pexels.com/photos/16027824/pexels-photo-16027824.jpeg",
     category: "ai",
     status: "in-progress",
     tags: ["Next.js", "OpenAI API", "LangChain", "TypeScript"],

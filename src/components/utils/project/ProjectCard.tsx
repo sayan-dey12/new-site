@@ -45,6 +45,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           transition
           duration-300
           group-hover:scale-105
+          rounded-2xl
           "
         />
       </div>
