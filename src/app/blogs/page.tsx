@@ -47,6 +47,7 @@ export default function BlogsPage() {
 
         {/* Blog Grid */}
         <section>
+          
 
             <ShowMore initialCount={6}>
 

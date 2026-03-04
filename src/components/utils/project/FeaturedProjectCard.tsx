@@ -32,6 +32,7 @@ export default function FeaturedProjectCard({
       duration-300
       hover:shadow-xl
       bg-card
+      px-3
     "
     >
       <div className="grid md:grid-cols-2">

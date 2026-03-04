@@ -28,7 +28,7 @@ export default function BlogCard({blog}:{blog:BlogType}) {
             src={blog.coverImage || "/images/fallback.png"}
             alt={blog.title}
             fill
-            className="object-cover"
+            className="object-cover px-1 rounded-2xl"
           />
         </div>
 

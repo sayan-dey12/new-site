@@ -31,6 +31,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       duration-300
       hover:shadow-lg
       hover:-translate-y-1
+      px-1.5
     "
     >
       {/* Image */}
