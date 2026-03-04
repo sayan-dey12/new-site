@@ -1,5 +1,6 @@
 export const blogs = [
   {
+    _id: 1,
     title: "Understanding WebSockets Internals",
     description:
       "Deep dive into how real-time communication works behind modern applications.",
@@ -9,6 +10,7 @@ export const blogs = [
     slug: "websocket-internals",
   },
   {
+    _id: 2,
     title: "Building AI Agents From Scratch",
     description:
       "Architecture and reasoning pipelines behind autonomous AI agents.",
@@ -18,6 +20,7 @@ export const blogs = [
     slug: "ai-agents-from-scratch",
   },
   {
+    _id: 3,
     title: "Next.js Server vs Client Components",
     description:
       "Understanding rendering boundaries in modern React applications.",
