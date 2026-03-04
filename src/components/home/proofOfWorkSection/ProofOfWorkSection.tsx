@@ -1,10 +1,11 @@
+import BorderModern from "@/components/utils/BorderModern";
 import SectionHeader from "../SectionHeader";
 import ProofCard from "./ProofCard";
 import { proofItems } from "./proofData";
 
 export default function ProofOfWorkSection() {
   return (
-    <section className="bg-primary py-10">
+    <section className="bg-primary pb-5">
 
       <div className="max-w-7xl mx-auto px-5">
 
@@ -23,6 +24,8 @@ export default function ProofOfWorkSection() {
         </div>
 
       </div>
+      <br /><br />
+      <BorderModern/>
     </section>
   );
 }

@@ -4,7 +4,7 @@ import HeroVisual from "./heroVisual";
 
 export default function HeroSection() {
   return (
-    <section className="relative bg-primary text-primary-foreground py-10">
+    <section className="relative bg-primary text-primary-foreground pt-8 pb-5">
 
       <div className="
         max-w-7xl
@@ -18,7 +18,7 @@ export default function HeroSection() {
         <HeroText />
         <HeroVisual />
       </div>
-
+      <br /><br />
       <BorderModern/>
 
     </section>

@@ -1,3 +1,4 @@
+import BorderModern from "@/components/utils/BorderModern";
 import SectionHeader from "../SectionHeader";
 import FeaturedProjectCard from "./FeaturedProjectCard";
 import ProjectCard from "./ProjectCard";
@@ -9,7 +10,7 @@ export default function FeaturedProjectsSection() {
   const others = projects.filter(p => !p.featured);
 
   return (
-    <section className="py-10 bg-primary">
+    <section className="pb-5 bg-primary">
 
       <div className="max-w-7xl mx-auto px-5">
 
@@ -31,6 +32,8 @@ export default function FeaturedProjectsSection() {
         </div>
 
       </div>
+      <br /><br />
+      <BorderModern/>
     </section>
   );
 }

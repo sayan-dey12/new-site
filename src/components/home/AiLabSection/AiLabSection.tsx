@@ -1,10 +1,11 @@
+import BorderModern from "@/components/utils/BorderModern";
 import SectionHeader from "../SectionHeader";
 import AiLabCard from "./AiLabCard";
 import { aiLabItems } from "./aiLabData";
 
 export default function AiLabSection() {
   return (
-    <section className="py-10 bg-primary">
+    <section className="pb-5 bg-primary">
 
       <div className="max-w-7xl mx-auto px-5">
 
@@ -26,6 +27,8 @@ export default function AiLabSection() {
         </div>
 
       </div>
+      <br /><br />
+      <BorderModern/>
 
     </section>
   );

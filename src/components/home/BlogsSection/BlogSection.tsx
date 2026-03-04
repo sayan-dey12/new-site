@@ -3,10 +3,11 @@ import { blogs } from "./blogData";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import SectionHeader from "../SectionHeader";
+import BorderModern from "@/components/utils/BorderModern";
 
 export default function BlogSection() {
   return (
-    <section className="py-10 bg-primary">
+    <section className="pb-5 bg-primary">
 
       <div className="max-w-7xl mx-auto px-5">
 
@@ -38,6 +39,8 @@ export default function BlogSection() {
         </div>
 
       </div>
+      <br /><br />
+      <BorderModern/>
 
     </section>
   );
