@@ -6,7 +6,7 @@ export default function AuthorSidebar() {
     <div
       className="
       rounded-xl p-5 
-      bg-secondary
+      bg-background
       border border-border
       shadow-sm 
       flex flex-col items-center text-center

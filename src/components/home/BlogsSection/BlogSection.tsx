@@ -25,7 +25,7 @@ export default function BlogSection() {
           lg:grid-cols-3
         ">
           {blogs.map((blog) => (
-            <BlogCard key={blog.slug} {...blog} />
+            <BlogCard key={blog._id} blog={blog} />
           ))}
         </div>
 

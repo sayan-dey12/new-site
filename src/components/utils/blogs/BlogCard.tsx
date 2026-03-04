@@ -19,7 +19,7 @@ export default function BlogCard({blog}:{blog:BlogType}) {
         hover:-translate-y-1
         hover:shadow-lg
         cursor-pointer
-        bg-secondary
+        bg-card
       ">
 
         {/* Image */}
@@ -36,7 +36,7 @@ export default function BlogCard({blog}:{blog:BlogType}) {
 
           {/* Meta */}
           <p className="text-xs text-muted-foreground">
-            {new Date(blog.createdAt).toLocaleDateString()} • {blog.readingTime || "5 min read"}
+            {new Date(blog.createdAt).toLocaleDateString("en-US", {year: "numeric",month: "short",day: "numeric",})} • {blog.readingTime || "5 min read"}
           </p>
 
           <CardTitle>{blog.title}</CardTitle>
