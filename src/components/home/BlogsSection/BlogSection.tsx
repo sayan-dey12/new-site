@@ -1,5 +1,5 @@
-import BlogCard from "./BlogCard";
-import { blogs } from "./blogData";
+import BlogCard from "../../utils/blogs/BlogCard";
+import { blogs } from "../../utils/blogs/blogData";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import SectionHeader from "../SectionHeader";
