@@ -1,3 +1,4 @@
+import BorderModern from "@/components/utils/BorderModern";
 import HeroText from "./heroText";
 import HeroVisual from "./heroVisual";
 
@@ -17,6 +18,8 @@ export default function HeroSection() {
         <HeroText />
         <HeroVisual />
       </div>
+
+      <BorderModern/>
 
     </section>
   );

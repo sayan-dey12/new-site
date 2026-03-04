@@ -1,3 +1,4 @@
+import SectionHeader from "../SectionHeader";
 import FeaturedProjectCard from "./FeaturedProjectCard";
 import ProjectCard from "./ProjectCard";
 import { projects } from "./projectData";
@@ -12,17 +13,10 @@ export default function FeaturedProjectsSection() {
 
       <div className="max-w-7xl mx-auto px-5">
 
-        {/* Header */}
-        <div className="text-center mb-14">
-          <h2 className="text-3xl md:text-4xl font-bold">
-            Featured Projects
-          </h2>
-
-          <p className="text-muted-foreground mt-3">
-            Selected projects demonstrating real-world
-            engineering and product development.
-          </p>
-        </div>
+        <SectionHeader
+          title="Featured Projects"
+          subtitle="Selected projects demonstrating real-world engineering and product development."
+          />
 
         {/* Featured */}
         {featured && (

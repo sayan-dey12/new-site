@@ -1,3 +1,4 @@
+import SectionHeader from "../SectionHeader";
 import StackGroup from "./StackGroup";
 import { techStack } from "./stackData";
 
@@ -7,16 +8,10 @@ export default function TechStackSection() {
 
       <div className="max-w-7xl mx-auto px-5">
 
-        <div className="text-center mb-14">
-          <h2 className="text-3xl md:text-4xl font-bold">
-            Tech Stack
-          </h2>
-
-          <p className="text-muted-foreground mt-3">
-            Technologies and tools I use to design,
-            build and scale modern applications.
-          </p>
-        </div>
+          <SectionHeader
+            title="Tech Stack"
+            subtitle=" Technologies and tools I use to design , build and scale modern applications."
+            />
 
         <div className="
           grid

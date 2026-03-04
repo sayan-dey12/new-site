@@ -1,3 +1,4 @@
+import SectionHeader from "../SectionHeader";
 import AiLabCard from "./AiLabCard";
 import { aiLabItems } from "./aiLabData";
 
@@ -7,17 +8,10 @@ export default function AiLabSection() {
 
       <div className="max-w-7xl mx-auto px-5">
 
-        {/* Header */}
-        <div className="text-center mb-14">
-          <h2 className="text-3xl md:text-4xl font-bold">
-            AI Lab
-          </h2>
-
-          <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">
-            Experimental AI systems, intelligent agents
-            and ongoing research explorations.
-          </p>
-        </div>
+        <SectionHeader
+          title="AI Lab"
+          subtitle="Experimental AI systems, intelligent agents and ongoing research explorations."
+          />
 
         {/* Grid */}
         <div className="

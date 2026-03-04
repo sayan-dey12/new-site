@@ -2,6 +2,7 @@ import BlogCard from "./BlogCard";
 import { blogs } from "./blogData";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import SectionHeader from "../SectionHeader";
 
 export default function BlogSection() {
   return (
@@ -10,16 +11,10 @@ export default function BlogSection() {
       <div className="max-w-7xl mx-auto px-5">
 
         {/* Header */}
-        <div className="text-center mb-14">
-          <h2 className="text-3xl md:text-4xl font-bold">
-            Latest Blogs
-          </h2>
-
-          <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">
-            Thoughts, learnings and deep dives into
-            software engineering, AI and system design.
-          </p>
-        </div>
+        <SectionHeader
+          title="Latest Blogs" 
+          subtitle="Fresh posts about full-stack development, AI/ML experiments, and what I’m learning."
+          />
 
         {/* Blog Grid */}
         <div className="
