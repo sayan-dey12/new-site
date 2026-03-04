@@ -1,7 +1,5 @@
-import LatestPreview from "./LatestPreview";
-import { blogs } from "@/components/utils/blogs/blogData";
 
-export default function HeroBlogs(){
+export default function HeroProjects(){
     return(
         <section className="relative overflow-hidden rounded-xl 
                 bg-linear-to-br 
@@ -11,10 +9,11 @@ export default function HeroBlogs(){
             <div className="relative max-w-3xl mx-auto text-center">
                 <h1
                     className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-foreground tracking-tight">
-                    Discover insights in Web Development, AI & Engineering</h1>
+                    Projects</h1>
                 <p
-                className="text-sm sm:text-base text-secondary-foreground">Tutorials, deep dives, and practical engineering content crafted for builders.</p>
-                <LatestPreview latest={blogs[0]}/>
+                className="text-sm sm:text-base text-secondary-foreground">
+                    A collection of projects where I explore scalable backend systems , real-time applications , AI tools , and modern full-stack development.
+                </p>
             </div>
         </section>
     )
