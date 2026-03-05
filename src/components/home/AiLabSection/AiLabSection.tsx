@@ -2,6 +2,7 @@ import BorderModern from "@/components/utils/BorderModern";
 import SectionHeader from "../SectionHeader";
 import AiLabCard from "./AiLabCard";
 import { aiLabItems } from "./aiLabData";
+import ViewAllButton from "@/components/utils/ViewAllButton";
 
 export default function AiLabSection() {
   return (
@@ -27,6 +28,7 @@ export default function AiLabSection() {
         </div>
 
       </div>
+      <ViewAllButton href="/ai-lab" label="Explore AI Lab"/>
       <br /><br />
       <BorderModern/>
 

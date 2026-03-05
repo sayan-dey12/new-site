@@ -38,7 +38,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
       <div className="relative aspect-video w-full overflow-hidden">
         <Image
-          src={project.image}
+          src={project.image || "/images/fallback.png"}
           alt={project.title}
           fill
           className="

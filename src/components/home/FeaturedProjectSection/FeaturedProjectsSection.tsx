@@ -4,6 +4,7 @@ import FeaturedProjectCard from "@/components/utils/project/FeaturedProjectCard"
 import ProjectCard from "@/components/utils/project/ProjectCard";
 
 import { projects } from "@/data/project"
+import ViewAllButton from "@/components/utils/ViewAllButton";
 
 
 export default function FeaturedProjectsSection() {
@@ -35,6 +36,7 @@ export default function FeaturedProjectsSection() {
 
 
       </div>
+      <ViewAllButton href="/projects" label="View All Projects"/>
       <br /><br />
       <BorderModern/>
     </section>

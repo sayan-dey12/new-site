@@ -121,22 +121,22 @@ export default function Navbar() {
                         Blogs
                 </Link>
 
-                <button 
+                <Link
+                    href="/projects"
                     onClick={()=>{
-                        handleComingSoon();
                         setMenuOpen(false);
                         }}
                         className={`block text-sm font-medium hover:text-accent transition-colors ${isActive("/projects")}`}>
                             Projects
-                </button>
-                <button 
+                </Link>
+                <Link
+                    href="/ai-lab"
                     onClick={()=>{
-                        handleComingSoon();
                         setMenuOpen(false);
                         }}
                         className={`block text-sm font-medium hover:text-accent transition-colors ${isActive("/ai-lab")}`}>
                             AI Lab
-                </button>
+                </Link>
                 <button 
                     onClick={()=>{
                         handleComingSoon();

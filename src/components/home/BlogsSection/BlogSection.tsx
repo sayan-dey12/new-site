@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import SectionHeader from "../SectionHeader";
 import BorderModern from "@/components/utils/BorderModern";
+import ViewAllButton from "@/components/utils/ViewAllButton";
 
 export default function BlogSection() {
   return (
@@ -24,19 +25,13 @@ export default function BlogSection() {
           md:grid-cols-2
           lg:grid-cols-3
         ">
-          {blogs.map((blog) => (
+          {blogs.slice(0,3).map((blog) => (
             <BlogCard key={blog._id} blog={blog} />
           ))}
         </div>
 
         {/* View All */}
-        <div className="text-center mt-12">
-          <Button asChild variant="outline">
-            <Link href="/blogs">
-              View All Blogs →
-            </Link>
-          </Button>
-        </div>
+        <ViewAllButton href="/blogs" label="Read All Blogs"/>
 
       </div>
       <br /><br />

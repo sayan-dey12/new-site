@@ -41,7 +41,7 @@ export default function FeaturedProjectCard({
 
         <div className="relative w-full aspect-video md:aspect-auto md:h-full">
           <Image
-            src={project.image}
+            src={project.image || "/fallback.pnj"}
             alt={project.title}
             fill
             className="object-cover rounded-2xl "
