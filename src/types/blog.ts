@@ -11,6 +11,7 @@
     readingTime?: string;
     category?: string;
     authorName: string;
+    published: boolean
   }
 
   
