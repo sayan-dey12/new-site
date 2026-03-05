@@ -9,7 +9,7 @@ interface StatsCardProps {
 
 export default function StatsCard({ title, value, icon: Icon }: StatsCardProps) {
   return (
-    <Card className="hover:shadow-md transition">
+    <Card className="hover:shadow-md bg-card hover:-translate-y-1 transition">
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="text-sm text-muted-foreground">
           {title}
