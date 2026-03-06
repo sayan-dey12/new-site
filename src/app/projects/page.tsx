@@ -18,7 +18,7 @@ export default function ProjectsPage() {
   )
 
   return (
-    <main className="bg-primary min-h-screen">
+    <main className="min-h-screen">
     <div className="max-w-6xl mx-auto px-6 py-6">
 
       {/* Hero Section */}
