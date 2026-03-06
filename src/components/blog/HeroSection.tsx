@@ -4,6 +4,7 @@ import { blogs } from "@/components/utils/blogs/blogData";
 export default function HeroBlogs(){
     return(
         <section className="relative overflow-hidden rounded-xl 
+                bg-primary
                 bg-linear-to-br 
                 from-purple-500/20 via-blue-500/20 to-transparent
                 dark:from-purple-600/15 dark:via-blue-600/15 dark:to-transparent
