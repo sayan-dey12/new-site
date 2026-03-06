@@ -4,7 +4,7 @@ import HeroVisual from "./heroVisual";
 
 export default function HeroSection() {
   return (
-    <section className="relative bg-primary text-primary-foreground pt-8 pb-5">
+    <section className="relative text-primary-foreground pt-8 pb-5">
 
       <div className="
         max-w-7xl
@@ -19,7 +19,7 @@ export default function HeroSection() {
         <HeroVisual />
       </div>
       <br /><br />
-      <BorderModern/>
+      {/* <BorderModern/> */}
 
     </section>
   );

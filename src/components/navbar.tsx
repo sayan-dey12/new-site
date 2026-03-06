@@ -29,7 +29,7 @@ export default function Navbar() {
     return(
         <>
         <nav
-            className = "w-full sticky top-0 z-50 border-b border-border bg-background/70 shadow-sm backdrop-blur-2xl"
+            className = "w-full sticky top-0 z-50 border-b border-border bg-background/50 rounded-b-2xl shadow-sm backdrop-blur-2xl"
         >
             <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
                 {/* main name */}

@@ -14,7 +14,7 @@ export default function FeaturedProjectsSection() {
     )
 
   return (
-    <section className="pb-5 bg-primary">
+    <section className="pb-5">
 
       <div className="max-w-7xl mx-auto px-5">
 
@@ -38,7 +38,7 @@ export default function FeaturedProjectsSection() {
       </div>
       <ViewAllButton href="/projects" label="View All Projects"/>
       <br /><br />
-      <BorderModern/>
+      {/* <BorderModern/> */}
     </section>
   );
 }

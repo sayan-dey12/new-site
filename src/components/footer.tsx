@@ -6,8 +6,9 @@ export default function Footer(){
         <>
             <footer
                 className="
+                    w-full
                     border-t border-border
-                    bg-background/95 text-muted-foreground
+                    bg-background text-muted-foreground
                     py-10"
             >
                 <div className="max-w-6xl mx-auto px-4 text-center space-y-6">

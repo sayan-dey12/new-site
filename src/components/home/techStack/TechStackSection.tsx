@@ -5,7 +5,7 @@ import { techStack } from "./stackData";
 
 export default function TechStackSection() {
   return (
-    <section className="pb-5 bg-primary">
+    <section className="pb-5">
 
       <div className="max-w-7xl mx-auto px-5">
 
@@ -30,7 +30,7 @@ export default function TechStackSection() {
       </div>
 
           <br /><br />
-      <BorderModern/>
+      {/* <BorderModern/> */}
 
     </section>
   );

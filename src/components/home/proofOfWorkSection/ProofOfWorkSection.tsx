@@ -5,7 +5,7 @@ import { proofItems } from "./proofData";
 
 export default function ProofOfWorkSection() {
   return (
-    <section className="bg-primary pb-5">
+    <section className="pb-5">
 
       <div className="max-w-7xl mx-auto px-5">
 
@@ -25,7 +25,7 @@ export default function ProofOfWorkSection() {
 
       </div>
       <br /><br />
-      <BorderModern/>
+      {/* <BorderModern/> */}
     </section>
   );
 }

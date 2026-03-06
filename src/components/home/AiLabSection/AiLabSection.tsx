@@ -6,7 +6,7 @@ import ViewAllButton from "@/components/utils/ViewAllButton";
 
 export default function AiLabSection() {
   return (
-    <section className="pb-5 bg-primary">
+    <section className="pb-5">
 
       <div className="max-w-7xl mx-auto px-5">
 
@@ -30,7 +30,7 @@ export default function AiLabSection() {
       </div>
       <ViewAllButton href="/ai-lab" label="Explore AI Lab"/>
       <br /><br />
-      <BorderModern/>
+      {/* <BorderModern/> */}
 
     </section>
   );
