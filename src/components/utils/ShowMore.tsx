@@ -34,7 +34,7 @@ export default function ShowMore({
       {children.length > initialCount && (
         <div className="flex justify-center">
           <Button
-            variant="outline"
+          className="bg-card shadow-md border border-border"
             onClick={() => setExpanded(!expanded)}
           >
             {expanded ? "Show Less" : "Show More"}
