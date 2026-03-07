@@ -4,6 +4,7 @@ import { useState } from "react"
 import MarkdownEditor from "./MarkdownEditor"
 import BlogMetadataForm from "./BlogMetadataForm"
 import TagInput from "./TagInput"
+import CoverUpload from "./CoverUpload"
 
 export default function BlogEditor() {
   const [title, setTitle] = useState("")
@@ -44,6 +45,11 @@ export default function BlogEditor() {
       <TagInput tags={tags} setTags={setTags} />
 
       <MarkdownEditor value={content} onChange={setContent} />
+       
+      <CoverUpload/>
+      
+      <br />
+      
 
       <button
         onClick={handleSubmit}

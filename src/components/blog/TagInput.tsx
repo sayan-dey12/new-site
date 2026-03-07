@@ -28,7 +28,7 @@ export default function TagInput({ tags, setTags }: Props) {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Add tag"
-          className="border p-2 rounded"
+          className="border p-2 rounded-xl bg-card"
         />
 
         <button onClick={addTag} className="px-3 py-2 bg-purple-600 text-white rounded">

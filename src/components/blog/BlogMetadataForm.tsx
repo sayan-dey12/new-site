@@ -22,21 +22,21 @@ export default function BlogMetadataForm({
         placeholder="Blog Title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        className="w-full border p-3 rounded-xl"
+        className="w-full border p-3 rounded-xl bg-card"
       />
 
       <input
         placeholder="Slug (example: building-a-chat-app)"
         value={slug}
         onChange={(e) => setSlug(e.target.value)}
-        className="w-full border p-3 rounded-xl"
+        className="w-full border p-3 rounded-xl bg-card"
       />
 
       <textarea
         placeholder="Short excerpt..."
         value={excerpt}
         onChange={(e) => setExcerpt(e.target.value)}
-        className="w-full border p-3 rounded-xl"
+        className="w-full border p-3 rounded-xl bg-card"
       />
     </div>
   )
