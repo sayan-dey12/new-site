@@ -3,7 +3,7 @@
 import { useState } from "react"
 import MarkdownEditor from "./MarkdownEditor"
 import BlogMetadataForm from "./BlogMetadataForm"
-import TagInput from "./TagInput"
+import TagInput from "../utils/new-page/TagInput"
 import CoverUpload from "./CoverUpload"
 
 export default function BlogEditor() {

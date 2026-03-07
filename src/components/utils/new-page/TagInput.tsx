@@ -11,8 +11,16 @@ export default function TagInput({ tags, setTags }: Props) {
   const [input, setInput] = useState("")
 
   const addTag = () => {
-    if (!input) return
-    setTags([...tags, input])
+    const trimmed = input
+                        .trim()
+                        .toLowerCase()
+                        .replace(/\s+/g,"-")
+                        .replace(/[^a-z0-9-]/g, "");
+
+    if (!trimmed) return
+    if (tags.includes(trimmed)) return
+
+    setTags([...tags, trimmed])
     setInput("")
   }
 
@@ -29,6 +37,12 @@ export default function TagInput({ tags, setTags }: Props) {
           onChange={(e) => setInput(e.target.value)}
           placeholder="Add tag"
           className="border p-2 rounded-xl bg-card"
+          onKeyDown={(e) => {
+          if (e.key === "Enter"){
+            e.preventDefault()
+            addTag()
+          }
+        }}
         />
 
         <button onClick={addTag} className="px-3 py-2 bg-purple-600 text-white rounded">
