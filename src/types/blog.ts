@@ -3,11 +3,11 @@
     title: string;
     slug: string;
     content: string;
-    excerpt?: string;
+    excerpt: string;
     coverImage?: string;
     tags?: string[];
-    createdAt: string;
-    updatedAt?: string 
+    createdAt: Date;
+    updatedAt?: Date 
     readingTime?: string;
     category?: string;
     authorName: string;
