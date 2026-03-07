@@ -6,7 +6,6 @@ import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import ToastProvider from "@/components/toast-provider";
 import GridBackgroundDemo from "@/components/grid-background-demo";
-import HexBackground from "@/components/HexagonalGrid";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

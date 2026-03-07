@@ -23,13 +23,10 @@ export default function HeroVisual() {
           relative
           rounded-3xl
           overflow-hidden
-          bg-card
-          border border-border
-          shadow-xl
         "
       >
         <Image
-          src="/sayan_dey.jpg"
+          src="/bg_removed_trial.png"
           alt="Sayan Dey"
           width={420}
           height={520}

@@ -14,7 +14,7 @@ export default function BlogEditor() {
   const [tags, setTags] = useState<string[]>([])
 
   const handleSubmit = async () => {
-    const res = await fetch("/api/blog/create", {
+    const res = await fetch("/api/blog", {
       method: "POST",
       body: JSON.stringify({
         title,
