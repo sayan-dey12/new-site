@@ -3,20 +3,27 @@ export type AIElementCategory = | "experiment" | "agent" | "tool" | "research"
 export type AIElementStatus = | "idea" | "building" | "completed" | "archived"
 
 export type AIElement = {
-  id: string
+  _id: string
   title: string
+  slug: string
+  excerpt: string
   description: string
 
   category: AIElementCategory
   status: AIElementStatus
 
   tech: string[]
+  coverImage: string
+  images?: string[]
 
-  image: string
+  tags: string[]
 
   github?: string
   demo?: string
   blog?: string
 
+  featured: boolean
+
   createdAt: string
+  updatedAt: string
 }

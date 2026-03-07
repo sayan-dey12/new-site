@@ -7,11 +7,13 @@
     coverImage?: string;
     tags?: string[];
     createdAt: string;
-    authorId: string; 
+    updatedAt?: string 
     readingTime?: string;
     category?: string;
     authorName: string;
+    featured: boolean
     published: boolean
+    views?: number
   }
 
   

@@ -3,11 +3,14 @@ export type ProjectStatus = | "completed" | "in-progress" | "planned"
 export type ProjectCategory = | "fullstack" | "backend" | "frontend" | "ai" | "devops" | "systems"
 
 export type Project = {
-  id: string
+  _id: string
   title: string
+  excerpt: string
   description: string
-  image: string
+  slug:string
+  coverImage: string
 
+  images?: string[]
   category: ProjectCategory
   status: ProjectStatus
 
@@ -17,9 +20,11 @@ export type Project = {
   demo?: string
   video?: string
 
-  visibility?: "featured" | "normal"
+  featured: boolean
 
   highlight?: string
 
-  createdAt?: string
+  createdAt: string
+  updatedAt?: string
+  published: boolean
 }
