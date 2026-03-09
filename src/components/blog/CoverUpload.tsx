@@ -1,8 +1,9 @@
 "use client"
-
-import { useState } from "react"
-
-export default function CoverUpload({ setCover }: any) {
+type Props ={
+  cover : string,
+  setCover:(v: string)=>void
+}
+export default function CoverUpload({ cover , setCover }: Props) {
 
   const uploadImage = async (file: File) => {
 
@@ -16,7 +17,7 @@ export default function CoverUpload({ setCover }: any) {
 
     const data = await res.json()
 
-    setCover(data.secure_url)
+    setCover(data.url)
   }
 
   return (

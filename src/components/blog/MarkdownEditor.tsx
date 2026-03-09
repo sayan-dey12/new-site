@@ -1,8 +1,16 @@
 "use client"
 
+import { Dispatch, SetStateAction } from "react"
+import { toast } from "react-hot-toast"
+
+type Props = {
+  content : string,
+  setContent: Dispatch<SetStateAction<string>>
+}
+
 import MDEditor from "@uiw/react-md-editor"
 
-export default function MarkdownEditor({ value, onChange }: any) {
+export default function MarkdownEditor({ content, setContent }: Props) {
 
   const uploadImage = async (file: File) => {
 
@@ -14,11 +22,16 @@ export default function MarkdownEditor({ value, onChange }: any) {
       body: formData
     })
 
+  if (!res.ok) {
+    toast.error("Image upload failed")
+    return
+  }
+
     const data = await res.json()
 
-    const markdownImage = `![image](${data.secure_url})`
+    const markdownImage = `![image](${data.url})`
 
-    onChange(value + "\n" + markdownImage)
+    setContent(prev => prev + "\n" + markdownImage)
   }
 
   return (
@@ -36,8 +49,8 @@ export default function MarkdownEditor({ value, onChange }: any) {
       <br />
 
       <MDEditor
-        value={value}
-        onChange={(v) => onChange(v || "")}
+        value={content}
+        onChange={(v) => setContent(v || "")}
         height={500}
       />
 

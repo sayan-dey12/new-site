@@ -18,9 +18,9 @@ export async function POST(req: Request){
     }
     const buffer = Buffer.from(await file.arrayBuffer())
 
-    const result : any = await new Promise((resolve , rejects)=>{
+    const result : any = await new Promise((resolve , reject)=>{
       cloudinary.uploader.upload_stream({folder: "new-site"} , (error , res)=>{
-        if (error) rejects(error)
+        if (error) reject(error)
         else resolve(res)
       }).end(buffer)
     })
