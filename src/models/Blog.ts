@@ -11,7 +11,8 @@ const BlogSchema = new mongoose.Schema<BlogType>({
         slug:{
             type: String,
             required: true,
-            unique: true
+            unique: true,
+            index:true
         },
         excerpt:{
             type: String,
@@ -21,7 +22,7 @@ const BlogSchema = new mongoose.Schema<BlogType>({
             type: String,
             required: true
         },
-        coverImage:{
+        cover:{
             type: String,
         },
         tags:{
@@ -42,13 +43,13 @@ const BlogSchema = new mongoose.Schema<BlogType>({
         },
         authorName:{
             type: String,
-            required: true
+            default: "Sayan Dey"
         },
         featured:{
             type:Boolean,
             default: false
         },
-        category:{
+        catagory:{
             type: String
         }
     },

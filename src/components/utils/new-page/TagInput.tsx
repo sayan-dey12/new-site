@@ -54,7 +54,7 @@ export default function TagInput({ tags, setTags }: Props) {
         {tags.map(tag => (
           <span
             key={tag}
-            className="px-2 py-1 bg-gray-200 rounded cursor-pointer"
+            className="px-2 py-1 bg-card border border-border rounded cursor-pointer"
             onClick={() => removeTag(tag)}
           >
             {tag}

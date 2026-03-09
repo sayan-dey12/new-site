@@ -1,12 +1,14 @@
 import { NextResponse , NextRequest } from "next/server";
 import { connectDB } from "@/dbConfig/dbConfig";
 import { BlogModel } from "@/models/Blog";
+import { calculateReadingTime } from "@/lib/ReadingTime";
 
 export async function POST( req: NextRequest){
     try {
         await connectDB();
         const body = await req.json();
-        const blog = await BlogModel.create(body);
+        const readingTime = calculateReadingTime(body.content)
+        const blog = await BlogModel.create({...body, readingTime});
         return NextResponse.json({
             success: true,
             data: blog

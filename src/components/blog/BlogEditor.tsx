@@ -6,6 +6,8 @@ import BlogMetadataForm from "./BlogMetadataForm"
 import TagInput from "../utils/new-page/TagInput"
 import CoverUpload from "./CoverUpload"
 import { toast } from "react-hot-toast"
+import CatagorySelect from "../utils/CatagorySelect"
+import CatagoryInput from "../utils/CatagoryInput"
 
 export default function BlogEditor() {
   const [title, setTitle] = useState<string>("")
@@ -15,6 +17,7 @@ export default function BlogEditor() {
   const [tags, setTags] = useState<string[]>([])
   const [cover,setCover] = useState("")
   const [loading , setLoading] = useState(false)
+  const [catagory , setCatagory] = useState("")
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -25,6 +28,11 @@ export default function BlogEditor() {
     }
     if (!cover) {
       toast.error("Cover image is required")
+      setLoading(false)
+      return
+    }
+    if (!catagory) {
+      toast.error("Category is required")
       setLoading(false)
       return
     }
@@ -40,7 +48,8 @@ export default function BlogEditor() {
           excerpt,
           content,
           tags,
-          cover
+          cover,
+          catagory
         })
       })
       if (res.ok) {
@@ -51,6 +60,7 @@ export default function BlogEditor() {
         setContent("")
         setTags([])
         setCover("")
+        setCatagory("")
       }else{
         const er = await res.json()
         toast.error(er.error);
@@ -75,6 +85,9 @@ export default function BlogEditor() {
       />
 
       <TagInput tags={tags} setTags={setTags} />
+
+      <CatagorySelect catagory={catagory} setCatagory={setCatagory} />
+      <CatagoryInput catagory={catagory} setCatagory={setCatagory}/>
 
       <MarkdownEditor content={content} setContent={setContent} />
        
