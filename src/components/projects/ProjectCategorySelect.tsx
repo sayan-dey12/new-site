@@ -1,5 +1,5 @@
     import { ProjectCategory } from "@/types/project"
-import { Label } from "../ui/label"
+    import { Label } from "../ui/label"
     import { Select , SelectItem , SelectContent , SelectTrigger , SelectValue } from "../ui/select"
 
     type Props = {
@@ -10,7 +10,7 @@ import { Label } from "../ui/label"
     export default function ProjectCatagorySelect({category , setCategory}:Props){
 
         return(
-            <div className="space-y-2">
+            <div className="space-y-4 m-4">
                 <Label>Category</Label>
             <Select value={category} onValueChange={setCategory}>
                 <SelectTrigger>
@@ -22,7 +22,7 @@ import { Label } from "../ui/label"
                 <SelectItem value="backend">Backend</SelectItem>
                 <SelectItem value="frontend">Frontend</SelectItem>
                 <SelectItem value="devops">DevOps</SelectItem>
-                <SelectItem value="system">System</SelectItem>
+                <SelectItem value="systems">Systems</SelectItem>
                 <SelectItem value="others">Others</SelectItem>
                 </SelectContent>
             </Select>

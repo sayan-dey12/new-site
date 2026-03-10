@@ -9,6 +9,7 @@ import { toast } from "react-hot-toast"
 import CatagorySelect from "../utils/CatagorySelect"
 import CatagoryInput from "../utils/CatagoryInput"
 
+
 export default function BlogEditor() {
   const [title, setTitle] = useState<string>("")
   const [slug, setSlug] = useState<string>("")

@@ -31,7 +31,7 @@ export default function TagInput({ tags, setTags }: Props) {
   return (
     <div>
 
-      <div className="flex gap-2">
+      <div className="flex gap-2 m-4">
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}

@@ -10,7 +10,7 @@
     export default function SelectStatus({status , setStatus}:Props){
 
         return(
-            <div className="space-y-2">
+            <div className="space-y-4 m-4">
                 <Label>Select Status</Label>
             <Select value={status} onValueChange={setStatus}>
                 <SelectTrigger>

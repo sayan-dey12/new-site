@@ -1,11 +1,12 @@
+"use client";
 
 type Props = {
     github?: string
-    setGithub?: (v : string) => void
+    setGithub: (v : string) => void
     demo?: string
-    setDemo?:(v : string) => void
+    setDemo:(v : string) => void
     highlight?: string 
-    setHighlight?: (v : string) => void
+    setHighlight: (v : string) => void
 }
 
 export default function ProjectExtraLinks({
@@ -17,7 +18,7 @@ export default function ProjectExtraLinks({
     setHighlight
 }:Props){
     return (
-        <div className="space-y-4">
+        <div className="space-y-4 m-4">
             <input 
                 placeholder="Github Link"
                 value={github ?? ""}

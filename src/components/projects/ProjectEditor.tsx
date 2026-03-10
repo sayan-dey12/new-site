@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import ProjectMetadata from "./ProjectMetadata";
 import TagInput from "../utils/new-page/TagInput";
@@ -65,14 +67,17 @@ export function ProjectEditor(){
             })
           })
           if (res.ok) {
-            toast.success("✅ Blog Saved Successfully")
+            toast.success("Project Saved Successfully")
             setTitle("")
             setSlug("")
             setExcerpt("")
             setDescription("")
             setTags([])
             setCoverImage("")
-            setCategory("others")
+            setCategory("fullstack")
+            setGithub("")
+            setDemo("")
+            setHighlight("")
           }else{
             const er = await res.json()
             toast.error(er.error);
@@ -114,6 +119,17 @@ export function ProjectEditor(){
                 highlight={highlight}
                 setHighlight={setHighlight}
             />
+
+            <br />
+      
+
+        <button
+            disabled={loading}
+            onClick={handleSubmit}
+            className="px-6 py-3 rounded-xl bg-purple-600 text-white"
+        >
+            {loading ? "Uploading..." : "Upload Project"}
+        </button>
             
         </>
     )
