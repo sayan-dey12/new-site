@@ -21,14 +21,18 @@ export default function CoverUpload({ cover , setCover }: Props) {
   }
 
   return (
-    <input
-      type="file"
-      accept="image/*"
-      className="bg-card rounded-2xl m-4"
-      onChange={(e) => {
-        if (!e.target.files) return
-        uploadImage(e.target.files[0])
-      }}
-    />
+    <div>
+      <label>Cover image:</label>
+      <input
+            type="file"
+            accept="image/*"
+            className="bg-card rounded-2xl m-4"
+            onChange={(e) => {
+              if (!e.target.files) return
+              uploadImage(e.target.files[0])
+            }}
+          />
+    </div>
+   
   )
 }
