@@ -23,17 +23,15 @@ export default function ProjectMetadata(
     }:Props
 ){
 
-    useEffect(() => {
-        if (!slug) {
-            setSlug(
-            title
-                .toLowerCase()
-                .trim()
-                .replace(/\s+/g, "-")
-                .replace(/[^a-z0-9-]/g, "")
-            )
-        }
-        }, [title, slug, setSlug])
+   useEffect(() => {
+    const generatedSlug = title
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, "-")
+        .replace(/[^a-z0-9-]/g, "")
+
+    setSlug(generatedSlug)
+    }, [title, setSlug])
     return(
         <div className="space-y-4 m-4">
             <input 

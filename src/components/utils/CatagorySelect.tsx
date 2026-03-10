@@ -10,7 +10,7 @@
 
 
         return(
-            <div className="space-y-2">
+            <div className="space-y-2 m-4">
                 <Label>Category</Label>
             <Select value={catagory} onValueChange={setCatagory}>
                 <SelectTrigger>

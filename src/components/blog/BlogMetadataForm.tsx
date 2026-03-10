@@ -1,3 +1,5 @@
+import { useEffect } from "react"
+
 type Props = {
   title: string
   setTitle: (v: string) => void
@@ -15,8 +17,18 @@ export default function BlogMetadataForm({
   excerpt,
   setExcerpt
 }: Props) {
+
+  useEffect(() => {
+        const generatedSlug = title
+            .toLowerCase()
+            .trim()
+            .replace(/\s+/g, "-")
+            .replace(/[^a-z0-9-]/g, "")
+    
+        setSlug(generatedSlug)
+        }, [title, setSlug])
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 m-4">
 
       <input
         placeholder="Blog Title"
