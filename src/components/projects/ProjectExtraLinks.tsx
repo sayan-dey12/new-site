@@ -32,7 +32,7 @@ export default function ProjectExtraLinks({
                 className="w-full border p-3 rounded-xl bg-card"
             />
             <input 
-                placeholder="Project Title"
+                placeholder="Blog link for this project"
                 value={highlight ?? ""}
                 onChange={(e)=>setHighlight?.(e.target.value)} 
                 className="w-full border p-3 rounded-xl bg-card"

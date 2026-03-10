@@ -10,6 +10,7 @@ import { ProjectCategory, ProjectStatus } from "@/types/project";
 import ProjectCatagorySelect from "./ProjectCategorySelect";
 import SelectStatus from "./ProjectStatus";
 import { toast } from "react-hot-toast";
+import ProjectImagesUpload from "./ProjectImageUpload";
 
 
 export function ProjectEditor(){
@@ -62,7 +63,8 @@ export function ProjectEditor(){
               github,
               demo,
               highlight,
-              status
+              status,
+              images
 
             })
           })
@@ -111,6 +113,7 @@ export function ProjectEditor(){
             <CoverUpload cover={coverImage} setCover={setCoverImage}/>
             {coverImage && <img src={coverImage} alt="Image preview" className="w-48 rounded mt-2" />}
 
+            <ProjectImagesUpload images={images} setImages={setImages}/>
             <ProjectExtraLinks 
                 github={github}
                 setGithub={setGithub}
