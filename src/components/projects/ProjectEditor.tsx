@@ -80,6 +80,9 @@ export function ProjectEditor(){
             setGithub("")
             setDemo("")
             setHighlight("")
+            setImages([])
+            setVideo("")
+            setStatus("planned")
           }else{
             const er = await res.json()
             toast.error(er.error);
