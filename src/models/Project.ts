@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
 import { Project } from "@/types/project"
-
+ 
 const ProjectSchema = new mongoose.Schema<Project>(
   {
     title: {
@@ -42,7 +42,8 @@ const ProjectSchema = new mongoose.Schema<Project>(
         "frontend",
         "ai",
         "devops",
-        "systems"
+        "systems",
+        "others"
       ],
       required: true
     },

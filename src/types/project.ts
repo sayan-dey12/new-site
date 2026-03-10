@@ -1,7 +1,7 @@
 export type ProjectStatus = | "completed" | "in-progress" | "planned"
 
-export type ProjectCategory = | "fullstack" | "backend" | "frontend" | "ai" | "devops" | "systems"
-
+export type ProjectCategory = | "fullstack" | "backend" | "frontend" | "ai" | "devops" | "systems" | "others"
+ 
 export type Project = {
   _id: string
   title: string

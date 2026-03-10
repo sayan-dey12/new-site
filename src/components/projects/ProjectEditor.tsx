@@ -1,0 +1,121 @@
+import { useState } from "react";
+import ProjectMetadata from "./ProjectMetadata";
+import TagInput from "../utils/new-page/TagInput";
+import ProjectExtraLinks from "./ProjectExtraLinks";
+import MarkdownEditor from "../blog/MarkdownEditor";
+import CoverUpload from "../blog/CoverUpload";
+import { ProjectCategory, ProjectStatus } from "@/types/project";
+import ProjectCatagorySelect from "./ProjectCategorySelect";
+import SelectStatus from "./ProjectStatus";
+import { toast } from "react-hot-toast";
+
+
+export function ProjectEditor(){
+    const [title , setTitle] = useState<string>("")
+    const [slug , setSlug] = useState<string>("")
+    const [excerpt , setExcerpt] = useState<string>("")
+    const [description, setDescription] = useState<string>("")
+    const [coverImage , setCoverImage] = useState<string>("")
+    const [tags , setTags] = useState<string[]>([])
+    const [images , setImages] = useState<string[]>([])
+    const [github , setGithub] = useState<string>("")
+    const [demo , setDemo] = useState<string>("")
+    const [video , setVideo] = useState<string>("")
+    const [highlight, setHighlight] = useState<string>("")
+    const [category , setCategory] = useState<ProjectCategory>("fullstack")
+    const [status , setStatus] = useState<ProjectStatus>("planned")
+    const [loading, setLoading] = useState<boolean>(false)
+
+    const handleSubmit = async () => {
+        setLoading(true);
+        if (!title || !slug || !description) {
+          toast.error("Title, slug and content are required")
+          setLoading(false)
+          return
+        }
+        if (!coverImage) {
+          toast.error("Cover image is required")
+          setLoading(false)
+          return
+        }
+        if (!category) {
+          toast.error("Category is required")
+          setLoading(false)
+          return
+        }
+        try {
+            const res = await fetch("/api/project", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              title,
+              slug,
+              excerpt,
+              description,
+              tags,
+              coverImage,
+              category,
+              github,
+              demo,
+              highlight,
+              status
+
+            })
+          })
+          if (res.ok) {
+            toast.success("✅ Blog Saved Successfully")
+            setTitle("")
+            setSlug("")
+            setExcerpt("")
+            setDescription("")
+            setTags([])
+            setCoverImage("")
+            setCategory("others")
+          }else{
+            const er = await res.json()
+            toast.error(er.error);
+          }
+        } catch (error) {
+          toast.error("Something went wrong")
+        } finally{
+          setLoading(false)
+        }
+      }
+
+
+    return(
+        <>
+            <ProjectMetadata
+                title={title}
+                setTitle={setTitle}
+                slug={slug}
+                setSlug={setSlug}
+                excerpt={excerpt}
+                setExcerpt={setExcerpt}
+            />
+            <TagInput tags={tags} setTags={setTags} />
+
+            <ProjectCatagorySelect category={category} setCategory={setCategory}/>
+
+            <SelectStatus status={status} setStatus={setStatus}/>
+
+            <MarkdownEditor content={description} setContent={setDescription}/>
+
+            <CoverUpload cover={coverImage} setCover={setCoverImage}/>
+            {coverImage && <img src={coverImage} alt="Image preview" className="w-48 rounded mt-2" />}
+
+            <ProjectExtraLinks 
+                github={github}
+                setGithub={setGithub}
+                demo={demo}
+                setDemo={setDemo}
+                highlight={highlight}
+                setHighlight={setHighlight}
+            />
+            
+        </>
+    )
+
+}    
