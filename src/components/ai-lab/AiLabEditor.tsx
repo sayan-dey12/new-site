@@ -10,6 +10,8 @@ import MarkdownEditor from "../blog/MarkdownEditor";
 import CoverUpload from "../blog/CoverUpload";
 import ProjectImagesUpload from "../projects/ProjectImageUpload";
 import ProjectExtraLinks from "../projects/ProjectExtraLinks";
+import { toast } from "react-hot-toast";
+
 
 
 export default function AiLabEditor(){
@@ -22,12 +24,77 @@ export default function AiLabEditor(){
     const [images , setImages] = useState<string[]>([])
     const [github , setGithub] = useState<string>("")
     const [demo , setDemo] = useState<string>("")
-//    const [video , setVideo] = useState<string>("")
+    const [video , setVideo] = useState<string>("")
     const [blog, setBlog] = useState<string>("")
     const [category , setCategory] = useState<AIElementCategory>("experiment")
     const [status , setStatus] = useState<AIElementStatus>("idea")
     const [tech , setTech] = useState<string[]>([])
     const [loading, setLoading] = useState<boolean>(false)
+
+    const handleSubmit = async () => {
+        setLoading(true);
+        if (!title || !slug || !description) {
+          toast.error("Title, slug and content are required")
+          setLoading(false)
+          return
+        }
+        if (!coverImage) {
+          toast.error("Cover image is required")
+          setLoading(false)
+          return
+        }
+        if (!category) {
+          toast.error("Category is required")
+          setLoading(false)
+          return
+        }
+        try {
+            const res = await fetch("/api/project", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              title,
+              slug,
+              excerpt,
+              description,
+              tags,
+              coverImage,
+              category,
+              github,
+              demo,
+              blog,
+              status,
+              images
+
+            })
+          })
+          if (res.ok) {
+            toast.success("Project Saved Successfully")
+            setTitle("")
+            setSlug("")
+            setExcerpt("")
+            setDescription("")
+            setTags([])
+            setCoverImage("")
+            setCategory("experiment")
+            setGithub("")
+            setDemo("")
+            setBlog("")
+            setImages([])
+            setVideo("")
+            setStatus("idea")
+          }else{
+            const er = await res.json()
+            toast.error(er.error);
+          }
+        } catch (error) {
+          toast.error("Something went wrong")
+        } finally{
+          setLoading(false)
+        }
+      }
 
     return(
         <>
@@ -38,6 +105,8 @@ export default function AiLabEditor(){
                 setSlug={setSlug}
                 excerpt={excerpt}
                 setExcerpt={setExcerpt}
+                tech={tech}
+                setTech={setTech}
             />
 
             <TagInput tags={tags} setTags={setTags} />
