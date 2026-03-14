@@ -1,7 +1,7 @@
-import BorderModern from "@/components/utils/BorderModern";
+//import BorderModern from "@/components/utils/BorderModern";
 import SectionHeader from "../SectionHeader";
 import FeaturedProjectCard from "@/components/utils/project/FeaturedProjectCard";
-import ProjectCard from "@/components/utils/project/ProjectCard";
+//import ProjectCard from "@/components/utils/project/ProjectCard";
 
 import { projects } from "@/data/project"
 import ViewAllButton from "@/components/utils/ViewAllButton";

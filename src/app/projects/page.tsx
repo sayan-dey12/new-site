@@ -13,9 +13,9 @@ export default function ProjectsPage() {
     (p) => p.featured === true
   )
 
-  const otherProjects = projects.filter(
-    (p) => p.featured === false
-  )
+  // const otherProjects = projects.filter(
+  //   (p) => p.featured === false
+  // )
 
   return (
     <main className="min-h-screen">

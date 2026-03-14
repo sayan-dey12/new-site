@@ -1,4 +1,4 @@
-import BorderModern from "@/components/utils/BorderModern";
+//import BorderModern from "@/components/utils/BorderModern";
 import SectionHeader from "../SectionHeader";
 import AiLabCard from "./AiLabCard";
 import { aiLabItems } from "./aiLabData";

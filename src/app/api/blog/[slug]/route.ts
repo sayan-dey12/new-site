@@ -23,6 +23,7 @@ export async function GET(req: Request , {params}:{params:Promise<{slug: string}
             }
         )
     } catch (error) {
+        console.error(error)
         return NextResponse.json(
             {
                 success: false,
@@ -61,7 +62,7 @@ export async function PUT(req: Request , {params}:{params:Promise<{slug: string}
             { status: 200 }
         );
     } catch (error) {
-
+        console.error(error)
         return NextResponse.json(
             {
                 success: false,
@@ -98,6 +99,7 @@ export async function DELETE(req: Request,{ params }: { params: Promise<{ slug: 
         { status: 200 }
         )
   } catch (error) {
+        console.error(error)
         return NextResponse.json(
         {
             success: false,

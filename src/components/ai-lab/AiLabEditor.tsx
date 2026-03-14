@@ -24,7 +24,7 @@ export default function AiLabEditor(){
     const [images , setImages] = useState<string[]>([])
     const [github , setGithub] = useState<string>("")
     const [demo , setDemo] = useState<string>("")
-    const [video , setVideo] = useState<string>("")
+    //const [video , setVideo] = useState<string>("")
     const [blog, setBlog] = useState<string>("")
     const [category , setCategory] = useState<AIElementCategory>("experiment")
     const [status , setStatus] = useState<AIElementStatus>("idea")
@@ -85,7 +85,6 @@ export default function AiLabEditor(){
             setDemo("")
             setBlog("")
             setImages([])
-            setVideo("")
             setStatus("idea")
           }else{
             const er = await res.json()

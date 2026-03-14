@@ -1,4 +1,4 @@
-import BorderModern from "@/components/utils/BorderModern";
+//import BorderModern from "@/components/utils/BorderModern";
 import HeroText from "./heroText";
 import HeroVisual from "./heroVisual";
 

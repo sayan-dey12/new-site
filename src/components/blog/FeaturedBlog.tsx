@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { BlogType } from "@/types/blog";
+import Image from "next/image";
 
 export default function FeaturedBlog({ blog }: { blog: BlogType }) {
   return (
@@ -15,10 +16,11 @@ export default function FeaturedBlog({ blog }: { blog: BlogType }) {
         "
       >
         <div className="relative w-full aspect-video">
-          <img
+          <Image
             src={blog.cover || "/images/fallback.png"}
             alt={blog.title}
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
           />
 
           <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/40 to-transparent" />

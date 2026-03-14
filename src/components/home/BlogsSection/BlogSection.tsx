@@ -1,9 +1,9 @@
 import BlogCard from "../../utils/blogs/BlogCard";
 import { blogs } from "../../utils/blogs/blogData";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+//import Link from "next/link";
+//import { Button } from "@/components/ui/button";
 import SectionHeader from "../SectionHeader";
-import BorderModern from "@/components/utils/BorderModern";
+//import BorderModern from "@/components/utils/BorderModern";
 import ViewAllButton from "@/components/utils/ViewAllButton";
 
 export default function BlogSection() {

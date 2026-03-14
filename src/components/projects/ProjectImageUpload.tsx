@@ -1,5 +1,7 @@
 "use client"
 
+import Image from "next/image"
+
 type Props = {
   images: string[]
   setImages: (v: string[]) => void
@@ -41,7 +43,7 @@ export default function ProjectImagesUpload({ images, setImages }: Props) {
       <div className="flex gap-3 flex-wrap">
         {images.map((img) => (
           <div key={img} className="relative">
-            <img src={img} className="w-32 rounded" />
+            <Image src={img} className="w-32 rounded" alt=""/>
 
             <button
               onClick={() => removeImage(img)}

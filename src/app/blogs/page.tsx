@@ -3,7 +3,7 @@ import HeroBlogs from "@/components/blog/HeroSection";
 import BlogCard from "@/components/utils/blogs/BlogCard";
 import { blogs } from "@/components/utils/blogs/blogData";
 import ShowMore from "@/components/utils/ShowMore";
-import { BlogType } from "@/types/blog";
+//import { BlogType } from "@/types/blog";
 
 export default function BlogsPage() {
   
@@ -42,7 +42,7 @@ export default function BlogsPage() {
 
         {/* Featured Articles */}
         <section>
-          <FeaturedSection blog={{...blogs[0]}} />
+          <FeaturedSection blog={{...blogs[0] , authorName: "Sayan Dey"}} />
         </section>
 
         {/* Blog Grid */}

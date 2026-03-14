@@ -15,7 +15,7 @@ export async function POST( req: NextRequest){
                 status: 201
             }
         );
-    } catch (error) {
+    } catch (_error) {
         return NextResponse.json(
             {
                 success: false,
@@ -42,7 +42,7 @@ export async function GET( req: NextRequest){
         count: projects.length,
         data: projects,
         });     
-    } catch (error) {
+    } catch (_error) {
         return NextResponse.json(
         {
             success: false,
