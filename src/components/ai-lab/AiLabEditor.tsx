@@ -49,7 +49,7 @@ export default function AiLabEditor(){
           return
         }
         try {
-            const res = await fetch("/api/project", {
+            const res = await fetch("/api/ai-lab", {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
@@ -66,7 +66,8 @@ export default function AiLabEditor(){
               demo,
               blog,
               status,
-              images
+              images,
+              tech
 
             })
           })
@@ -77,6 +78,7 @@ export default function AiLabEditor(){
             setExcerpt("")
             setDescription("")
             setTags([])
+            setTech([])
             setCoverImage("")
             setCategory("experiment")
             setGithub("")

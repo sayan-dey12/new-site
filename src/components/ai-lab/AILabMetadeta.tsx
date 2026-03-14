@@ -79,7 +79,7 @@ export default function AILabMetadata(
                 <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Add tag"
+                placeholder="Add tech"
                 className="border p-2 rounded-xl bg-card"
                 onKeyDown={(e) => {
                 if (e.key === "Enter"){
