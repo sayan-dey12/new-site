@@ -23,7 +23,7 @@ export function ProjectEditor(){
     const [images , setImages] = useState<string[]>([])
     const [github , setGithub] = useState<string>("")
     const [demo , setDemo] = useState<string>("")
-    const [video , setVideo] = useState<string>("")
+    //const [video , setVideo] = useState<string>("")
     const [highlight, setHighlight] = useState<string>("")
     const [category , setCategory] = useState<ProjectCategory>("fullstack")
     const [status , setStatus] = useState<ProjectStatus>("planned")
@@ -81,13 +81,14 @@ export function ProjectEditor(){
             setDemo("")
             setHighlight("")
             setImages([])
-            setVideo("")
             setStatus("planned")
           }else{
             const er = await res.json()
             toast.error(er.error);
           }
         } catch (error) {
+          console.error(error);
+          
           toast.error("Something went wrong")
         } finally{
           setLoading(false)

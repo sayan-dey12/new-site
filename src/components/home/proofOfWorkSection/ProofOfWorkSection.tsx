@@ -1,4 +1,4 @@
-import BorderModern from "@/components/utils/BorderModern";
+//import BorderModern from "@/components/utils/BorderModern";
 import SectionHeader from "../SectionHeader";
 import ProofCard from "./ProofCard";
 import { proofItems } from "./proofData";

@@ -8,6 +8,7 @@ import CoverUpload from "./CoverUpload"
 import { toast } from "react-hot-toast"
 import CatagorySelect from "../utils/CatagorySelect"
 import CatagoryInput from "../utils/CatagoryInput"
+import Image from "next/image"
 
 
 export default function BlogEditor() {
@@ -94,7 +95,7 @@ export default function BlogEditor() {
       <MarkdownEditor content={content} setContent={setContent} />
        
       <CoverUpload cover={cover} setCover={setCover}/>
-      {cover && <img src={cover} alt="Image preview" className="w-48 rounded mt-2" />}
+      {cover && <Image src={cover} alt="Image preview" className="w-48 rounded mt-2" />}
       
       <br />
       

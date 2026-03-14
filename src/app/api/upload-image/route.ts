@@ -33,7 +33,8 @@ export async function POST(req: Request){
       }).end(buffer)
     })
     return Response.json({ url: result.secure_url });
-  } catch (_error) {
+  } catch (error) {
+    console.error(error)
       return Response.json({ 
         status: false,
         error: "Upload failed" }, 

@@ -11,6 +11,7 @@ import CoverUpload from "../blog/CoverUpload";
 import ProjectImagesUpload from "../projects/ProjectImageUpload";
 import ProjectExtraLinks from "../projects/ProjectExtraLinks";
 import { toast } from "react-hot-toast";
+import Image from "next/image";
 
 
 
@@ -91,6 +92,7 @@ export default function AiLabEditor(){
             toast.error(er.error);
           }
         } catch (error) {
+          console.error(error)
           toast.error("Something went wrong")
         } finally{
           setLoading(false)
@@ -115,7 +117,7 @@ export default function AiLabEditor(){
             <AISelectStatus status={status} setStatus={setStatus} />
             <MarkdownEditor content={description} setContent={setDescription}/>
             <CoverUpload cover={coverImage} setCover={setCoverImage}/>
-            {coverImage && <img src={coverImage} alt="Image preview" className="w-48 rounded mt-2" />} 
+            {coverImage && <Image src={coverImage} alt="Image preview" className="w-48 rounded mt-2" />} 
             <ProjectImagesUpload images={images} setImages={setImages}/>
             <ProjectExtraLinks 
                 github={github}
