@@ -28,7 +28,7 @@ export default function ProjectTable({ projects }: Props) {
 
           {projects.map((project) => (
             <ProjectRow
-              key={project.id}
+              key={project._id}
               project={project}
             />
           ))}

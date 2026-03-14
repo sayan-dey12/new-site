@@ -10,7 +10,7 @@ import ViewAllButton from "@/components/utils/ViewAllButton";
 export default function FeaturedProjectsSection() {
 
   const featuredProjects = projects.filter(
-      (p) => p.visibility === "featured"
+      (p) => p.featured === true
     )
 
   return (
@@ -27,7 +27,7 @@ export default function FeaturedProjectsSection() {
         <div className="space-y-10">
           {featuredProjects.map((project) => (
            <FeaturedProjectCard
-              key={project.id}
+              key={project._id}
               project={project}
             />
           ))}

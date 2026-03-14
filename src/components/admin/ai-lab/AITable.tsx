@@ -28,7 +28,7 @@ export default function AITable({ elements }: Props) {
 
           {elements.map((element) => (
             <AIRow
-              key={element.id}
+              key={element._id}
               element={element}
             />
           ))}

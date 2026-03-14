@@ -48,7 +48,7 @@ export default function AILabPage() {
         <div>
         <ShowMore initialCount={3}>
           {experiments.map((exp) => (
-            <ExperimentCard key={exp.id} aiElement={exp} />
+            <ExperimentCard key={exp._id} aiElement={exp} />
           ))}
         </ShowMore>
 
@@ -68,7 +68,7 @@ export default function AILabPage() {
 
           <ShowMore initialCount={3}>
           {agents.map((agent) => (
-            <AgentCard key={agent.id} {...agent} />
+            <AgentCard key={agent._id} {...agent} />
           ))}
           </ShowMore>
 
