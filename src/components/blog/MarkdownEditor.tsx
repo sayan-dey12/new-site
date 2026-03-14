@@ -2,13 +2,17 @@
 
 import { Dispatch, SetStateAction } from "react"
 import { toast } from "react-hot-toast"
+import dynamic from "next/dynamic"
 
 type Props = {
   content : string,
   setContent: Dispatch<SetStateAction<string>>
 }
 
-import MDEditor from "@uiw/react-md-editor"
+const MDEditor = dynamic(
+  () => import("@uiw/react-md-editor"),
+  { ssr: false }
+)
 
 export default function MarkdownEditor({ content, setContent }: Props) {
 
