@@ -1,5 +1,9 @@
 import cloudinary from "@/lib/cloudinary";
 
+type CloudinaryUploadResult = {
+  secure_url: string
+}
+
 export async function POST(req: Request){
   try {
     const formData = await req.formData()
@@ -18,14 +22,18 @@ export async function POST(req: Request){
     }
     const buffer = Buffer.from(await file.arrayBuffer())
 
-    const result : any = await new Promise((resolve , reject)=>{
+    const result  = await new Promise<CloudinaryUploadResult>((resolve , reject)=>{
       cloudinary.uploader.upload_stream({folder: "new-site"} , (error , res)=>{
         if (error) reject(error)
-        else resolve(res)
+        if (!res) {
+          reject(new Error("Upload failed"))
+          return
+        }
+        resolve({secure_url: res.secure_url})
       }).end(buffer)
     })
     return Response.json({ url: result.secure_url });
-  } catch (error) {
+  } catch (_error) {
       return Response.json({ 
         status: false,
         error: "Upload failed" }, 
