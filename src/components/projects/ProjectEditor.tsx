@@ -11,6 +11,7 @@ import ProjectCatagorySelect from "./ProjectCategorySelect";
 import SelectStatus from "./ProjectStatus";
 import { toast } from "react-hot-toast";
 import ProjectImagesUpload from "./ProjectImageUpload";
+import Image from "next/image";
 
 
 export function ProjectEditor(){
@@ -115,7 +116,7 @@ export function ProjectEditor(){
             <MarkdownEditor content={description} setContent={setDescription}/>
 
             <CoverUpload cover={coverImage} setCover={setCoverImage}/>
-            {coverImage && <img src={coverImage} alt="Image preview" className="w-48 rounded mt-2" />}
+            {coverImage && <Image src={coverImage} alt="Image preview" className="w-48 rounded mt-2" />}
 
             <ProjectImagesUpload images={images} setImages={setImages}/>
             <ProjectExtraLinks 
