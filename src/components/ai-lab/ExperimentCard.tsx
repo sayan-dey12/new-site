@@ -20,7 +20,7 @@ export default function ExperimentCard({aiElement}: {aiElement:AIElement}) {
       {/* image */}
       <div className="relative h-44 w-full overflow-hidden">
         <Image
-          src={aiElement.image || "/images/fallback.png"}
+          src={aiElement.coverImage || "/images/fallback.png"}
           alt={aiElement.title}
           fill
           className="object-cover rounded-2xl px-1 transition-transform duration-300 group-hover:scale-105"

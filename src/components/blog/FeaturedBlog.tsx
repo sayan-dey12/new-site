@@ -16,7 +16,7 @@ export default function FeaturedBlog({ blog }: { blog: BlogType }) {
       >
         <div className="relative w-full aspect-video">
           <img
-            src={blog.coverImage || "/images/fallback.png"}
+            src={blog.cover || "/images/fallback.png"}
             alt={blog.title}
             className="w-full h-full object-cover"
           />

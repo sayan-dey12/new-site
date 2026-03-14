@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge"
 
 import { Pencil, Trash } from "lucide-react"
 
-function formatDate(date?: string) {
+function formatDate(date?: string | Date) {
   if (!date) return "-"
   return new Date(date).toLocaleDateString("en-US", {
     day: "numeric",
@@ -29,7 +29,7 @@ export default function ProjectRow({ project }: Props) {
       <td className="p-4 flex items-center gap-4">
 
         <Image
-          src={project.image}
+          src={project.coverImage}
           alt={project.title}
           width={60}
           height={40}
@@ -74,7 +74,7 @@ export default function ProjectRow({ project }: Props) {
 
       {/* Visibility */}
       <td>
-        {project.visibility === "featured" ? (
+        {project.featured === true ? (
           <Badge className="bg-green-600 hover:bg-green-600">
             Featured
           </Badge>

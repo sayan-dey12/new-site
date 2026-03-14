@@ -2,10 +2,10 @@ import { BlogModel } from "@/models/Blog";
 import { connectDB } from "@/dbConfig/dbConfig";
 import { NextResponse } from "next/server";
 
-export async function GET(req: Request , {params}:{params:{slug: string}}){
+export async function GET(req: Request , {params}:{params:Promise<{slug: string}>}){
     try {
         await connectDB();
-        const slug = params.slug;
+        const { slug } = await params;
         const blog = await BlogModel.findOneAndUpdate({slug} , {$inc: {views: 1}} , {new: true})
         if(!blog){
             return NextResponse.json({ 
@@ -34,10 +34,10 @@ export async function GET(req: Request , {params}:{params:{slug: string}}){
 }
 
 
-export async function PUT(req: Request , {params}:{params:{slug: string}}){
+export async function PUT(req: Request , {params}:{params:Promise<{slug: string}>}){
     try {
         await connectDB();
-        const slug = params.slug;
+        const { slug } = await params;
         const body = await req.json();
         const updatedBlog = await BlogModel.findOneAndUpdate(
             {slug},
@@ -74,12 +74,12 @@ export async function PUT(req: Request , {params}:{params:{slug: string}}){
 }
 
 
-export async function DELETE(req: Request,{ params }: { params: { slug: string } }) {
+export async function DELETE(req: Request,{ params }: { params: Promise<{ slug: string }> }) {
   
     try {
         await connectDB()
 
-        const slug = params.slug;
+        const { slug } = await params;
         const deletedBlog = await BlogModel.findOneAndDelete({slug: slug});
         if (!deletedBlog) {
         return NextResponse.json(

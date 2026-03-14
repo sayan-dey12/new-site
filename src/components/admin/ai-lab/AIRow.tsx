@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 
 import { Pencil, Trash } from "lucide-react"
 
-function formatDate(date: string) {
+function formatDate(date: string | Date) {
   return new Date(date).toLocaleDateString("en-US", {
     day: "numeric",
     month: "short",
@@ -28,7 +28,7 @@ export default function AIRow({ element }: Props) {
       <td className="p-4 flex items-center gap-4">
 
         <Image
-          src={element.image}
+          src={element.coverImage}
           alt={element.title}
           width={60}
           height={40}
@@ -99,7 +99,7 @@ export default function AIRow({ element }: Props) {
         </Button>
 
       </td>
-
+ 
     </tr>
   )
 }

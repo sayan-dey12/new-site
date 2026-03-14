@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge"
 
 import { Pencil, Trash } from "lucide-react"
 
-function formatDate(date: string) {
+function formatDate(date: string | Date) {
   return new Date(date).toLocaleDateString("en-US", {
     day: "numeric",
     month: "short",
@@ -27,9 +27,9 @@ export default function BlogRow({ blog }: Props) {
       {/* Blog */}
       <td className="p-4 flex items-center gap-4">
 
-        {blog.coverImage && (
+        {blog.cover && (
           <Image
-            src={blog.coverImage}
+            src={blog.cover}
             alt={blog.title}
             width={60}
             height={40}

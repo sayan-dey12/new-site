@@ -10,11 +10,11 @@ import ShowMore from "@/components/utils/ShowMore";
 export default function ProjectsPage() {
 
   const featuredProjects = projects.filter(
-    (p) => p.visibility === "featured"
+    (p) => p.featured === true
   )
 
   const otherProjects = projects.filter(
-    (p) => p.visibility !== "featured"
+    (p) => p.featured === false
   )
 
   return (
