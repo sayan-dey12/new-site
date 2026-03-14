@@ -5,7 +5,7 @@ export default function HeroText() {
     <div className="space-y-6">
 
       <p className="text-accent font-bold">
-        Hello, I'm
+        Hello, I&apos;m
       </p>
 
       <h1 className="text-4xl md:text-6xl font-bold leading-tight tracking-tight">

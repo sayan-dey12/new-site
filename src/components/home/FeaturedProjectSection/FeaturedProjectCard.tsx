@@ -5,9 +5,16 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-export default function FeaturedProjectCard({
-  project,
-}: any) {
+type Project = {
+  coverImage: string
+  title: string
+  description: string
+  tech: string[]
+  demo: string
+  github: string
+}
+
+export default function FeaturedProjectCard({project}: {project:Project}) {
   return (
     <Card className="overflow-hidden">
 
@@ -16,7 +23,7 @@ export default function FeaturedProjectCard({
         {/* Image */}
         <div className="relative h-64 md:h-full">
           <Image
-            src={project.image}
+            src={project.coverImage}
             alt={project.title}
             fill
             className="object-cover"

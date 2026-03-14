@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect , useState} from "react";
 import { usePathname} from "next/navigation";
-import { Sun , Moon , X , Loader2 , Menu} from "lucide-react";
+import { Sun , Moon , X , Menu} from "lucide-react";
 import { useTheme } from "next-themes";
 import {Button} from "@/components/ui/button";
 import handleComingSoon from "@/lib/handleCommingSoon";
@@ -17,7 +17,8 @@ export default function Navbar() {
 
 
     useEffect(() => {
-    setMounted(true);
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setMounted(true);
     }, []);
 
     if (!mounted) return null;
