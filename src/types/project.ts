@@ -24,7 +24,7 @@ export type Project = {
 
   highlight?: string
 
-  createdAt: string
-  updatedAt?: string
+  createdAt: Date
+  updatedAt?: Date
   published: boolean
 }

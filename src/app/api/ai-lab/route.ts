@@ -16,6 +16,7 @@ export async function POST( req: NextRequest){
             }
         );
     } catch (error) {
+        console.log(error);
         return NextResponse.json(
             {
                 success: false,
@@ -33,16 +34,17 @@ export async function GET( req: NextRequest){
         await connectDB()
 
         const limitParams = req.nextUrl.searchParams.get("limit");
-        const limit = Math.min(parseInt(limitParams || "10"), 50);
+        const limit = Math.min(Number(limitParams) || 10, 50);
         const aiElement = await AIElementModel.find({})
             .sort({ createdAt: -1 })
             .limit(limit);
         return NextResponse.json({
-        success: true,
-        count: aiElement.length,
-        data: aiElement,
+            success: true,
+            count: aiElement.length,
+            data: aiElement,
         });     
     } catch (error) {
+        console.log(error);
         return NextResponse.json(
         {
             success: false,

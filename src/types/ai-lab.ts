@@ -1,7 +1,7 @@
 export type AIElementCategory = | "experiment" | "agent" | "tool" | "research"
 
 export type AIElementStatus = | "idea" | "building" | "completed" | "archived"
-
+ 
 export type AIElement = {
   _id: string
   title: string
@@ -24,6 +24,6 @@ export type AIElement = {
 
   featured: boolean
 
-  createdAt: string
-  updatedAt: string
+  createdAt: Date
+  updatedAt: Date
 }
