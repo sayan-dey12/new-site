@@ -2,178 +2,230 @@ import { AIElement } from "@/types/ai-lab"
 
 export const aiElements: AIElement[] = [
   {
-    id: "ai-tool-platform",
+    _id: "ai-tool-platform",
+    slug: "ai-tool-platform",
     title: "AI Tool Platform",
+    excerpt: "Unified AI platform combining assistants and tools.",
     description:
       "A unified AI platform combining chat assistants, image generation, and developer productivity tools.",
     category: "experiment",
     status: "building",
     tech: ["Next.js", "OpenAI API", "Redis", "TypeScript"],
-    image: "https://images.pexels.com/photos/16027824/pexels-photo-16027824.jpeg",
+    coverImage:
+      "https://images.pexels.com/photos/16027824/pexels-photo-16027824.jpeg",
+    tags: ["ai", "platform"],
     github: "https://github.com/sayan-dey12",
     demo: "#",
-    createdAt: "2026-02-10",
+    featured: true,
+    createdAt: new Date("2026-02-10"),
+    updatedAt: new Date("2026-02-10"),
   },
 
   {
-    id: "coding-agent",
+    _id: "coding-agent",
+    slug: "coding-agent",
     title: "AI Coding Agent",
+    excerpt: "Autonomous AI that analyzes and improves codebases.",
     description:
       "An autonomous agent that analyzes codebases and suggests improvements.",
     category: "agent",
     status: "building",
     tech: ["LLM", "Node.js", "AST Analysis"],
-    image: "/ai-lab/coding-agent.png",
-    createdAt: "2026-02-15",
+    coverImage: "/ai-lab/coding-agent.png",
+    tags: ["agent", "coding"],
+    featured: false,
+    createdAt: new Date("2026-02-15"),
+    updatedAt: new Date("2026-02-15"),
   },
 
   {
-    id: "research-agent",
+    _id: "research-agent",
+    slug: "research-agent",
     title: "Research Agent",
+    excerpt: "AI agent that searches the web and summarizes research.",
     description:
       "An AI agent that searches the web and produces structured summaries.",
     category: "agent",
     status: "idea",
     tech: ["OpenAI", "Search APIs", "RAG"],
-    image: "/ai-lab/research-agent.png",
-    createdAt: "2026-02-20",
+    coverImage: "/ai-lab/research-agent.png",
+    tags: ["agent", "research"],
+    featured: false,
+    createdAt: new Date("2026-02-20"),
+    updatedAt: new Date("2026-02-20"),
   },
 
   {
-    id: "rag-knowledge-base",
+    _id: "rag-knowledge-base",
+    slug: "rag-knowledge-base",
     title: "RAG Knowledge Base",
+    excerpt: "AI question answering using a custom knowledge base.",
     description:
       "An AI system that answers questions using a custom knowledge base powered by RAG.",
     category: "experiment",
     status: "idea",
     tech: ["Vector DB", "Embeddings", "LangChain"],
-    image: "https://images.pexels.com/photos/15863103/pexels-photo-15863103.jpeg",
+    coverImage:
+      "https://images.pexels.com/photos/15863103/pexels-photo-15863103.jpeg",
+    tags: ["rag", "knowledge"],
     github: "#",
-    createdAt: "2026-02-18",
+    featured: false,
+    createdAt: new Date("2026-02-18"),
+    updatedAt: new Date("2026-02-18"),
   },
 
   {
-    id: "prompt-playground",
+    _id: "prompt-playground",
+    slug: "prompt-playground",
     title: "Prompt Engineering Playground",
+    excerpt: "Experiment with prompts and compare AI outputs.",
     description:
       "A tool to experiment with prompt engineering strategies and compare outputs.",
     category: "tool",
     status: "building",
     tech: ["Next.js", "OpenAI API"],
-    image: "https://images.pexels.com/photos/1749303/pexels-photo-1749303.jpeg",
-    createdAt: "2026-02-12",
+    coverImage:
+      "https://images.pexels.com/photos/1749303/pexels-photo-1749303.jpeg",
+    tags: ["prompt", "tool"],
+    featured: false,
+    createdAt: new Date("2026-02-12"),
+    updatedAt: new Date("2026-02-12"),
   },
 
-  /* ----------------------------- */
-  /* New Experiments               */
-  /* ----------------------------- */
-
   {
-    id: "ai-meeting-summarizer",
+    _id: "ai-meeting-summarizer",
+    slug: "ai-meeting-summarizer",
     title: "AI Meeting Summarizer",
+    excerpt: "Convert meetings into summaries with action items.",
     description:
       "Automatically converts meeting recordings into structured summaries with action items.",
     category: "experiment",
     status: "idea",
     tech: ["Whisper", "OpenAI API", "Next.js"],
-    image: "/ai-lab/meeting-summarizer.png",
-    createdAt: "2026-03-02",
+    coverImage: "/ai-lab/meeting-summarizer.png",
+    tags: ["ai", "meeting"],
+    featured: false,
+    createdAt: new Date("2026-03-02"),
+    updatedAt: new Date("2026-03-02"),
   },
 
   {
-    id: "ai-code-review-system",
+    _id: "ai-code-review-system",
+    slug: "ai-code-review-system",
     title: "AI Code Review System",
+    excerpt: "AI reviews pull requests for quality and security.",
     description:
       "An AI-powered tool that reviews pull requests and provides feedback on code quality and security.",
     category: "experiment",
     status: "building",
     tech: ["LLM", "GitHub API", "Node.js"],
-    image: "/ai-lab/code-review.png",
+    coverImage: "/ai-lab/code-review.png",
+    tags: ["ai", "code-review"],
     github: "#",
-    createdAt: "2026-03-01",
+    featured: false,
+    createdAt: new Date("2026-03-01"),
+    updatedAt: new Date("2026-03-01"),
   },
 
   {
-    id: "multi-agent-coordinator",
+    _id: "multi-agent-coordinator",
+    slug: "multi-agent-coordinator",
     title: "Multi-Agent Coordinator",
+    excerpt: "Orchestrates multiple AI agents for complex tasks.",
     description:
       "A system that orchestrates multiple AI agents to collaborate on complex tasks.",
     category: "experiment",
     status: "idea",
     tech: ["Agents", "LangChain", "Task Graph"],
-    image: "/ai-lab/multi-agent.png",
-    createdAt: "2026-02-28",
+    coverImage: "/ai-lab/multi-agent.png",
+    tags: ["agents", "coordination"],
+    featured: false,
+    createdAt: new Date("2026-02-28"),
+    updatedAt: new Date("2026-02-28"),
   },
 
-  /* ----------------------------- */
-  /* New Agents                    */
-  /* ----------------------------- */
-
   {
-    id: "documentation-agent",
+    _id: "documentation-agent",
+    slug: "documentation-agent",
     title: "Documentation Agent",
+    excerpt: "Generate project documentation automatically.",
     description:
       "Generates documentation automatically from source code and project structure.",
     category: "agent",
     status: "idea",
     tech: ["LLM", "Code Parsing"],
-    image: "/ai-lab/documentation-agent.png",
-    createdAt: "2026-03-03",
+    coverImage: "/ai-lab/documentation-agent.png",
+    tags: ["documentation"],
+    featured: false,
+    createdAt: new Date("2026-03-03"),
+    updatedAt: new Date("2026-03-03"),
   },
 
   {
-    id: "debugging-agent",
+    _id: "debugging-agent",
+    slug: "debugging-agent",
     title: "Debugging Agent",
+    excerpt: "AI assistant for debugging stack traces.",
     description:
       "Analyzes stack traces and logs to suggest possible bug fixes.",
     category: "agent",
     status: "idea",
     tech: ["LLM", "Log Analysis"],
-    image: "/ai-lab/debugging-agent.png",
-    createdAt: "2026-03-03",
+    coverImage: "/ai-lab/debugging-agent.png",
+    tags: ["debugging"],
+    featured: false,
+    createdAt: new Date("2026-03-03"),
+    updatedAt: new Date("2026-03-03"),
   },
 
-  /* ----------------------------- */
-  /* Tools                         */
-  /* ----------------------------- */
-
   {
-    id: "ai-text-refiner",
+    _id: "ai-text-refiner",
+    slug: "ai-text-refiner",
     title: "AI Text Refiner",
+    excerpt: "Improve grammar and tone of written content.",
     description:
       "Improves grammar, tone, and clarity of written content using AI.",
     category: "tool",
     status: "completed",
     tech: ["OpenAI API", "Next.js"],
-    image: "/ai-lab/text-refiner.png",
-    createdAt: "2026-02-25",
+    coverImage: "/ai-lab/text-refiner.png",
+    tags: ["text", "ai"],
+    featured: false,
+    createdAt: new Date("2026-02-25"),
+    updatedAt: new Date("2026-02-25"),
   },
 
   {
-    id: "dataset-labeling-tool",
+    _id: "dataset-labeling-tool",
+    slug: "dataset-labeling-tool",
     title: "AI Dataset Labeling Tool",
+    excerpt: "Assist dataset labeling with AI predictions.",
     description:
       "Assists in labeling datasets using AI predictions to speed up annotation workflows.",
     category: "tool",
     status: "idea",
     tech: ["ML", "Active Learning"],
-    image: "/ai-lab/dataset-tool.png",
-    createdAt: "2026-02-27",
+    coverImage: "/ai-lab/dataset-tool.png",
+    tags: ["dataset", "ml"],
+    featured: false,
+    createdAt: new Date("2026-02-27"),
+    updatedAt: new Date("2026-02-27"),
   },
 
-  /* ----------------------------- */
-  /* Research                      */
-  /* ----------------------------- */
-
   {
-    id: "agent-collaboration-research",
+    _id: "agent-collaboration-research",
+    slug: "agent-collaboration-research",
     title: "Agent Collaboration Research",
+    excerpt: "Researching coordination strategies for agents.",
     description:
       "Exploring coordination strategies for multi-agent systems solving complex tasks.",
     category: "research",
     status: "idea",
     tech: ["Multi-Agent Systems", "Planning Algorithms"],
-    image: "/ai-lab/agent-research.png",
-    createdAt: "2026-03-04",
+    coverImage: "/ai-lab/agent-research.png",
+    tags: ["research", "agents"],
+    featured: false,
+    createdAt: new Date("2026-03-04"),
+    updatedAt: new Date("2026-03-04"),
   },
 ]

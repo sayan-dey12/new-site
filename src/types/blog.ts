@@ -6,8 +6,8 @@
     excerpt: string;
     cover?: string;
     tags?: string[];
-    createdAt: Date;
-    updatedAt?: Date 
+    createdAt: Date | string;
+    updatedAt?: Date | string
     readingTime?: string;
     catagory?: string;
     authorName?: string;

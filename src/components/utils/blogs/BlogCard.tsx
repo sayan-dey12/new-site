@@ -25,7 +25,7 @@ export default function BlogCard({blog}:{blog:BlogType}) {
         {/* Image */}
         <div className="relative h-44">
           <Image
-            src={blog.coverImage || "/images/fallback.png"}
+            src={blog.cover || "/images/fallback.png"}
             alt={blog.title}
             fill
             className="object-cover px-1 rounded-2xl"
