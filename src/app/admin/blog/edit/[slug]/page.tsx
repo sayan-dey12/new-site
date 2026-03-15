@@ -15,12 +15,13 @@ export default async function EditBlogPage({
   if (!blog) return notFound()
 
   return (
-    <div className="max-w-5xl mx-auto py-10">
+    <div className="max-w-7xl mx-auto py-10">
 
       <h1 className="text-3xl font-bold mb-8">
         Edit Blog
       </h1>
 
+    
       <BlogEditor initialData={blog} />
 
     </div>

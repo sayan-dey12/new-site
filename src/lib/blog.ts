@@ -7,7 +7,7 @@ export async function getBlog(slug: string): Promise<BlogType | null> {
       process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
 
     const res = await fetch(`${baseUrl}/api/blog/${slug}`, {
-      next: { revalidate: 60 } // ISR caching
+      cache: "no-store"
     })
 
     if (!res.ok) {
