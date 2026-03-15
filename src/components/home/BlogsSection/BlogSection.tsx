@@ -7,13 +7,10 @@ import ViewAllButton from "@/components/utils/ViewAllButton";
 
 export default async function BlogSection() {
 
-   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/blog?limit=3`, {
-    cache: "no-store"
-  });
+   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/blog?limit=3`);
 
   const result = await res.json();
-  const blogs = result.data;
-
+  const blogs: BlogType[] = result?.data ?? [];
   return (
     <section className="pb-5">
 
