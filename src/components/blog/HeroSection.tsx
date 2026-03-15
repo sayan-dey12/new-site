@@ -1,7 +1,15 @@
 import LatestPreview from "./LatestPreview";
-import { blogs } from "@/components/utils/blogs/blogData";
 
-export default function HeroBlogs(){
+export default async function HeroBlogs(){
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/blog?limit=1`, {
+    cache: "no-store"
+  });
+
+  const result = await res.json();
+  const blogs = result.data;
+
+
     return(
         <section className="relative overflow-hidden rounded-xl 
                 bg-primary

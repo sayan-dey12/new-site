@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 
-export default function LatestPreview({latest}: {latest?: { title: string; slug: string; coverImage?: string };}){
+export default function LatestPreview({latest}: {latest?: { title: string; slug: string; cover?: string };}){
     return(
         <>
         {latest && (
@@ -12,7 +12,7 @@ export default function LatestPreview({latest}: {latest?: { title: string; slug:
                        shadow-md hover:shadow-2xl rounded-full px-4 py-2 transition"
           >
             <Image
-              src={latest.coverImage || "/images/fallback.png"}
+              src={latest.cover || "/images/fallback.png"}
               width={36}
               height={36}
               className="rounded-full object-cover"
