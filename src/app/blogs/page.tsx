@@ -3,10 +3,22 @@ import HeroBlogs from "@/components/blog/HeroSection";
 import BlogCard from "@/components/utils/blogs/BlogCard";
 import { blogs } from "@/components/utils/blogs/blogData";
 import ShowMore from "@/components/utils/ShowMore";
+import { BlogType } from "@/types/blog";
 //import { BlogType } from "@/types/blog";
 
-export default function BlogsPage() {
+export default async function BlogsPage() {
   
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/blog?limit=6`, {
+    cache: "no-store"
+  });
+
+  const result = await res.json();
+  const blogs: BlogType[] = result.data || [];
+  
+  const featuredBlog = blogs.find( (blog)=> blog.featured===true)
+  console.log("featured blog: ",featuredBlog);
+
+
   return (
     
     <main className="min-h-screen">
@@ -40,10 +52,11 @@ export default function BlogsPage() {
 
         </section>
 
-        {/* Featured Articles */}
-        <section>
-          <FeaturedSection blog={{...blogs[0] , authorName: "Sayan Dey"}} />
-        </section>
+        {/* Featured Articles */}        
+          <section>
+            <FeaturedSection blog={featuredBlog ? { ...featuredBlog, authorName: "Sayan Dey" } : undefined} />
+          </section>
+        
 
         {/* Blog Grid */}
         <section>
@@ -51,7 +64,7 @@ export default function BlogsPage() {
 
             <ShowMore initialCount={6}>
 
-              {blogs.map((blog) => (
+              {blogs.map((blog: BlogType) => (
                 <BlogCard key={blog._id} blog={blog} />
               ))}
 
