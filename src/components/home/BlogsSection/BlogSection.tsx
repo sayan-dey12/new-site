@@ -1,18 +1,18 @@
 import BlogCard from "../../utils/blogs/BlogCard";
 //import { blogs } from "../../utils/blogs/blogData";
-import { connectDB } from "@/dbConfig/dbConfig";
-import { BlogModel } from "@/models/Blog";
+import { BlogType } from "@/types/blog";
 import SectionHeader from "../SectionHeader";
 //import BorderModern from "@/components/utils/BorderModern";
 import ViewAllButton from "@/components/utils/ViewAllButton";
 
 export default async function BlogSection() {
-  await connectDB();
 
-  const blogs = await BlogModel.find({ published: true })
-    .sort({ createdAt: -1 })
-    .limit(3)
-    .lean();
+   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/blog?limit=3`, {
+    cache: "no-store"
+  });
+
+  const result = await res.json();
+  const blogs = result.data;
 
   return (
     <section className="pb-5">
@@ -32,8 +32,8 @@ export default async function BlogSection() {
           md:grid-cols-2
           lg:grid-cols-3
         ">
-          {blogs.map((blog) => (
-            <BlogCard key={blog._id.toString()} blog={blog} />
+          {blogs.map((blog : BlogType) => (
+            <BlogCard key={blog._id} blog={blog} />
           ))}
         </div>
 
