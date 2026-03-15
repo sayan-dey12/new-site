@@ -16,7 +16,7 @@ export default async function BlogsPage() {
   const blogs: BlogType[] = result.data || [];
   
   const featuredBlog = blogs.find( (blog)=> blog.featured===true)
-  console.log("featured blog: ",featuredBlog);
+  // console.log("featured blog: ",featuredBlog);
 
 
   return (

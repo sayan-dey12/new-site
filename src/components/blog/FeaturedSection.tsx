@@ -7,7 +7,7 @@ type Props = {
 }
 
 export default function FeaturedSection({blog}:Props){
-    console.log("featured blog inside of FS: ", blog);
+    // console.log("featured blog inside of FS: ", blog);
 
      if (!blog || !blog._id) {
         return (
