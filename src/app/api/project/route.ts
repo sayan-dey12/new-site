@@ -37,8 +37,10 @@ export async function GET( req: NextRequest){
         await connectDB()
 
         const limitParams = req.nextUrl.searchParams.get("limit");
+        const showAll = req.nextUrl.searchParams.get("all");
+        const filter = showAll === "true" ? {} : { published: true}
         const limit = Math.min(parseInt(limitParams || "50"), 50);
-        const projects = await ProjectModel.find({ published: true })
+        const projects = await ProjectModel.find( filter )
             .sort({ createdAt: -1 })
             .limit(limit);
         return NextResponse.json({
