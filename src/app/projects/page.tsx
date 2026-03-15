@@ -1,5 +1,4 @@
-import { projects } from "@/data/project"
-
+import { Project } from "@/types/project"
 import FeaturedProjectCard from "@/components/utils/project/FeaturedProjectCard"
 import ProjectCard from "@/components/utils/project/ProjectCard"
 import HeroProjects from "@/components/projects/HeaderSection"
@@ -7,7 +6,14 @@ import SectionHeader from "@/components/utils/SectionHeader"
 import ShowMore from "@/components/utils/ShowMore";
 
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/project?`, {
+        cache: "no-store"
+      });
+    
+  const result = await res.json();
+  const projects: Project[] = result?.data ?? [];
 
   const featuredProjects = projects.filter(
     (p) => p.featured === true
