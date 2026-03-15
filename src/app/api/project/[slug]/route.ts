@@ -1,0 +1,114 @@
+import { ProjectModel } from "@/models/Project";
+import { connectDB } from "@/dbConfig/dbConfig";
+import { NextResponse } from "next/server";
+
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
+export async function GET(req: Request , {params}:{params:Promise<{slug: string}>}){
+    try {
+        await connectDB();
+        const { slug } = await params;
+        const project = await ProjectModel.findOneAndUpdate({slug} , {$inc: {views: 1}} , {new: true})
+        if(!project){
+            return NextResponse.json({ 
+                success: false,
+                error: "Project not found" },
+                { status: 404 })
+        }
+        return NextResponse.json(
+            {
+                success: true,
+                data: project
+            },
+            {
+                status: 200
+            }
+        )
+    } catch (error) {
+        console.error(error)
+        return NextResponse.json(
+            {
+                success: false,
+                error: "Error in finding the data"
+            },
+            {status: 500}
+        )
+    }
+}
+
+
+export async function PUT(req: Request , {params}:{params:Promise<{slug: string}>}){
+    try {
+        await connectDB();
+        const { slug } = await params;
+        const body = await req.json();
+        const updatedproject = await ProjectModel.findOneAndUpdate(
+            {slug},
+            body,
+            {new : true}
+        )
+        if(!updatedproject){
+            return NextResponse.json(
+                {
+                    success: false,
+                    error: "project not found"
+                },
+                { status: 404 }
+            );
+        }
+        return NextResponse.json(
+            {
+                success: true,
+                data: updatedproject
+            },
+            { status: 200 }
+        );
+    } catch (error) {
+        console.error(error)
+        return NextResponse.json(
+            {
+                success: false,
+                error: "Failed to update project"
+            },
+            { status: 500 }
+        );
+        
+    }
+}
+
+
+export async function DELETE(req: Request,{ params }: { params: Promise<{ slug: string }> }) {
+  
+    try {
+        await connectDB()
+
+        const { slug } = await params;
+        const deletedproject = await ProjectModel.findOneAndDelete({slug: slug});
+        if (!deletedproject) {
+        return NextResponse.json(
+            {
+            success: false,
+            error: "project not found",
+            },
+            { status: 404 }
+        )
+        }
+        return NextResponse.json(
+        {
+            success: true,
+            message: "project deleted successfully",
+        },
+        { status: 200 }
+        )
+  } catch (error) {
+        console.error(error)
+        return NextResponse.json(
+        {
+            success: false,
+            error: "Failed to delete project",
+        },
+        { status: 500 }
+        )
+    }
+}
