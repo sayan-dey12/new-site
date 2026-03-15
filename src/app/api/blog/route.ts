@@ -39,8 +39,12 @@ export async function GET( req: NextRequest){
         await connectDB()
 
         const limitParams = req.nextUrl.searchParams.get("limit");
-        const limit = Math.min(parseInt(limitParams || "10"), 50);
-        const blogs = await BlogModel.find({ published: true })
+        const showAll = req.nextUrl.searchParams.get("all");
+        const limit = Math.min(parseInt(limitParams || "50"), 50);
+
+        const filter = showAll === "true" ? {} : { published: true }
+
+        const blogs = await BlogModel.find(filter)
             .sort({ createdAt: -1 })
             .limit(limit);
         return NextResponse.json({
