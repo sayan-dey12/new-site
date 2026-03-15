@@ -2,6 +2,7 @@ import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import rehypeHighlight from "rehype-highlight"
 import { BlogType } from "@/types/blog"
+import Image from "next/image"
 
 export default function BlogContent({ blog }: { blog: BlogType }) {
 
@@ -9,7 +10,7 @@ export default function BlogContent({ blog }: { blog: BlogType }) {
     <div className="prose dark:prose-invert max-w-none">
 
       {blog.cover && (
-        <img
+        <Image
           src={blog.cover}
           alt={blog.title || "not found"}
           className="rounded-xl mb-8"

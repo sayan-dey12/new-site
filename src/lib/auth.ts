@@ -17,6 +17,7 @@ export async function isAdmin(): Promise<boolean> {
     return decoded.role === "admin"
 
   } catch (error) {
+    console.log(error);
     return false
   }
 }

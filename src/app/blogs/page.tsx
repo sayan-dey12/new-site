@@ -1,7 +1,6 @@
 import FeaturedSection from "@/components/blog/FeaturedSection";
 import HeroBlogs from "@/components/blog/HeroSection";
 import BlogCard from "@/components/utils/blogs/BlogCard";
-import { blogs } from "@/components/utils/blogs/blogData";
 import ShowMore from "@/components/utils/ShowMore";
 import { BlogType } from "@/types/blog";
 //import { BlogType } from "@/types/blog";
