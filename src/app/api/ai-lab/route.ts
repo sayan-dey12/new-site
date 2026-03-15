@@ -2,6 +2,9 @@ import { NextResponse , NextRequest } from "next/server";
 import { connectDB } from "@/dbConfig/dbConfig";
 import { AIElementModel } from "@/models/AiLab";
 
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
 export async function POST( req: NextRequest){
     try {
         await connectDB();

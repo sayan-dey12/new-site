@@ -3,6 +3,9 @@ import { connectDB } from "@/dbConfig/dbConfig";
 import { BlogModel } from "@/models/Blog";
 import { calculateReadingTime } from "@/lib/ReadingTime";
 
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
 export async function POST( req: NextRequest){
     try {
         await connectDB();

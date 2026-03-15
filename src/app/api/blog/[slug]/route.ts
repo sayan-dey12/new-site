@@ -2,6 +2,9 @@ import { BlogModel } from "@/models/Blog";
 import { connectDB } from "@/dbConfig/dbConfig";
 import { NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
 export async function GET(req: Request , {params}:{params:Promise<{slug: string}>}){
     try {
         await connectDB();

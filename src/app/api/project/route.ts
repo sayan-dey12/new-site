@@ -2,6 +2,9 @@ import { NextResponse , NextRequest } from "next/server";
 import { connectDB } from "@/dbConfig/dbConfig";
 import { ProjectModel } from "@/models/Project";
 
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
 export async function POST( req: NextRequest){
     try {
         await connectDB();
