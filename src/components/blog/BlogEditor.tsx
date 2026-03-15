@@ -55,7 +55,7 @@ export default function BlogEditor() {
         })
       })
       if (res.ok) {
-        toast.success("✅ Blog Saved Successfully")
+        toast.success("Blog Saved Successfully")
         setTitle("")
         setSlug("")
         setExcerpt("")

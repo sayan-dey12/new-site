@@ -1,4 +1,3 @@
-"use client";
 
 import AiLabSection from "@/components/home/AiLabSection/AiLabSection";
 import BlogSection from "@/components/home/BlogsSection/BlogSection";
