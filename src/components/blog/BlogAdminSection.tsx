@@ -106,7 +106,7 @@ export default function BlogAdminSection({ blog }: Props) {
   }
 
   const editBlog = () => {
-    router.push(`/admin/edit/${blog.slug}`)
+    router.push(`/admin/blog/edit/${blog.slug}`)
   }
 
   return (

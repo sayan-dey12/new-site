@@ -9,17 +9,21 @@ import { toast } from "react-hot-toast"
 import CatagorySelect from "../utils/CatagorySelect"
 import CatagoryInput from "../utils/CatagoryInput"
 import Image from "next/image"
+import { BlogType } from "@/types/blog"
 
+type Props = {
+  initialData?: BlogType
+}
 
-export default function BlogEditor() {
-  const [title, setTitle] = useState<string>("")
-  const [slug, setSlug] = useState<string>("")
-  const [excerpt, setExcerpt] = useState<string>("")
-  const [content, setContent] = useState<string>("")
-  const [tags, setTags] = useState<string[]>([])
-  const [cover,setCover] = useState("")
+export default function BlogEditor({ initialData }: Props) {
+  const [title, setTitle] = useState<string>(initialData?.title || "")
+  const [slug, setSlug] = useState<string>(initialData?.slug || "")
+  const [excerpt, setExcerpt] = useState<string>(initialData?.excerpt || "")
+  const [content, setContent] = useState<string>(initialData?.content || "")
+  const [tags, setTags] = useState<string[]>(initialData?.tags || [])
+  const [cover,setCover] = useState(initialData?.cover || "")
   const [loading , setLoading] = useState(false)
-  const [catagory , setCatagory] = useState("")
+  const [catagory , setCatagory] = useState(initialData?.catagory || "")
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -39,8 +43,12 @@ export default function BlogEditor() {
       return
     }
     try {
-        const res = await fetch("/api/blog", {
-        method: "POST",
+
+      const url = initialData ? `/api/blog/${initialData.slug}` : `/api/blog`
+      const method = initialData ? "PUT" : "POST"
+
+        const res = await fetch(url, {
+        method,
         headers: {
           "Content-Type": "application/json"
         },
@@ -55,7 +63,9 @@ export default function BlogEditor() {
         })
       })
       if (res.ok) {
-        toast.success("Blog Saved Successfully")
+        toast.success( initialData
+        ? "Blog updated successfully"
+        : "Blog created successfully")
         setTitle("")
         setSlug("")
         setExcerpt("")
@@ -94,9 +104,17 @@ export default function BlogEditor() {
 
       <MarkdownEditor content={content} setContent={setContent} />
        
-      <CoverUpload cover={cover} setCover={setCover}/>
-      {cover && <Image src={cover} alt="Image preview" className="w-48 rounded mt-2" />}
-      
+     <CoverUpload cover={cover} setCover={setCover} />
+
+    {cover && (
+      <Image
+        src={cover}
+        alt="Image preview"
+        width={200}
+        height={120}
+        className="rounded mt-2"
+      />
+    )}
       <br />
       
 

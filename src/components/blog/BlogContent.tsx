@@ -10,12 +10,16 @@ export default function BlogContent({ blog }: { blog: BlogType }) {
     <div className="prose dark:prose-invert max-w-none">
 
       {blog.cover && (
+      <div className="relative w-full h-100 mb-8">
         <Image
           src={blog.cover}
-          alt={blog.title || "not found"}
-          className="rounded-xl mb-8"
+          alt={blog.title || "Blog cover"}
+          fill
+          className="rounded-xl object-cover"
+          priority
         />
-      )}
+      </div>
+    )}
 
       {blog.excerpt && (
         <p className="text-lg text-muted-foreground mb-8">
