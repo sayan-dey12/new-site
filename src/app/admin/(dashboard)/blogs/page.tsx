@@ -1,17 +1,21 @@
 import BlogTable from "@/components/admin/blogs/BlogTable"
 import BlogHeader from "@/components/admin/blogs/BlogHeader"
-import { blogs } from "@/data/blogData"
+import { BlogType } from "@/types/blog";
 
-export default function BlogsPage() {
+export default async function BlogsPage() {
 
-  const blogList = blogs.slice(0, 10) // simulate pagination
-
+   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/blog?all=true`, {
+      cache: "no-store"
+    });
+  
+    const result = await res.json();
+    const blogs: BlogType[] = result.data || [];
   return (
     <div className="space-y-8">
 
       <BlogHeader />
 
-      <BlogTable blogs={blogList} />
+      <BlogTable blogs={blogs} />
 
     </div>
   )

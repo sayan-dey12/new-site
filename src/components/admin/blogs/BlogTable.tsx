@@ -17,7 +17,6 @@ export default function BlogTable({ blogs }: Props) {
 
             <th className="p-4">Blog</th>
             <th>Tags</th>
-            <th>Author</th>
             <th>Date</th>
             <th>Status</th>
             <th className="text-right pr-6">Actions</th>
