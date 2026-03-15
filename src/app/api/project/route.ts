@@ -37,14 +37,14 @@ export async function GET( req: NextRequest){
         await connectDB()
 
         const limitParams = req.nextUrl.searchParams.get("limit");
-        const limit = Math.min(parseInt(limitParams || "10"), 50);
+        const limit = Math.min(parseInt(limitParams || "50"), 50);
         const projects = await ProjectModel.find({ published: true })
             .sort({ createdAt: -1 })
             .limit(limit);
         return NextResponse.json({
-        success: true,
-        count: projects.length,
-        data: projects,
+            success: true,
+            count: projects.length,
+            data: projects,
         });     
     } catch (error) {
         console.error(error)

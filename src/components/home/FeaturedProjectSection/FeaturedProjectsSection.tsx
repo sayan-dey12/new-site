@@ -2,13 +2,18 @@
 import SectionHeader from "../SectionHeader";
 import FeaturedProjectCard from "@/components/utils/project/FeaturedProjectCard";
 //import ProjectCard from "@/components/utils/project/ProjectCard";
-
-import { projects } from "@/data/project"
+import { Project } from "@/types/project";
 import ViewAllButton from "@/components/utils/ViewAllButton";
 
 
-export default function FeaturedProjectsSection() {
+export default async function FeaturedProjectsSection() {
 
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/project?`, {
+      cache: "no-store"
+    });
+  
+  const result = await res.json();
+  const projects: Project[] = result?.data ?? [];
   const featuredProjects = projects.filter(
       (p) => p.featured === true
     )

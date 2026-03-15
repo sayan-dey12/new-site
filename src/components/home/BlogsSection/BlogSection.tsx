@@ -7,7 +7,7 @@ import ViewAllButton from "@/components/utils/ViewAllButton";
 
 export default async function BlogSection() {
 
-   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/blog?limit=3`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/blog?limit=3`, {
     cache: "no-store"
   });
 
