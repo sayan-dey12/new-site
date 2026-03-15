@@ -71,6 +71,11 @@ const AIElementSchema = new mongoose.Schema<AIElement>(
     featured: {
       type: Boolean,
       default: false
+    },
+    
+    published : {
+      type: Boolean,
+      default: false
     }
   },
   {

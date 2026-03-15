@@ -37,8 +37,11 @@ export async function GET( req: NextRequest){
         await connectDB()
 
         const limitParams = req.nextUrl.searchParams.get("limit");
-        const limit = Math.min(Number(limitParams) || 10, 50);
-        const aiElement = await AIElementModel.find({})
+
+        const limit = Math.min(Number(limitParams), 50);
+        const showAll = req.nextUrl.searchParams.get("all");
+        const filter = showAll === "true" ? {} : { published: true}
+        const aiElement = await AIElementModel.find(filter)
             .sort({ createdAt: -1 })
             .limit(limit);
         return NextResponse.json({
