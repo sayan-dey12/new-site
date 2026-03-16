@@ -25,7 +25,7 @@ export async function getProject(slug: string): Promise<Project | null> {
     return data.data as Project
 
   } catch (error) {
-    console.error("getBlog error:", error)
+    console.error("getProject error:", error)
     return null
   }
 }
