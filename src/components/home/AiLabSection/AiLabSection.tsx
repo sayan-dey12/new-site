@@ -1,10 +1,24 @@
 //import BorderModern from "@/components/utils/BorderModern";
 import SectionHeader from "../SectionHeader";
 import AiLabCard from "./AiLabCard";
-import { aiLabItems } from "./aiLabData";
+import { AIElement } from "@/types/ai-lab";
 import ViewAllButton from "@/components/utils/ViewAllButton";
+import ExperimentCard from "@/components/ai-lab/ExperimentCard";
+import FeaturedAIProjectCard from "@/components/utils/ai-lab/FeaturedAICardHome";
 
-export default function AiLabSection() {
+export default async function AiLabSection() {
+
+   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/ai-lab`, {
+      cache: "no-store"
+    });
+  
+    const result = await res.json();
+    const aiElements : AIElement[] = result.data || [];
+
+    const featured = aiElements.filter((e)=> e.featured === true)
+
+    if (featured.length === 0) return null
+
   return (
     <section className="pb-5">
 
@@ -16,15 +30,10 @@ export default function AiLabSection() {
           />
 
         {/* Grid */}
-        <div className="
-          grid
-          gap-6
-          sm:grid-cols-2
-          lg:grid-cols-4
-        ">
-          {aiLabItems.map((item) => (
-            <AiLabCard key={item.title} {...item} />
-          ))}
+        <div className="space-y-6">
+          {featured.map((exp) => (
+                <FeaturedAIProjectCard key={exp._id} aiElement={exp}/>
+            ))}
         </div>
 
       </div>

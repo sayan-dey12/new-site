@@ -18,6 +18,8 @@ export default async function FeaturedProjectsSection() {
       (p) => p.featured === true
     )
 
+    if ( featuredProjects.length === 0 ) return null
+
   return (
     <section className="pb-5">
 
