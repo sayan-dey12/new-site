@@ -7,6 +7,11 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 
 import { Pencil, Trash } from "lucide-react"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { el } from "date-fns/locale"
+
+
 
 function formatDate(date: string | Date) {
   return new Date(date).toLocaleDateString("en-US", {
@@ -21,12 +26,42 @@ interface Props {
 }
 
 export default function AIRow({ element }: Props) {
+
+  const router = useRouter()
+
+  const deleteAIProject = async () => {
+
+    const confirmDelete = confirm("Delete this AI project?")
+
+    if (!confirmDelete) return
+
+    try {
+
+      const res = await fetch(`/api/project/${element.slug}`, {
+        method: "DELETE"
+      })
+
+      if (!res.ok) {
+        throw new Error("Failed to delete ai project")
+      }
+
+      router.refresh()
+
+    } catch (error) {
+
+      console.error(error)
+      alert("Delete failed")
+
+    }
+  }
+
+
   return (
     <tr className="border-b hover:bg-muted/40 transition">
 
       {/* AI Item */}
       <td className="p-4 flex items-center gap-4">
-
+      <Link href={`/ai-lab/${element.slug}`} className="flex items-center gap-4">
         <Image
           src={element.coverImage}
           alt={element.title}
@@ -37,15 +72,16 @@ export default function AIRow({ element }: Props) {
 
         <div>
 
-          <p className="font-medium">
+          <p className="font-medium hover:underline">
             {element.title}
           </p>
 
-          <p className="text-xs text-muted-foreground line-clamp-1 max-w-[320px]">
-            {element.description}
+          <p className="text-xs text-muted-foreground line-clamp-1 max-w-72">
+            {element.excerpt}
           </p>
 
         </div>
+        </Link>
 
       </td>
 
@@ -71,14 +107,34 @@ export default function AIRow({ element }: Props) {
         </Badge>
       </td>
 
-      {/* Tech */}
+      {/*  published */}
       <td className="space-x-2">
 
-        {element.tech.slice(0, 2).map((t) => (
-          <Badge key={t} variant="outline">
-            {t}
+        {element.published ? (
+          <Badge className="bg-green-600 hover:bg-green-600">
+            Published
           </Badge>
-        ))}
+        ) : (
+          <Badge variant="outline">
+            Draft
+          </Badge>
+        )}
+
+      </td>
+
+      {/* Featured */}
+
+      <td className="space-x-2">
+
+        {element.featured ? (
+          <Badge className="bg-green-600 hover:bg-green-600">
+            Featured
+          </Badge>
+        ) : (
+          <Badge variant="outline">
+            Normal
+          </Badge>
+        )}
 
       </td>
 
@@ -87,14 +143,26 @@ export default function AIRow({ element }: Props) {
         {formatDate(element.createdAt)}
       </td>
 
-      {/* Actions */}
+     {/* Actions */}
       <td className="flex justify-end gap-2 p-4">
 
-        <Button size="icon" variant="outline">
+        {/* Edit */}
+
+        <Button
+          size="icon"
+          variant="outline"
+          onClick={() => router.push(`/admin/ai-lab/edit/${element.slug}`)}
+        >
           <Pencil size={16} />
         </Button>
 
-        <Button size="icon" variant="destructive">
+        {/* Delete */}
+
+        <Button
+          size="icon"
+          variant="destructive"
+          onClick={deleteAIProject}
+        >
           <Trash size={16} />
         </Button>
 

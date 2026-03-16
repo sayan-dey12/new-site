@@ -1,13 +1,18 @@
 import AIHeader from "@/components/admin/ai-lab/AIHeader"
 import AITable from "@/components/admin/ai-lab/AITable"
+import { AIElement } from "@/types/ai-lab";
 
-import { aiElements } from "@/data/ai-lab"
+export default async function AILabPage() {
 
-export default function AILabPage() {
-
-  const elements = aiElements.slice(0, 10)
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/ai-lab?all=true`, {
+          cache: "no-store"
+        });
+      
+        const result = await res.json();
+        const elements : AIElement[] = result.data || [];
 
   return (
+
     <div className="space-y-8">
 
       <AIHeader />

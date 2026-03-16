@@ -127,7 +127,16 @@ export default function AiLabEditor({initialData}: Props){
             <AISelectStatus status={status} setStatus={setStatus} />
             <MarkdownEditor content={description} setContent={setDescription}/>
             <CoverUpload cover={coverImage} setCover={setCoverImage}/>
-            {coverImage && <Image src={coverImage} alt="Image preview" className="w-48 rounded mt-2" />} 
+            <CoverUpload cover={coverImage} setCover={setCoverImage}/>
+              {coverImage && (
+                  <Image
+                      src={coverImage}
+                      alt="Image preview"
+                      width={200}
+                      height={120}
+                      className="rounded mt-2"
+                      />
+                  )}
             <ProjectImagesUpload images={images} setImages={setImages}/>
             <ProjectExtraLinks 
                 github={github}

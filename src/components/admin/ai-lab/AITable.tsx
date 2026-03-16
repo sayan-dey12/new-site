@@ -17,7 +17,8 @@ export default function AITable({ elements }: Props) {
             <th className="p-4">AI Element</th>
             <th>Category</th>
             <th>Status</th>
-            <th>Tech</th>
+            <th>Published</th>
+            <th>Featured</th>
             <th>Date</th>
             <th className="text-right pr-6">Actions</th>
 
