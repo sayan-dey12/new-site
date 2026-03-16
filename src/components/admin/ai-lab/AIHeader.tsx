@@ -10,7 +10,7 @@ export default function AIHeader() {
         AI Lab
       </h1>
 
-      <Link href="/admin/new-ai-element">
+      <Link href="/admin/dashboard/ai-lab/new">
         <Button className="flex items-center gap-2">
           <Plus size={16} />
           Add AI Element

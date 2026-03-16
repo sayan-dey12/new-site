@@ -10,7 +10,7 @@ export default function ProjectHeader() {
         Projects
       </h1>
 
-      <Link href="/admin/new-project">
+      <Link href="/admin/dashboard/project/new">
         <Button className="flex items-center gap-2">
           <Plus size={16} />
           Add Project

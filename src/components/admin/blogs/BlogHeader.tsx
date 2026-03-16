@@ -10,7 +10,7 @@ export default function BlogHeader() {
         Blogs
       </h1>
 
-      <Link href="/admin/new-blog">
+      <Link href="/admin/dashboard/blog/new">
         <Button className="flex items-center gap-2">
           <Plus size={16} />
           New Blog
