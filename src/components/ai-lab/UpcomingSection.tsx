@@ -1,30 +1,15 @@
 import { Badge } from "@/components/ui/badge"
 import { Lightbulb } from "lucide-react"
+import { AIElement } from "@/types/ai-lab"
+import Link from "next/link"
 
-export default function UpcomingSection() {
 
-  const ideas = [
-    {
-      title: "Autonomous Coding Agent",
-      description:
-        "An AI agent capable of writing, debugging, and improving code autonomously.",
-    },
-    {
-      title: "AI DevOps Assistant",
-      description:
-        "A system that monitors deployments, logs, and infrastructure issues using AI analysis.",
-    },
-    {
-      title: "Multi-Agent Collaboration",
-      description:
-        "Multiple AI agents collaborating to plan and execute complex workflows.",
-    },
-    {
-      title: "AI Research Assistant",
-      description:
-        "A research-focused AI system that gathers papers, summarizes knowledge, and generates insights.",
-    },
-  ]
+export default function UpcomingSection({
+  aiElement,
+}: {
+  aiElement: AIElement[]
+}) {
+
 
   return (
     <section className="space-y-12">
@@ -43,12 +28,15 @@ export default function UpcomingSection() {
       </div>
 
       <div className="grid md:grid-cols-2 gap-6 ">
+        
 
-        {ideas.map((idea) => (
+        {aiElement.map((idea) => (
+          <Link key={idea.slug} href={`/ai-lab/${idea.slug}`} className="block">
           <div
             key={idea.title}
             className="rounded-xl border border-border bg-card shadow-md p-6 space-y-4 hover:shadow-lg transition hover:-translate-y-1"
           >
+            
 
             <div className="flex items-center justify-between">
 
@@ -66,11 +54,13 @@ export default function UpcomingSection() {
             </div>
 
             <p className="text-sm text-muted-foreground">
-              {idea.description}
+              {idea.excerpt}
             </p>
 
           </div>
+          </Link>
         ))}
+        
 
       </div>
 

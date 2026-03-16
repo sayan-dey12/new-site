@@ -26,6 +26,8 @@ export default async function AILabPage() {
     (el) => el.category === "agent"
   )
 
+  const ideas = aiElements.filter((el)=> el.status === "idea" )
+
   return (
     <main className="max-w-6xl mx-auto px-6 py-16 space-y-14">
 
@@ -93,7 +95,7 @@ export default async function AILabPage() {
       {/* FUTURE */}
 
       <section className="space-y-6 text-center">
-          <UpcomingSection/>
+          <UpcomingSection aiElement={ideas}/>
       </section>
 
     </main>
