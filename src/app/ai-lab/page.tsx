@@ -73,7 +73,7 @@ export default async function AILabPage() {
 
           <ShowMore initialCount={3}>
           {agents.map((agent) => (
-            <AgentCard key={agent._id} {...agent} />
+            <AgentCard key={agent._id} aiElement={agent} />
           ))}
           </ShowMore>
 

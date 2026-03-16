@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import {
   Card,
@@ -6,45 +7,50 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Bot } from "lucide-react"
-
-interface AgentCardProps {
-  title: string
-  description: string
-  tech: string[]
-}
+import { AIElement } from "@/types/ai-lab"
 
 export default function AgentCard({
-  title,
-  description,
-  tech,
-}: AgentCardProps) {
+  aiElement,
+}: {
+  aiElement: AIElement
+}) {
   return (
-    <Card className="transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+    <Link href={`/ai-lab/${aiElement.slug}`} className="block">
 
-      <CardHeader className="flex flex-row items-center gap-3">
+      <Card className="transition-all duration-300 hover:-translate-y-1 hover:shadow-lg cursor-pointer">
 
-        <div className="p-2 rounded-md bg-secondary">
-          <Bot size={20} />
-        </div>
+        <CardHeader className="flex flex-row items-center gap-3">
 
-        <CardTitle>{title}</CardTitle>
+          <div className="p-2 rounded-md bg-secondary">
+            <Bot size={20} />
+          </div>
 
-      </CardHeader>
+          <CardTitle className="hover:underline">
+            {aiElement.title}
+          </CardTitle>
 
-      <CardContent className="space-y-4">
-        <p className="text-sm text-muted-foreground">
-          {description}
-        </p>
+        </CardHeader>
 
-        <div className="flex flex-wrap gap-2">
-          {tech.map((t) => (
-            <Badge key={t} variant="outline">
-              {t}
-            </Badge>
-          ))}
-        </div>
-      </CardContent>
+        <CardContent className="space-y-4">
 
-    </Card>
+          <p className="text-sm text-muted-foreground">
+            {aiElement.excerpt}
+          </p>
+
+          <div className="flex flex-wrap gap-2">
+
+            {aiElement.tech.map((t) => (
+              <Badge key={t} variant="outline">
+                {t}
+              </Badge>
+            ))}
+
+          </div>
+
+        </CardContent>
+
+      </Card>
+
+    </Link>
   )
 }
