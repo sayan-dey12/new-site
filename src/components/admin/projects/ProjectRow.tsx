@@ -1,15 +1,22 @@
 "use client"
 
 import Image from "next/image"
-import { Project } from "@/types/project"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
 
+import { Project } from "@/types/project"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 
 import { Pencil, Trash } from "lucide-react"
 
+interface Props {
+  project: Project
+}
+
 function formatDate(date?: string | Date) {
   if (!date) return "-"
+
   return new Date(date).toLocaleDateString("en-US", {
     day: "numeric",
     month: "short",
@@ -17,36 +24,70 @@ function formatDate(date?: string | Date) {
   })
 }
 
-interface Props {
-  project: Project
-}
-
 export default function ProjectRow({ project }: Props) {
+
+  const router = useRouter()
+
+  const deleteProject = async () => {
+
+    const confirmDelete = confirm("Delete this project?")
+
+    if (!confirmDelete) return
+
+    try {
+
+      const res = await fetch(`/api/project/${project.slug}`, {
+        method: "DELETE"
+      })
+
+      if (!res.ok) {
+        throw new Error("Failed to delete project")
+      }
+
+      router.refresh()
+
+    } catch (error) {
+
+      console.error(error)
+      alert("Delete failed")
+
+    }
+  }
+
   return (
     <tr className="border-b hover:bg-muted/40 transition">
 
       {/* Project Info */}
-      <td className="p-4 flex items-center gap-4">
+      <td className="p-4">
 
-        <Image
-          src={project.coverImage}
-          alt={project.title}
-          width={60}
-          height={40}
-          className="rounded-md object-cover"
-        />
+        <Link
+          href={`/project/${project.slug}`}
+          className="flex items-center gap-4"
+        >
 
-        <div>
+          <Image
+            src={project.coverImage}
+            alt={project.title}
+            width={60}
+            height={40}
+            className="rounded-md object-cover"
+          />
 
-          <p className="font-medium">
-            {project.title}
-          </p>
+          <div>
 
-          <p className="text-xs text-muted-foreground line-clamp-1 max-w-75">
-            {project.description}
-          </p>
+            <p className="font-medium hover:underline">
+              {project.title}
+            </p>
 
-        </div>
+            {project.excerpt && (
+              <p className="text-xs text-muted-foreground line-clamp-1 max-w-72">
+                {project.excerpt}
+              </p>
+            )}
+
+          </div>
+
+        </Link>
 
       </td>
 
@@ -59,6 +100,7 @@ export default function ProjectRow({ project }: Props) {
 
       {/* Status */}
       <td>
+
         <Badge
           variant={
             project.status === "completed"
@@ -70,11 +112,13 @@ export default function ProjectRow({ project }: Props) {
         >
           {project.status}
         </Badge>
+
       </td>
 
       {/* Visibility */}
       <td>
-        {project.featured === true ? (
+
+        {project.featured ? (
           <Badge className="bg-green-600 hover:bg-green-600">
             Featured
           </Badge>
@@ -83,6 +127,7 @@ export default function ProjectRow({ project }: Props) {
             Normal
           </Badge>
         )}
+
       </td>
 
       {/* Date */}
@@ -93,11 +138,23 @@ export default function ProjectRow({ project }: Props) {
       {/* Actions */}
       <td className="flex justify-end gap-2 p-4">
 
-        <Button size="icon" variant="outline">
+        {/* Edit */}
+
+        <Button
+          size="icon"
+          variant="outline"
+          onClick={() => router.push(`/admin/project/edit/${project.slug}`)}
+        >
           <Pencil size={16} />
         </Button>
 
-        <Button size="icon" variant="destructive">
+        {/* Delete */}
+
+        <Button
+          size="icon"
+          variant="destructive"
+          onClick={deleteProject}
+        >
           <Trash size={16} />
         </Button>
 

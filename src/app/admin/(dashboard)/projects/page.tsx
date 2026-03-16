@@ -1,18 +1,21 @@
 import ProjectHeader from "@/components/admin/projects/ProjectHeader"
 import ProjectTable from "@/components/admin/projects/ProjectTable"
+import { Project } from "@/types/project"
 
-import { projects } from "@/data/project"
+export default async function ProjectsPage() {
 
-export default function ProjectsPage() {
-
-  const projectList = projects.slice(0, 10) // simulate pagination
-
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/project?all=true`, {
+        cache: "no-store"
+      });
+    
+      const result = await res.json();
+      const projects: Project[] = result.data || [];
   return (
     <div className="space-y-8">
 
       <ProjectHeader />
 
-      <ProjectTable projects={projectList} />
+      <ProjectTable projects={projects} />
 
     </div>
   )
