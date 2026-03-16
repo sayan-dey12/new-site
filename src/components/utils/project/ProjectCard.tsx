@@ -34,9 +34,13 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       px-1.5
     "
     >
-      {/* Image */}
 
-      <div className="relative aspect-video w-full overflow-hidden">
+      {/* Image (clickable) */}
+
+      <Link
+        href={`/project/${project.slug}`}
+        className="relative aspect-video w-full overflow-hidden block"
+      >
         <Image
           src={project.coverImage || "/images/fallback.png"}
           alt={project.title}
@@ -49,11 +53,12 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           rounded-2xl
           "
         />
-      </div>
+      </Link>
 
       {/* Content */}
 
       <CardHeader>
+
         <div className="flex gap-2 flex-wrap mb-2">
 
           <Badge variant="secondary">
@@ -66,13 +71,18 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
         </div>
 
-        <CardTitle className="text-lg">
-          {project.title}
-        </CardTitle>
+        {/* Title clickable */}
+
+        <Link href={`/project/${project.slug}`}>
+          <CardTitle className="text-lg hover:underline">
+            {project.title}
+          </CardTitle>
+        </Link>
 
         <CardDescription className="text-sm">
           {project.description}
         </CardDescription>
+
       </CardHeader>
 
       {/* Tags */}
@@ -87,13 +97,17 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
       </CardContent>
 
-      {/* Links */}
+      {/* External Links */}
 
       <CardFooter className="flex gap-3">
 
         {project.github && (
           <Button asChild variant="outline" size="sm">
-            <Link href={project.github} target="_blank">
+            <Link
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Github className="h-4 w-4 mr-2" />
               GitHub
             </Link>
@@ -102,7 +116,11 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
         {project.demo && (
           <Button asChild size="sm">
-            <Link href={project.demo} target="_blank">
+            <Link
+              href={project.demo}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <ExternalLink className="h-4 w-4 mr-2" />
               Demo
             </Link>
@@ -110,6 +128,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         )}
 
       </CardFooter>
+
     </Card>
   )
 }

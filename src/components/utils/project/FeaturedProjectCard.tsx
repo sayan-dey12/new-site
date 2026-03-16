@@ -37,16 +37,19 @@ export default function FeaturedProjectCard({
     >
       <div className="grid md:grid-cols-2">
 
-        {/* Image */}
+        {/* Image clickable */}
 
-        <div className="relative w-full aspect-video md:aspect-auto md:h-full">
+        <Link
+          href={`/project/${project.slug}`}
+          className="relative w-full aspect-video md:aspect-auto md:h-full block"
+        >
           <Image
-            src={project.coverImage || "/fallback.pnj"}
+            src={project.coverImage || "/fallback.png"}
             alt={project.title}
             fill
-            className="object-cover rounded-2xl "
+            className="object-cover rounded-2xl"
           />
-        </div>
+        </Link>
 
         {/* Content */}
 
@@ -70,9 +73,13 @@ export default function FeaturedProjectCard({
 
               </div>
 
-              <CardTitle className="text-2xl">
-                {project.title}
-              </CardTitle>
+              {/* Title clickable */}
+
+              <Link href={`/project/${project.slug}`}>
+                <CardTitle className="text-2xl hover:underline">
+                  {project.title}
+                </CardTitle>
+              </Link>
 
               <CardDescription className="mt-3 text-sm">
                 {project.description}
@@ -102,13 +109,17 @@ export default function FeaturedProjectCard({
 
           </div>
 
-          {/* Links */}
+          {/* External Links */}
 
           <CardFooter className="p-0 mt-6 flex gap-3">
 
             {project.github && (
               <Button asChild variant="outline" size="sm">
-                <Link href={project.github} target="_blank">
+                <Link
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <Github className="mr-2 h-4 w-4" />
                   GitHub
                 </Link>
@@ -117,7 +128,11 @@ export default function FeaturedProjectCard({
 
             {project.demo && (
               <Button asChild size="sm">
-                <Link href={project.demo} target="_blank">
+                <Link
+                  href={project.demo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <ExternalLink className="mr-2 h-4 w-4" />
                   Live Demo
                 </Link>
