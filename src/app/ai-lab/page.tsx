@@ -4,12 +4,19 @@ import BorderModern from "@/components/utils/BorderModern"
 import ButtonsAI from "@/components/ai-lab/ButtonsSection"
 import ExperimentCard from "@/components/ai-lab/ExperimentCard"
 import AgentCard from "@/components/ai-lab/AgentCard"
-import { aiElements } from "@/data/ai-lab"
+import { AIElement } from "@/types/ai-lab"
 import ShowMore from "@/components/utils/ShowMore"
 import ArchitectureSection from "@/components/ai-lab/ArchitectureSection"
 import UpcomingSection from "@/components/ai-lab/UpcomingSection"
 
-export default function AILabPage() {
+export default async function AILabPage() {
+
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/ai-lab`, {
+      cache: "no-store"
+    });
+  
+    const result = await res.json();
+    const aiElements : AIElement[] = result.data || [];
 
     const experiments = aiElements.filter((el) =>
         ["experiment", "tool" , "research"].includes(el.category)
