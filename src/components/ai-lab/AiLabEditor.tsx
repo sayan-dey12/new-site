@@ -127,7 +127,6 @@ export default function AiLabEditor({initialData}: Props){
             <AISelectStatus status={status} setStatus={setStatus} />
             <MarkdownEditor content={description} setContent={setDescription}/>
             <CoverUpload cover={coverImage} setCover={setCoverImage}/>
-            <CoverUpload cover={coverImage} setCover={setCoverImage}/>
               {coverImage && (
                   <Image
                       src={coverImage}
