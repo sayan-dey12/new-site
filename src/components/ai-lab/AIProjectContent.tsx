@@ -1,9 +1,9 @@
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import rehypeHighlight from "rehype-highlight"
-import { Project } from "@/types/project"
+import { AIElement } from "@/types/ai-lab"
 
-export default function ProjectContent({ project }: { project: Project }) {
+export default function AIProjectContent({ aiElement }: { aiElement: AIElement }) {
 
   return (
     <div className="prose dark:prose-invert max-w-none pt-6">
@@ -21,7 +21,7 @@ export default function ProjectContent({ project }: { project: Project }) {
           }
         }}
       >
-        {project.description}
+        {aiElement.description}
       </ReactMarkdown>
 
     </div>
