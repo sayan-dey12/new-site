@@ -6,28 +6,31 @@ import TagInput from "../utils/new-page/TagInput";
 import ProjectExtraLinks from "./ProjectExtraLinks";
 import MarkdownEditor from "../blog/MarkdownEditor";
 import CoverUpload from "../blog/CoverUpload";
-import { ProjectCategory, ProjectStatus } from "@/types/project";
+import { ProjectCategory, ProjectStatus , Project } from "@/types/project";
 import ProjectCatagorySelect from "./ProjectCategorySelect";
 import SelectStatus from "./ProjectStatus";
 import { toast } from "react-hot-toast";
 import ProjectImagesUpload from "./ProjectImageUpload";
 import Image from "next/image";
 
+type Props ={
+  initialData? : Project
+}
 
-export function ProjectEditor(){
-    const [title , setTitle] = useState<string>("")
-    const [slug , setSlug] = useState<string>("")
-    const [excerpt , setExcerpt] = useState<string>("")
-    const [description, setDescription] = useState<string>("")
-    const [coverImage , setCoverImage] = useState<string>("")
-    const [tags , setTags] = useState<string[]>([])
-    const [images , setImages] = useState<string[]>([])
-    const [github , setGithub] = useState<string>("")
-    const [demo , setDemo] = useState<string>("")
+export function ProjectEditor({ initialData }: Props){
+    const [title , setTitle] = useState<string>( initialData?.title || "")
+    const [slug , setSlug] = useState<string>( initialData?.slug || "")
+    const [excerpt , setExcerpt] = useState<string>( initialData?.excerpt || "")
+    const [description, setDescription] = useState<string>( initialData?.description || "")
+    const [coverImage , setCoverImage] = useState<string>( initialData?.coverImage || "")
+    const [tags , setTags] = useState<string[]>( initialData?.tags || [])
+    const [images , setImages] = useState<string[]>( initialData?.images || [])
+    const [github , setGithub] = useState<string>( initialData?.github || "")
+    const [demo , setDemo] = useState<string>( initialData?.demo || "")
     //const [video , setVideo] = useState<string>("")
-    const [highlight, setHighlight] = useState<string>("")
-    const [category , setCategory] = useState<ProjectCategory>("fullstack")
-    const [status , setStatus] = useState<ProjectStatus>("planned")
+    const [highlight, setHighlight] = useState<string>( initialData?.highlight || "")
+    const [category , setCategory] = useState<ProjectCategory>( initialData?.category || "fullstack")
+    const [status , setStatus] = useState<ProjectStatus>( initialData?.status || "planned")
     const [loading, setLoading] = useState<boolean>(false)
 
     const handleSubmit = async () => {
@@ -48,8 +51,11 @@ export function ProjectEditor(){
           return
         }
         try {
-            const res = await fetch("/api/project", {
-            method: "POST",
+          const url = initialData ? `/api/project/${initialData.slug}` : `/api/project`
+          const method = initialData ? "PUT" : "POST"
+
+            const res = await fetch(url, {
+            method,
             headers: {
               "Content-Type": "application/json"
             },
@@ -70,7 +76,9 @@ export function ProjectEditor(){
             })
           })
           if (res.ok) {
-            toast.success("Project Saved Successfully")
+            toast.success(initialData
+              ? "Project updated successfully"
+              : "Project created successfully")
             setTitle("")
             setSlug("")
             setExcerpt("")
@@ -98,7 +106,7 @@ export function ProjectEditor(){
 
 
     return(
-        <>
+        <div className="space-y-6">
             <ProjectMetadata
                 title={title}
                 setTitle={setTitle}
@@ -116,7 +124,15 @@ export function ProjectEditor(){
             <MarkdownEditor content={description} setContent={setDescription}/>
 
             <CoverUpload cover={coverImage} setCover={setCoverImage}/>
-            {coverImage && <Image src={coverImage} alt="Image preview" className="w-48 rounded mt-2" />}
+            {coverImage && (
+                  <Image
+                    src={coverImage}
+                    alt="Image preview"
+                    width={200}
+                    height={120}
+                    className="rounded mt-2"
+                  />
+                )}
 
             <ProjectImagesUpload images={images} setImages={setImages}/>
             <ProjectExtraLinks 
@@ -139,7 +155,7 @@ export function ProjectEditor(){
             {loading ? "Uploading..." : "Upload Project"}
         </button>
             
-        </>
+        </div>
     )
 
 }    
