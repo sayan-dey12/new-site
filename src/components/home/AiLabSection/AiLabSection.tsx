@@ -1,9 +1,7 @@
 //import BorderModern from "@/components/utils/BorderModern";
 import SectionHeader from "../SectionHeader";
-import AiLabCard from "./AiLabCard";
 import { AIElement } from "@/types/ai-lab";
 import ViewAllButton from "@/components/utils/ViewAllButton";
-import ExperimentCard from "@/components/ai-lab/ExperimentCard";
 import FeaturedAIProjectCard from "@/components/utils/ai-lab/FeaturedAICardHome";
 
 export default async function AiLabSection() {

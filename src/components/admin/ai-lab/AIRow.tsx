@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button"
 import { Pencil, Trash } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { el } from "date-fns/locale"
 
 
 
