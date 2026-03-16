@@ -4,6 +4,10 @@ import { getProject } from "@/lib/project"
 import AuthorSidebar from "@/components/blog/AuthorSidebar"
 import ProjectMeta from "@/components/projects/ProjectMeta"
 import ProjectAdminSection from "@/components/projects/ProjectAdminSection"
+import ProjectContent from "@/components/projects/ProjectContent"
+import ProjectMediaSection from "@/components/projects/ProjectMediaSection"
+import ProjectLinksSection from "@/components/projects/ProjectLinkSection"
+import ProjectCoverExpert from "@/components/projects/ProjectCoverExcerpt"
 
 
 export default async function ProjectPage({params}:{params:Promise<{slug:string}>}) {
@@ -29,9 +33,16 @@ export default async function ProjectPage({params}:{params:Promise<{slug:string}
                 {admin && (
                   <ProjectAdminSection project={project} />
                 )}
+
+                <ProjectCoverExpert project={project}/>
+
+                <ProjectLinksSection project={project}/>
+
+                <ProjectMediaSection project={project}/>
         
-                <BlogContent blog={blog} />
+                <ProjectContent project={project} />
                 
+
               </article>
         
               <aside className="lg:col-span-1 order-last lg:order-0">

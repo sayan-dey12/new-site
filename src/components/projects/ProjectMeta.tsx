@@ -24,16 +24,23 @@ export default function ProjectMeta({ project }: { project: Project }) {
 
       {project.createdAt && (
         <>
-          <span>•</span>
           <span>{formatDate(project.createdAt)}</span>
         </>
       )}
 
       {project.category && (
         <>
-          {/* <span>•</span> */}
+          <span>•</span>
           <span className="px-2 py-0.5 bg-card border border-border rounded text-md">
             {project.category}
+          </span>
+        </>
+      )}
+       {project.status && (
+        <>
+          {/* <span>•</span> */}
+          <span className="px-2 py-0.5 bg-card border border-border rounded text-md">
+            {project.status}
           </span>
         </>
       )}
