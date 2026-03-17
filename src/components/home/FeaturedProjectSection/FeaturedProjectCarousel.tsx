@@ -50,10 +50,10 @@ export default function FeaturedProjectsCarousel({
       {/* 📱 MOBILE (EMBLA CAROUSEL) */}
       <div className="lg:hidden relative">
         <Carousel
-          opts={{ loop: true }}
+          opts={{ loop: false }}
           plugins={[
             Autoplay({
-              delay: 2500,
+              delay: 2000,
               stopOnInteraction: false,
             }),
           ]}
