@@ -27,14 +27,16 @@ export default async function ContactsPage() {
             </tr>
           </thead>
 
-          <tbody>
+          <tbody className="bg-card">
             {contacts.map((c: any) => (
               <tr key={c._id} className="border-t">
                 <td className="p-3">{c.email}</td>
                 <td className="p-3">{c.source}</td>
                 <td className="p-3 text-xs">{c.ip}</td>
                 <td className="p-3 text-xs truncate max-w-50">
-                  {c.userAgent}
+                    <div className="max-w-75 max-h-20 overflow-auto wrap-break-word">
+                        {c.userAgent}
+                    </div>
                 </td>
                 <td className="p-3">
                   {new Date(c.createdAt).toLocaleDateString()}

@@ -5,7 +5,7 @@ import { rateLimit } from "@/lib/rateLimiter";
 
 export async function POST(req: Request) {
   try {
-    const { email } = await req.json();
+    const { email , source} = await req.json();
 
     // ✅ Email Regex Validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -46,7 +46,7 @@ export async function POST(req: Request) {
 
     await Contact.create({
       email,
-      source: "homepage",
+      source: source || "unknown",
       ip,
       userAgent,
     });

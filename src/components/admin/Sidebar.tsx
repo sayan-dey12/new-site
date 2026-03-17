@@ -8,6 +8,7 @@ import {
   FolderKanban,
   FlaskConical,
   LogOut,
+  Mail,
 } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -62,6 +63,11 @@ export default function Sidebar() {
         <Link href="/admin/ai-lab" className="flex items-center gap-3 p-2 rounded-lg hover:bg-muted">
           <FlaskConical size={18} />
           AI Lab
+        </Link>
+
+        <Link href="/admin/connect" className="flex items-center gap-3 p-2 rounded-lg hover:bg-muted">
+          <Mail size={18} />
+          Contacts
         </Link>
 
         {/* 🔥 Logout Button */}

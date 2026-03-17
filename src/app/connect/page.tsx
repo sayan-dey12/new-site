@@ -1,5 +1,11 @@
 import ContactCard from "@/components/home/CTA/ContactCard";
 
+export const metadata = {
+  title: "Connect with Me | Sayan Builds",
+  description:
+    "Get in touch with Sayan Dey for collaborations, projects, or networking opportunities.",
+};
+
 export default function ConnectPage() {
   return (
     <section className="min-h-[80vh] flex items-center justify-center px-5 py-16">
