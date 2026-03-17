@@ -48,7 +48,7 @@ export const metadata = {
     siteName: "Sayan Builds",
     images: [
       {
-        url: `${baseUrl}/og-image.png`,
+        url: `${baseUrl}/default.jpg`,
         width: 1200,
         height: 630,
         alt: "Sayan Builds",
@@ -62,7 +62,7 @@ export const metadata = {
     title: "Sayan Builds",
     description:
       "Full-stack developer portfolio with AI tools, blogs, and projects.",
-    images: [`${baseUrl}/og-image.png`],
+    images: [`${baseUrl}/default.jpg`],
   },
 }
 
