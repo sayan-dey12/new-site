@@ -1,5 +1,4 @@
 import { Project } from "@/types/project"
-import Image from "next/image"
 
 function formatDate(date: Date | string) {
   const d = new Date(date)
