@@ -16,6 +16,7 @@ export default function ViewAllButton({ href, label }: ViewAllButtonProps) {
         px-6 py-3
         rounded-xl
         bg-card
+        border border-border backdrop-blur-lg
         shadow-md
         text-secondary-foreground
         text-sm font-medium

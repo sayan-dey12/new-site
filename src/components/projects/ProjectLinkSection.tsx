@@ -11,7 +11,7 @@ export default function ProjectLinksSection({ project }: { project: Project }) {
         <a
           href={project.github}
           target="_blank"
-          className="px-4 py-2 rounded-lg bg-card text-card-foreground hover:opacity-90"
+          className="px-4 py-2 rounded-lg bg-card border border-border shadow-sm backdrop-blur-sm text-card-foreground hover:opacity-90"
         >
           View Source
         </a>
@@ -21,7 +21,7 @@ export default function ProjectLinksSection({ project }: { project: Project }) {
         <a
           href={project.demo}
           target="_blank"
-          className="px-4 py-2 rounded-lg bg-accent text-accent-foreground hover:bg-purple-700"
+          className="px-4 py-2 rounded-lg bg-accent border border-border shadow-sm backdrop-blur-sm text-accent-foreground hover:bg-purple-700"
         >
           Live Demo
         </a>
@@ -31,7 +31,7 @@ export default function ProjectLinksSection({ project }: { project: Project }) {
         <a
           href={project.highlight}
           target="_blank"
-          className="px-4 py-2 rounded-lg bg-card text-card-foreground hover:opacity-90"
+          className="px-4 py-2 rounded-lg bg-card border border-border shadow-sm backdrop-blur-sm text-card-foreground hover:opacity-90"
         >
           View Blog About It
         </a>

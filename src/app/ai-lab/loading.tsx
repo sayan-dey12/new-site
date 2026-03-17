@@ -5,7 +5,7 @@ export default function Loading() {
     <main className="max-w-6xl mx-auto px-6 py-16 space-y-14">
 
       {/* HERO (matches your gradient card layout) */}
-      <section className="rounded-xl p-8 sm:p-12 space-y-6 bg-card">
+      <section className="rounded-xl p-8 sm:p-12 space-y-6 bg-background">
         <div className="flex flex-col items-center space-y-4">
           <Skeleton className="h-10 w-40" />
           <Skeleton className="h-4 w-[60%]" />

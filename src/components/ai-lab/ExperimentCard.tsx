@@ -20,7 +20,7 @@ export default function ExperimentCard({
   aiElement: AIElement
 }) {
   return (
-    <Card className="group bg-card overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+    <Card className="group bg-card border border-border shadow-sm backdrop-blur-sm overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
 
       {/* Image clickable */}
 

@@ -7,7 +7,7 @@ type Props = {
 
 export default function GridBackgroundDemo({children}:Props) {
   return (
-    <div className="relative bg-white dark:bg-black">
+    <div className="relative bg-[#fff7ea] dark:bg-[#0b0a0a]">
       <div
         className={cn(
           "pointer-events-none fixed inset-0 z-0",

@@ -42,6 +42,7 @@ export default async function BlogsPage() {
                 rounded-xl
                 bg-card
                 border
+                border-border shadow-sm backdrop-blur-sm
                 outline-none
                 focus:ring-2
                 focus:ring-accent

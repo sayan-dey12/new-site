@@ -6,7 +6,7 @@ export default function Loading() {
       <div className="max-w-6xl mx-auto px-6 py-6 space-y-16">
 
         {/* Hero Section */}
-        <section className="rounded-xl p-8 sm:p-12 bg-card space-y-6">
+        <section className="rounded-xl p-8 sm:p-12 bg-background space-y-6">
           <div className="flex flex-col items-center space-y-4">
             <Skeleton className="h-10 w-[60%]" />
             <Skeleton className="h-4 w-[40%]" />
