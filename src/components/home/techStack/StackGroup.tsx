@@ -22,6 +22,8 @@ export default function StackGroup({ category, items }: Props) {
               bg-muted
               text-muted-foreground
               border border-border
+              transition-all duration-200
+              hover:bg-accent hover:text-accent-foreground hover:scale-105
             "
           >
             {tech}
