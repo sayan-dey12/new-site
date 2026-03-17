@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     siteName: "Sayan Builds",
     images: [
       {
-        url: `${baseUrl}/og-image.png`,
+        url: `${baseUrl}/default.jpg`,
         width: 1200,
         height: 630,
       },
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     title: "Sayan Builds",
     description:
       "Full-stack developer building AI tools and scalable applications.",
-    images: [`${baseUrl}/og-image.png`],
+    images: [`${baseUrl}/default.jpg`],
   },
 
   alternates: {
@@ -87,11 +87,13 @@ export default function Home() {
 
           jobTitle: "Full Stack Developer & AI Engineer",
 
-          image: `${baseUrl}/og-image.png`,
+          image: `${baseUrl}/default.jpg`,
 
           sameAs: [
-            "https://github.com/your-username",
-            "https://linkedin.com/in/your-profile",
+            "https://github.com/sayan-dey12",
+            "https://www.linkedin.com/in/sayan-dey-b37843378/",
+            "https://x.com/sayan_dey12",
+            "https://www.instagram.com/sayan_.dey_",
           ],
 
           worksFor: {
