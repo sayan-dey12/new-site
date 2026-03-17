@@ -1,48 +1,43 @@
 import BlogCard from "../../utils/blogs/BlogCard";
-//import { blogs } from "../../utils/blogs/blogData";
 import { BlogType } from "@/types/blog";
 import SectionHeader from "../SectionHeader";
-//import BorderModern from "@/components/utils/BorderModern";
 import ViewAllButton from "@/components/utils/ViewAllButton";
+import BlogCarousel from "./BlogCarousal";
 
 export default async function BlogSection() {
-
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/blog?limit=3`, {
-    cache: "no-store"
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/blog?limit=3`,
+    { cache: "no-store" }
+  );
 
   const result = await res.json();
   const blogs: BlogType[] = result?.data ?? [];
+
   return (
     <section className="pb-5">
-
       <div className="max-w-7xl mx-auto px-5">
-
-        {/* Header */}
+        
         <SectionHeader
-          title="Latest Blogs" 
+          title="Latest Blogs"
           subtitle="Fresh posts about full-stack development, AI/ML experiments, and what I’m learning."
-          />
+        />
 
-        {/* Blog Grid */}
-        <div className="
-          grid
-          gap-6
-          md:grid-cols-2
-          lg:grid-cols-3
-        ">
-          {blogs.map((blog : BlogType) => (
+        {/* 📱 Mobile Carousel */}
+        <div className="lg:hidden">
+          <BlogCarousel blogs={blogs} />
+        </div>
+
+        {/* 💻 Desktop Grid */}
+        <div className="hidden lg:grid gap-6 lg:grid-cols-3">
+          {blogs.map((blog) => (
             <BlogCard key={blog._id} blog={blog} />
           ))}
         </div>
 
-        {/* View All */}
-        <ViewAllButton href="/blogs" label="Read All Blogs"/>
-
+        <ViewAllButton href="/blogs" label="Read All Blogs" />
       </div>
-      <br /><br />
-      {/* <BorderModern/> */}
 
+      <br /><br />
     </section>
   );
 }
