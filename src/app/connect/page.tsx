@@ -9,19 +9,18 @@ export default function ConnectPage() {
         {/* 🔥 Heading */}
         <div className="space-y-4">
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
-            Let’s Connect 🚀
+            Stay in Touch
           </h1>
 
           <p className="text-muted-foreground text-sm sm:text-base max-w-xl mx-auto">
-            Whether you have a project idea, collaboration opportunity, or just want to say hi — I’d love to hear from you.
-          </p>
+            Drop your email and I’ll get back to yo          </p>
         </div>
 
         {/* 💬 Contact Card */}
         <ContactCard />
 
         {/* 🔒 Trust Line */}
-        <p className="text-xs text-muted-foreground">
+        <p className="text-sm text-muted-foreground">
           No spam. Just meaningful conversations.
         </p>
 
