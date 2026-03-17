@@ -6,7 +6,62 @@ import FeaturedProjectsSection from "@/components/home/FeaturedProjectSection/Fe
 import HeroSection from "@/components/home/heroSection/heroSection";
 import ProofOfWorkSection from "@/components/home/proofOfWorkSection/ProofOfWorkSection";
 import TechStackSection from "@/components/home/techStack/TechStackSection";
+import { Metadata } from "next"
 
+const baseUrl =
+  process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+
+export const metadata: Metadata = {
+  metadataBase: new URL(baseUrl),
+
+  title: "Sayan Dey | Full Stack Developer & AI Engineer",
+
+  description:
+    "Hi, I'm Sayan Dey. I build full-stack applications, AI tools, and scalable backend systems. Explore my projects, blogs, and AI lab.",
+
+  keywords: [
+    "Sayan Dey",
+    "full stack developer",
+    "AI engineer",
+    "developer portfolio",
+    "Next.js developer",
+    "backend developer",
+    "AI projects",
+  ],
+
+  robots: {
+    index: true,
+    follow: true,
+  },
+
+  openGraph: {
+    title: "Sayan Builds | Full Stack Developer & AI Engineer",
+    description:
+      "Explore projects, blogs, and AI tools built by Sayan Dey.",
+    url: `${baseUrl}/`,
+    siteName: "Sayan Builds",
+    images: [
+      {
+        url: `${baseUrl}/og-image.png`,
+        width: 1200,
+        height: 630,
+      },
+    ],
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Sayan Builds",
+    description:
+      "Full-stack developer building AI tools and scalable applications.",
+    images: [`${baseUrl}/og-image.png`],
+  },
+
+  alternates: {
+    canonical: `${baseUrl}/`,
+  },
+}
 
 
 export default function Home() {
@@ -19,6 +74,41 @@ export default function Home() {
       <BlogSection/>
       <TechStackSection/>
       <CTASection/>
+
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Person",
+
+          name: "Sayan Dey",
+          url: baseUrl,
+
+          jobTitle: "Full Stack Developer & AI Engineer",
+
+          image: `${baseUrl}/og-image.png`,
+
+          sameAs: [
+            "https://github.com/your-username",
+            "https://linkedin.com/in/your-profile",
+          ],
+
+          worksFor: {
+            "@type": "Organization",
+            name: "Sayan Builds",
+          },
+
+          knowsAbout: [
+            "Full Stack Development",
+            "Next.js",
+            "Backend Systems",
+            "Artificial Intelligence",
+            "DevOps",
+          ],
+        }),
+      }}
+    />
     </>
   );
 }

@@ -8,6 +8,65 @@ import { AIElement } from "@/types/ai-lab"
 import ShowMore from "@/components/utils/ShowMore"
 import ArchitectureSection from "@/components/ai-lab/ArchitectureSection"
 import UpcomingSection from "@/components/ai-lab/UpcomingSection"
+import { Metadata } from "next"
+
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+
+export const metadata: Metadata = {
+  title: "AI Lab | Free AI Tools & Experiments | Sayan Builds",
+
+  description:
+    "Explore AI tools, experiments, and intelligent agents built by Sayan. Try chatbots, automation tools, and cutting-edge AI projects.",
+
+  keywords: [
+    "AI tools",
+    "free AI tools",
+    "AI experiments",
+    "AI agents",
+    "machine learning projects",
+    "developer AI tools",
+    "Research on AI",
+  ],
+
+  authors: [{ name: "Sayan Dey" }],
+
+  robots: {
+    index: true,
+    follow: true,
+  },
+
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+  ),
+
+  openGraph: {
+    title: "AI Lab | Sayan Builds",
+    description:
+      "Explore AI tools, experiments, and intelligent agents built by Sayan.",
+    url: "/ai-lab",
+    siteName: "Sayan Builds",
+    images: [
+      {
+        url: `${baseUrl}/default.jpg`,
+        width: 1200,
+        height: 630,
+      },
+    ],
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "AI Lab | Sayan Builds",
+    description:
+      "Explore AI tools, experiments, and intelligent agents built by Sayan.",
+    images: ["/default.jpg"],
+  },
+
+  alternates: {
+    canonical: `${baseUrl}/ai-lab`,
+  },
+}
 
 export default async function AILabPage() {
 
@@ -97,6 +156,36 @@ export default async function AILabPage() {
       <section className="space-y-6 text-center">
           <UpcomingSection aiElement={ideas}/>
       </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+
+            name: "AI Lab - Sayan Builds",
+            description:
+              "A collection of AI tools, experiments, and intelligent agents built by Sayan.",
+
+            url: `${
+              process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+            }/ai-lab`,
+
+            inLanguage: "en",
+
+            author: {
+              "@type": "Person",
+              name: "Sayan Dey",
+            },
+
+            publisher: {
+              "@type": "Organization",
+              name: "Sayan Builds",
+            },
+          }),
+        }}
+      />
 
     </main>
   )

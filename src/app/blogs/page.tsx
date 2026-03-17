@@ -4,6 +4,63 @@ import BlogCard from "@/components/utils/blogs/BlogCard";
 import ShowMore from "@/components/utils/ShowMore";
 import { BlogType } from "@/types/blog";
 //import { BlogType } from "@/types/blog";
+import { Metadata } from "next"
+
+const baseUrl =
+  process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+
+export const metadata: Metadata = {
+  metadataBase: new URL(baseUrl),
+
+  title: "Blogs | Sayan Builds",
+
+  description:
+    "Read blogs on full-stack development, system design, AI, and backend engineering by Sayan.",
+
+  keywords: [
+    "developer blogs",
+    "full stack blogs",
+    "system design blogs",
+    "AI blogs",
+    "backend engineering",
+    "Next.js blogs",
+  ],
+
+  authors: [{ name: "Sayan Dey" }],
+
+  robots: {
+    index: true,
+    follow: true,
+  },
+
+  openGraph: {
+    title: "Blogs | Sayan Builds",
+    description:
+      "Read blogs on full-stack development, system design, AI, and backend engineering.",
+    url: `${baseUrl}/blog`,
+    siteName: "Sayan Builds",
+    images: [
+      {
+        url: `${baseUrl}/default.jpg`,
+        width: 1200,
+        height: 630,
+      },
+    ],
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Blogs | Sayan Builds",
+    description:
+      "Read blogs on full-stack development, system design, AI, and backend engineering.",
+    images: [`${baseUrl}/default.jpg`],
+  },
+
+  alternates: {
+    canonical: `${baseUrl}/blog`,
+  },
+}
 
 export default async function BlogsPage() {
   
@@ -73,6 +130,34 @@ export default async function BlogsPage() {
         </section>
 
       </div>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+
+            name: "Blogs - Sayan Builds",
+            description:
+              "A collection of blogs on full-stack development, AI, and system design.",
+
+            url: `${baseUrl}/blog`,
+
+            inLanguage: "en",
+
+            author: {
+              "@type": "Person",
+              name: "Sayan Dey",
+            },
+
+            publisher: {
+              "@type": "Organization",
+              name: "Sayan Builds",
+            },
+          }),
+        }}
+      />
 
     </main>
   );

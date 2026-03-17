@@ -16,36 +16,55 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+
 export const metadata = {
-  title: 'Sayan Dey | TechWithStrider | Developer Portfolio',
+  metadataBase: new URL(baseUrl),
+
+  title: {
+    default: "Sayan Builds | Full Stack Developer & AI Engineer",
+    template: "%s | Sayan Builds",
+  },
+
   description:
-    'Official website of Sayan Dey aka Strider — a full-stack developer and student exploring AI, web dev, and blogging at TechWithStrider.',
-  metadataBase: new URL("https://sayanbuilds.online"),
+    "Sayan Builds — portfolio of Sayan Dey, showcasing full-stack development, AI tools, backend systems, and scalable projects.",
+
+  authors: [{ name: "Sayan Dey" }],
+
+  robots: {
+    index: true,
+    follow: true,
+  },
+
+  alternates: {
+    canonical: baseUrl,
+  },
+
   openGraph: {
-    title: 'Sayan Dey | TechWithStrider | Developer Portfolio',
+    title: "Sayan Builds",
     description:
-      'Official website of Sayan Dey aka Strider — a full-stack developer and student exploring AI, web dev, and blogging at TechWithStrider.',
-    url: 'https://sayanbuilds.online',
-    siteName: 'TechWithStrider',
+      "Portfolio of Sayan Dey — full-stack developer building AI tools, backend systems, and scalable applications.",
+    url: baseUrl,
+    siteName: "Sayan Builds",
     images: [
       {
-        url: '/og-image.png', // put this image inside the /public folder
+        url: `${baseUrl}/og-image.png`,
         width: 1200,
         height: 630,
-        alt: 'TechWithStrider – Sayan Dey',
+        alt: "Sayan Builds",
       },
     ],
-    type: 'website',
+    type: "website",
   },
+
   twitter: {
-    card: 'summary_large_image',
-    title: 'Sayan Dey | TechWithStrider',
+    card: "summary_large_image",
+    title: "Sayan Builds",
     description:
-      'Official portfolio and blog of Sayan Dey aka Strider – full-stack development, AI, open source, and more.',
-    images: ['/og-image.png'],
-    creator: '@sayan_dey12', // Optional: Your Twitter handle
+      "Full-stack developer portfolio with AI tools, blogs, and projects.",
+    images: [`${baseUrl}/og-image.png`],
   },
-};
+}
 
 export default function RootLayout({
   children,
