@@ -9,19 +9,19 @@ export default function QuickActionsSection() {
     <div className="grid gap-6 md:grid-cols-3">
       <QuickActionCard
         title="Write Blog"
-        href="/admin/new-blog"
+        href="/admin/dashboard/blog/new"
         icon={PenLine}
       />
 
       <QuickActionCard
         title="Add Project"
-        href="/admin/new-project"
+        href="/admin/dashboard/project/new"
         icon={FolderPlus}
       />
 
       <QuickActionCard
         title="Add AI Experiment"
-        href="/admin/new-experiment"
+        href="/admin/dashboard/ai-lab/new"
         icon={FlaskConical}
       />
 
