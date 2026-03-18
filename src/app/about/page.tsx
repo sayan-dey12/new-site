@@ -1,3 +1,4 @@
+import ContactCard from "@/components/home/CTA/ContactCard";
 import TechStackSection from "@/components/home/techStack/TechStackSection";
 
 export const metadata = {
@@ -102,6 +103,10 @@ export default function AboutPage() {
             My goal is to build impactful software, contribute to meaningful projects,
             and grow into a developer who can design and ship scalable systems end-to-end.
           </p>
+        </div>
+
+        <div>
+          <ContactCard/>
         </div>
 
       </div>

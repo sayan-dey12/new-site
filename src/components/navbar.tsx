@@ -6,7 +6,7 @@ import { usePathname} from "next/navigation";
 import { Sun , Moon , X , Menu} from "lucide-react";
 import { useTheme } from "next-themes";
 import {Button} from "@/components/ui/button";
-import handleComingSoon from "@/lib/handleCommingSoon";
+//import handleComingSoon from "@/lib/handleCommingSoon";
 
 
 export default function Navbar() {
@@ -138,14 +138,14 @@ export default function Navbar() {
                         className={`block text-sm font-medium hover:text-accent transition-colors ${isActive("/ai-lab")}`}>
                             AI Lab
                 </Link>
-                <button 
+                <Link
+                    href="/about"
                     onClick={()=>{
-                        handleComingSoon();
                         setMenuOpen(false);
                         }}
                         className={`block text-sm font-medium hover:text-accent transition-colors ${isActive("/about")}`}>
                             About
-                </button>
+                </Link>
             </div>
         )}
 

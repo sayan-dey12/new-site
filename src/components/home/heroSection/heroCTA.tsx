@@ -32,9 +32,12 @@ export default function HeroCTA() {
       {/* AI Lab - Coming Soon */}
       <Button
         onClick={handleComingSoon}
-        className="rounded-full border border-border bg-accent/90 text-foreground hover:opacity-90 transition-colors"
+        className="rounded-full border border-border bg-accent text-foreground hover:opacity-90 transition-colors"
       >
-        🤖 AI Lab
+        <Link href="/ai-lab">
+          🤖 AI Lab
+        </Link>
+        
       </Button>
 
       {/* Connect */}
