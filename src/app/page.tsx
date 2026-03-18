@@ -82,12 +82,19 @@ export default function Home() {
           "@context": "https://schema.org",
           "@type": "Person",
 
+          "@id": `${baseUrl}/#person`,
+
           name: "Sayan Dey",
           url: baseUrl,
 
+          image: `${baseUrl}/default.jpg`,
+
           jobTitle: "Full Stack Developer & AI Engineer",
 
-          image: `${baseUrl}/default.jpg`,
+          mainEntityOfPage: {
+            "@type": "WebPage",
+            "@id": baseUrl,
+          },
 
           sameAs: [
             "https://github.com/sayan-dey12",
@@ -104,8 +111,12 @@ export default function Home() {
           knowsAbout: [
             "Full Stack Development",
             "Next.js",
+            "TypeScript",
             "Backend Systems",
+            "WebSockets",
+            "Redis",
             "Artificial Intelligence",
+            "LLM Applications",
             "DevOps",
           ],
         }),

@@ -29,19 +29,31 @@ export const metadata = {
   description:
     "Sayan Builds — portfolio of Sayan Dey, showcasing full-stack development, AI tools, backend systems, and scalable projects.",
 
+  keywords: [
+    "Sayan Dey",
+    "Full Stack Developer",
+    "Next.js Developer",
+    "AI Engineer",
+    "Backend Developer",
+    "Developer Portfolio",
+  ],
+
   authors: [{ name: "Sayan Dey" }],
+  creator: "Sayan Dey",
 
   robots: {
     index: true,
     follow: true,
   },
 
-  alternates: {
-    canonical: baseUrl,
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/apple-icon.png",
   },
 
   openGraph: {
-    title: "Sayan Builds",
+    title: "Sayan Builds | Full Stack Developer & AI Engineer",
     description:
       "Portfolio of Sayan Dey — full-stack developer building AI tools, backend systems, and scalable applications.",
     url: baseUrl,
