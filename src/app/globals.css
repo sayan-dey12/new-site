@@ -70,7 +70,7 @@
 
   /* ================= MUTED ================= */
   --muted: #F4F4F5;
-  --muted-foreground: #71717A;
+  --muted-foreground: #41414d;
 
   /* ================= ACCENT ⭐ ================= */
   --accent: #8B5CF6;
@@ -120,7 +120,7 @@
 
   /* ================= MUTED ================= */
   --muted: #111827;
-  --muted-foreground: #6B7280;
+  --muted-foreground: #c8c8d0;
 
   /* ================= ACCENT ⭐ ================= */
   --accent: #8B5CF6;
