@@ -4,7 +4,7 @@ import { BlogType } from "@/types/blog";
 
 export default async function BlogsPage() {
 
-   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/blog?all=true`, {
+   const res = await fetch(`/api/blog?all=true`, {
       cache: "no-store"
     });
   

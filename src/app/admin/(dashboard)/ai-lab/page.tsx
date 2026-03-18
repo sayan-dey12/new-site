@@ -4,7 +4,7 @@ import { AIElement } from "@/types/ai-lab";
 
 export default async function AILabPage() {
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/ai-lab?all=true`, {
+  const res = await fetch(`/api/ai-lab?all=true`, {
           cache: "no-store"
         });
       
