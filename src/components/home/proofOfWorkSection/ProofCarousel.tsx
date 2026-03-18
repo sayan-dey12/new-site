@@ -18,7 +18,7 @@ export default function ProofCarousel() {
       opts={{ loop: false }}
       plugins={[
         Autoplay({
-          delay: 2000,
+          delay: 1500,
           stopOnInteraction: false,
         }),
       ]}
@@ -29,7 +29,7 @@ export default function ProofCarousel() {
         {proofItems.map((item) => (
           <CarouselItem
             key={item.title}
-            className="basis-full px-8" // ✅ space for arrows
+            className="basis-full px-8" //space for arrows
           >
             <ProofCard {...item} />
           </CarouselItem>

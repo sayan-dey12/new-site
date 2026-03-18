@@ -28,7 +28,7 @@ export default function FeaturedProjectsCarousel({
       setIndex((prev) =>
         prev === projects.length - 1 ? 0 : prev + 1
       );
-    }, 4000);
+    }, 2000);
 
     return () => clearInterval(interval);
   }, [projects.length]);
@@ -53,7 +53,7 @@ export default function FeaturedProjectsCarousel({
           opts={{ loop: false }}
           plugins={[
             Autoplay({
-              delay: 2000,
+              delay: 1500,
               stopOnInteraction: false,
             }),
           ]}

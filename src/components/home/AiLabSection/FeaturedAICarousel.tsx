@@ -28,7 +28,7 @@ export default function FeaturedAICarousel({
       setIndex((prev) =>
         prev === items.length - 1 ? 0 : prev + 1
       );
-    }, 4000);
+    }, 2000);
 
     return () => clearInterval(interval);
   }, [items.length]);
@@ -53,7 +53,7 @@ export default function FeaturedAICarousel({
           opts={{ loop: false }}
           plugins={[
             Autoplay({
-              delay: 2000,
+              delay: 1500,
               stopOnInteraction: false,
             }),
           ]}

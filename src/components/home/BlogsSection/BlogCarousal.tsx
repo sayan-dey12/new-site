@@ -4,6 +4,8 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
+   CarouselPrevious,
+  CarouselNext
 } from "@/components/ui/carousel";
 
 import Autoplay from "embla-carousel-autoplay";
@@ -16,7 +18,7 @@ export default function BlogCarousel({ blogs }: { blogs: BlogType[] }) {
       opts={{ loop: false }}
       plugins={[
         Autoplay({
-          delay: 2000,
+          delay: 1500,
           stopOnInteraction: false,
         }),
       ]}
@@ -28,6 +30,8 @@ export default function BlogCarousel({ blogs }: { blogs: BlogType[] }) {
           </CarouselItem>
         ))}
       </CarouselContent>
+      <CarouselPrevious className="left-1 bg-white dark:bg-black border border-border" />
+      <CarouselNext className="right-1 bg-white dark:bg-black border border-border" />
     </Carousel>
   );
 }
