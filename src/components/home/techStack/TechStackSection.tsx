@@ -5,9 +5,9 @@ import { techStack } from "./stackData";
 
 export default function TechStackSection() {
   return (
-    <section className="pb-5">
+    <section className="pb-2">
 
-      <div className="max-w-7xl mx-auto px-5">
+      <div className="max-w-6xl mx-auto px-5">
 
           <SectionHeader
             title="Tech Stack"

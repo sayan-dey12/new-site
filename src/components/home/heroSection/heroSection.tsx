@@ -4,7 +4,7 @@ import HeroCTA from "./heroCTA";
 
 export default function HeroSection() {
   return (
-    <section className="relative text-primary-foreground pt-5 pb-5">
+    <section className="relative text-primary-foreground pt-5 pb-7">
 
       <div
         className="

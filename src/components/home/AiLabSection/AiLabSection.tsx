@@ -17,8 +17,8 @@ export default async function AiLabSection() {
   if (featured.length === 0) return null;
 
   return (
-    <section className="pb-5">
-      <div className="max-w-7xl mx-auto px-5">
+    <section className="pb-2">
+      <div className="max-w-6xl mx-auto px-5">
 
         <SectionHeader
           title="AI Lab"

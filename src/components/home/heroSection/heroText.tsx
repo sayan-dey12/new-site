@@ -1,11 +1,9 @@
-import HeroCTA from "./heroCTA";
-
 export default function HeroText() {
   return (
     <div className="space-y-6">
 
       <p className="text-accent font-semibold text-sm tracking-wide">
-        Full-Stack Developer , AI learner
+        Full-Stack Developer • AI & Systems
       </p>
 
       <h1 className="text-2xl md:text-5xl font-bold leading-tight tracking-tight">

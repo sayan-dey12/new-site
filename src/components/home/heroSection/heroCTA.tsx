@@ -21,8 +21,7 @@ export default function HeroCTA() {
       {/* Blogs */}
       <Button
         asChild
-        variant="outline"
-        className="rounded-full border border-slate-400 dark:border-slate-700 hover:border-slate-600 dark:hover:border-slate-500 bg-transparent text-slate-800 dark:text-slate-100 px-6 py-2.5 text-sm sm:text-base font-semibold"
+        className="rounded-full bg-card border border-border text-card-foreground px-6 py-2.5 text-sm sm:text-base font-semibold hover:bg-accent"
       >
         <Link href="/blogs">
           ✍️ Read Blogs
