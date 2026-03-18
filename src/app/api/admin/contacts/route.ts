@@ -15,6 +15,7 @@ export async function GET() {
       data: contacts,
     });
   } catch (error) {
+    console.error(error)
     return NextResponse.json(
       { success: false, message: "Failed to fetch contacts" },
       { status: 500 }

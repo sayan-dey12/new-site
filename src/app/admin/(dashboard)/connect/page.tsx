@@ -1,3 +1,12 @@
+type Contact = {
+  _id: string;
+  email: string;
+  source: string;
+  ip: string;
+  userAgent: string;
+  createdAt: string;
+};
+
 export default async function ContactsPage() {
   const baseUrl =
   process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
@@ -7,7 +16,7 @@ export default async function ContactsPage() {
     });
 
   const result = await res.json();
-  const contacts = result?.data || [];
+  const contacts : Contact[] = result?.data || [];
 
   return (
     <div className="space-y-6">
@@ -28,7 +37,7 @@ export default async function ContactsPage() {
           </thead>
 
           <tbody className="bg-card">
-            {contacts.map((c: any) => (
+            {contacts.map((c : Contact) => (
               <tr key={c._id} className="border-t">
                 <td className="p-3">{c.email}</td>
                 <td className="p-3">{c.source}</td>

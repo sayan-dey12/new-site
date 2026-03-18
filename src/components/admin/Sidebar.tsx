@@ -34,6 +34,7 @@ export default function Sidebar() {
       router.push("/");
       router.refresh(); // important for auth state update
     } catch (error) {
+      console.error(error);
       toast.error("Something went wrong");
     }
   };
