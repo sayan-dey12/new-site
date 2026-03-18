@@ -1,11 +1,64 @@
 import ContactCard from "@/components/home/CTA/ContactCard";
 import TechStackSection from "@/components/home/techStack/TechStackSection";
+import { Metadata } from "next"
 
-export const metadata = {
-  title: "About Me | Shaan Singh",
+const baseUrl =
+  process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+
+export const metadata: Metadata = {
+  metadataBase: new URL(baseUrl),
+
+  title: "About Sayan Dey | Full-Stack Developer & AI Builder",
+
   description:
-    "Learn more about Shaan Singh, a full-stack developer building scalable systems and AI-powered applications.",
-};
+    "Learn more about Sayan Dey, a full-stack developer building scalable backend systems, real-time applications, and AI-powered tools using modern technologies.",
+
+  keywords: [
+    "Sayan Dey",
+    "Full Stack Developer",
+    "Next.js Developer",
+    "Backend Developer",
+    "AI Developer",
+    "Web Developer Portfolio",
+    "MERN Stack Developer",
+    "Software Engineer Student",
+  ],
+
+  authors: [{ name: "Sayan Dey" }],
+
+  robots: {
+    index: true,
+    follow: true,
+  },
+
+  openGraph: {
+    title: "About Sayan Dey | Sayan Builds",
+    description:
+      "Explore the journey of Sayan Dey — building full-stack applications, real-time systems, and AI-powered tools.",
+    url: `${baseUrl}/about`,
+    siteName: "Sayan Builds",
+    images: [
+      {
+        url: `${baseUrl}/default.jpg`,
+        width: 1200,
+        height: 630,
+      },
+    ],
+    type: "profile",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "About Sayan Dey | Sayan Builds",
+    description:
+      "Full-stack developer focused on backend systems, AI integration, and scalable applications.",
+    images: [`${baseUrl}/default.jpg`],
+  },
+
+  alternates: {
+    canonical: `${baseUrl}/about`,
+  },
+}
 
 export default function AboutPage() {
   return (
