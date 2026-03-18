@@ -151,6 +151,30 @@ export default function AboutPage() {
         </div>
 
       </div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+
+            name: "Sayan Dey",
+            url: `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/about`,
+
+            jobTitle: "Full Stack Developer",
+
+            description:
+              "Full-stack developer building scalable systems, real-time applications, and AI-powered tools.",
+
+            sameAs: [
+              "https://github.com/sayan-dey12",
+              "https://www.linkedin.com/in/sayan-dey-b37843378/",
+              "https://x.com/sayan_dey12",
+              "https://www.instagram.com/sayan_.dey_",
+            ],
+          }),
+        }}
+      />
     </section>
   );
 }
