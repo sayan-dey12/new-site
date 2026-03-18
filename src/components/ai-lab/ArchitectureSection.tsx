@@ -4,31 +4,31 @@ import { Cpu, Server, Brain, Globe } from "lucide-react"
 export default function ArchitectureSection() {
   const layers = [
     {
-      title: "Frontend Layer",
+      title: "Interface Layer",
       description:
-        "User interfaces and dashboards interacting with AI systems.",
-      tech: ["Next.js", "React", "Tailwind"],
+        "User-facing interfaces where AI tools, chat systems, and experiments are interacted with in real-time.",
+      tech: ["Next.js", "TypeScript", "Tailwind CSS", "shadcn/ui"],
       icon: Globe,
     },
     {
-      title: "Backend Services",
+      title: "Orchestration Layer",
       description:
-        "APIs and orchestration logic powering AI workflows.",
-      tech: ["Node.js", "WebSockets", "REST APIs"],
+        "Handles request flow, prompt construction, API calls, and coordination between different AI components.",
+      tech: ["Next.js API Routes", "Server Actions", "Node.js"],
       icon: Server,
     },
     {
-      title: "AI / LLM Layer",
+      title: "AI Execution Layer",
       description:
-        "Core AI capabilities including reasoning and generation.",
-      tech: ["OpenAI API", "Embeddings", "RAG"],
+        "Core intelligence powered by LLMs for reasoning, generation, and tool-based workflows.",
+      tech: ["OpenAI API", "Prompt Engineering", "Function Calling"],
       icon: Brain,
     },
     {
-      title: "Infrastructure",
+      title: "Memory & Infrastructure",
       description:
-        "Scalable systems and caching layers supporting AI workloads.",
-      tech: ["Redis", "Docker", "Cloud"],
+        "Manages state, caching, and scalability for AI interactions and real-time systems.",
+      tech: ["Redis (Aiven)", "WebSockets", "Vercel"],
       icon: Cpu,
     },
   ]
