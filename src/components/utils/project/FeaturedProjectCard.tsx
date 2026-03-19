@@ -82,7 +82,7 @@ export default function FeaturedProjectCard({
               </Link>
 
               <CardDescription className="mt-3 text-sm">
-                {project.description}
+                {project.excerpt}
               </CardDescription>
 
             </CardHeader>
