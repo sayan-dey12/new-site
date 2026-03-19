@@ -4,6 +4,7 @@ import rehypeHighlight from "rehype-highlight"
 import "highlight.js/styles/github-dark.css"
 import { Project } from "@/types/project"
 import Image from "next/image"
+import type { ComponentPropsWithoutRef } from "react"
 
 export default function ProjectContent({ project }: { project: Project }) {
   return (
@@ -32,6 +33,11 @@ export default function ProjectContent({ project }: { project: Project }) {
         prose-td:bg-zinc-900 prose-td:text-white
         prose-th:px-3 prose-th:py-2
         prose-td:px-3 prose-td:py-2
+
+        /* FIX CODE BLOCK CONFLICT */
+        prose-pre:bg-transparent
+        prose-pre:p-0
+        prose-pre:shadow-none
       "
     >
       <ReactMarkdown
@@ -40,22 +46,37 @@ export default function ProjectContent({ project }: { project: Project }) {
         components={{
           pre({ children }) {
             return (
-              <pre className="rounded-lg p-4 mt-4 overflow-x-auto">
+              <pre className="bg-zinc-900 text-white rounded-lg p-4 mt-6 overflow-x-auto">
                 {children}
               </pre>
             )
           },
 
+          code({ children, className, ...props }: ComponentPropsWithoutRef<"code">) {
+            const isInline = !className
+
+            if (isInline) {
+              return (
+                <code className="bg-zinc-800 px-1 py-0.5 rounded text-sm">
+                  {children}
+                </code>
+              )
+            }
+
+            return <code className={className} {...props}>{children}</code>
+          },
+
           img({ src = "", alt = "" }) {
-            const imageSrc = typeof src === "string" ? src : ""
+            if (typeof src !== "string") return null
+
             return (
-              <div className="relative w-full h-64 sm:h-80 my-4 group cursor-pointer">
-                  <Image
-                    src={imageSrc}
-                    alt={alt}
-                    fill
-                    className="rounded-lg my-4 cursor-pointer"
-                  />
+              <div className="relative w-full h-64 sm:h-80 my-4">
+                <Image
+                  src={src}
+                  alt={alt}
+                  fill
+                  className="rounded-lg object-contain"
+                />
               </div>
             )
           },
