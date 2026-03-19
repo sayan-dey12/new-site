@@ -6,12 +6,12 @@ export default function ProjectCoverExpert({ project }: { project: Project }){
     return(
         <>
         {project.coverImage && (
-              <div className="relative w-full h-100 mb-8">
+              <div className="relative w-full aspect-video sm:aspect-video md:aspect-21/9 rounded-sm overflow-hidden mb-8 ">
                 <Image
                   src={project.coverImage}
                   alt={project.title || "Project cover"}
                   fill
-                  className="rounded-xl object-cover"
+                  className="object-contain md:object-cover"
                   priority
                 />
               </div>
