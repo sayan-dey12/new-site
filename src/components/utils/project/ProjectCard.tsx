@@ -80,7 +80,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         </Link>
 
         <CardDescription className="text-sm">
-          {project.description}
+          {project.excerpt}
         </CardDescription>
 
       </CardHeader>
