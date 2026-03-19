@@ -9,8 +9,6 @@ export default function ProjectMediaSection({ project }: { project: Project }) {
   const images = project.images || []
   const [currentIndex, setCurrentIndex] = useState<number | null>(null)
 
-  if (!images.length && !project.video) return null
-
   const openModal = (index: number) => setCurrentIndex(index)
   const closeModal = () => setCurrentIndex(null)
 
@@ -28,7 +26,7 @@ export default function ProjectMediaSection({ project }: { project: Project }) {
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (currentIndex === null) return
-      if (e.key === "Escape") closeModal()
+      if (e.key === "Escape" || e.key === "Enter") closeModal()
       if (e.key === "ArrowRight") nextImage()
       if (e.key === "ArrowLeft") prevImage()
     }
@@ -36,6 +34,10 @@ export default function ProjectMediaSection({ project }: { project: Project }) {
     window.addEventListener("keydown", handleKey)
     return () => window.removeEventListener("keydown", handleKey)
   }, [currentIndex])
+
+
+    if (!images.length && !project.video) return null
+
 
   return (
     <div className="mt-12 space-y-6">

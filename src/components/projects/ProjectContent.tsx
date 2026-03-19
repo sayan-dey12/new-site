@@ -1,8 +1,9 @@
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import rehypeHighlight from "rehype-highlight"
-import "highlight.js/styles/github-dark.css" // IMPORTANT
+import "highlight.js/styles/github-dark.css"
 import { Project } from "@/types/project"
+import Image from "next/image"
 
 export default function ProjectContent({ project }: { project: Project }) {
   return (
@@ -46,12 +47,16 @@ export default function ProjectContent({ project }: { project: Project }) {
           },
 
           img({ src = "", alt = "" }) {
+            const imageSrc = typeof src === "string" ? src : ""
             return (
-              <img
-                src={src}
-                alt={alt}
-                className="rounded-lg my-4 cursor-pointer"
-              />
+              <div className="relative w-full h-64 sm:h-80 my-4 group cursor-pointer">
+                  <Image
+                    src={imageSrc}
+                    alt={alt}
+                    fill
+                    className="rounded-lg my-4 cursor-pointer"
+                  />
+              </div>
             )
           },
 
