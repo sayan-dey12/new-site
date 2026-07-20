@@ -9,7 +9,7 @@ export default function BlogContent({ blog }: { blog: BlogType }) {
   console.log("RAW BLOG CONTENT:", JSON.stringify(blog.content))
 
   return (
-    <div className="prose dark:prose-invert max-w-none">
+    <div className="prose dark:prose-invert max-w-none prose-code:before:content-none prose-code:after:content-none">
       
       {blog.cover && (
       <div className="relative w-full h-100 mb-8">
@@ -29,9 +29,11 @@ export default function BlogContent({ blog }: { blog: BlogType }) {
         </p>
       )}
       
+      {/* cover image, excerpt, etc */}
+
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
-        rehypePlugins={[rehypeRaw, rehypeHighlight]}
+        rehypePlugins={[rehypeRaw, [rehypeHighlight, { detect: false }]]}
         components={{
           pre({ children }) {
             return (
@@ -43,14 +45,12 @@ export default function BlogContent({ blog }: { blog: BlogType }) {
           code({ className, children, ...props }) {
             const isBlock = className?.includes("hljs") || className?.includes("language-")
             if (isBlock) {
-              // fenced code block - let it render plain, pre already styles the wrapper
               return (
                 <code className={className} {...props}>
                   {children}
                 </code>
               )
             }
-            // inline code
             return (
               <code
                 className="px-1.5 py-0.5 rounded bg-zinc-200 dark:bg-zinc-800 text-pink-600 dark:text-pink-400 font-mono text-[0.875em]"
