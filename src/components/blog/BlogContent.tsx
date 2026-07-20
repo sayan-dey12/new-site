@@ -6,7 +6,7 @@ import { BlogType } from "@/types/blog"
 import Image from "next/image"
 
 export default function BlogContent({ blog }: { blog: BlogType }) {
-  console.log("RAW BLOG CONTENT:", JSON.stringify(blog.content))
+  //console.log("RAW BLOG CONTENT:", JSON.stringify(blog.content))
 
   return (
     <div className="prose dark:prose-invert max-w-none prose-code:before:content-none prose-code:after:content-none">
