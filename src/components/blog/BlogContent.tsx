@@ -6,10 +6,11 @@ import { BlogType } from "@/types/blog"
 import Image from "next/image"
 
 export default function BlogContent({ blog }: { blog: BlogType }) {
+  console.log("RAW BLOG CONTENT:", JSON.stringify(blog.content))
 
   return (
     <div className="prose dark:prose-invert max-w-none">
-
+      
       {blog.cover && (
       <div className="relative w-full h-100 mb-8">
         <Image
@@ -27,7 +28,7 @@ export default function BlogContent({ blog }: { blog: BlogType }) {
           {blog.excerpt}
         </p>
       )}
-
+      
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeRaw,rehypeHighlight]}

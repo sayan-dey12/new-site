@@ -1,0 +1,2310 @@
+
+====================================================================================================
+FILE: src\app\api\admin\contacts\route.ts
+====================================================================================================
+
+import { NextResponse } from "next/server";
+import { connectDB } from "@/dbConfig/dbConfig";
+import Contact from "@/models/contact";
+
+export async function GET() {
+  try {
+    await connectDB();
+
+    const contacts = await Contact.find()
+      .sort({ createdAt: -1 })
+      .lean();
+
+    return NextResponse.json({
+      success: true,
+      data: contacts,
+    });
+  } catch (error) {
+    console.error(error)
+    return NextResponse.json(
+      { success: false, message: "Failed to fetch contacts" },
+      { status: 500 }
+    );
+  }
+}
+
+
+====================================================================================================
+FILE: src\app\api\admin\login\route.ts
+====================================================================================================
+
+import { NextResponse } from "next/server"
+import bcrypt from "bcryptjs"
+import jwt from "jsonwebtoken"
+import { cookies } from "next/headers"
+
+export async function POST(req: Request) {
+
+  const { email, password } = await req.json()
+
+  if (email !== process.env.ADMIN_EMAIL) {
+    return NextResponse.json({ success: false })
+  }
+
+  const valid = await bcrypt.compare(
+    password,
+    process.env.ADMIN_PASSWORD_HASH!
+  )
+
+  if (!valid) {
+    return NextResponse.json({ success: false })
+  }
+
+  const token = jwt.sign(
+    { role: "admin" },
+    process.env.JWT_SECRET!,
+    { expiresIn: "2d" }
+  );
+  
+  (await cookies()).set("admin-token", token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+    path: "/",
+  })
+
+  return NextResponse.json({ success: true })
+}
+
+
+====================================================================================================
+FILE: src\app\api\admin\logout\route.ts
+====================================================================================================
+
+import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
+
+export async function POST() {
+  const cookieStore = await cookies();
+
+  cookieStore.set("admin-token", "", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+    path: "/",
+    expires: new Date(0),
+  });
+
+  return NextResponse.json({
+    success: true,
+    message: "Logged out successfully",
+  });
+}
+
+
+====================================================================================================
+FILE: src\app\api\ai-lab\[slug]\route.ts
+====================================================================================================
+
+import { AIElementModel } from "@/models/AiLab";
+import { connectDB } from "@/dbConfig/dbConfig";
+import { NextResponse } from "next/server";
+
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
+export async function GET(req: Request , {params}:{params:Promise<{slug: string}>}){
+    try {
+        await connectDB();
+        const { slug } = await params;
+        const AIElement = await AIElementModel.findOneAndUpdate({slug} , {$inc: {views: 1}} , {new: true})
+        if(!AIElement){
+            return NextResponse.json({ 
+                success: false,
+                error: "AI Element not found" },
+                { status: 404 })
+        }
+        return NextResponse.json(
+            {
+                success: true,
+                data: AIElement
+            },
+            {
+                status: 200
+            }
+        )
+    } catch (error) {
+        console.error(error)
+        return NextResponse.json(
+            {
+                success: false,
+                error: "Error in finding the data"
+            },
+            {status: 500}
+        )
+    }
+}
+
+
+export async function PUT(req: Request , {params}:{params:Promise<{slug: string}>}){
+    try {
+        await connectDB();
+        const { slug } = await params;
+        const body = await req.json();
+        const updatedAIElement = await AIElementModel.findOneAndUpdate(
+            {slug},
+            body,
+            {new : true}
+        )
+        if(!updatedAIElement){
+            return NextResponse.json(
+                {
+                    success: false,
+                    error: "AI Element not found"
+                },
+                { status: 404 }
+            );
+        }
+        return NextResponse.json(
+            {
+                success: true,
+                data: updatedAIElement
+            },
+            { status: 200 }
+        );
+    } catch (error) {
+        console.error(error)
+        return NextResponse.json(
+            {
+                success: false,
+                error: "Failed to update AI Element"
+            },
+            { status: 500 }
+        );
+        
+    }
+}
+
+
+export async function DELETE(req: Request,{ params }: { params: Promise<{ slug: string }> }) {
+  
+    try {
+        await connectDB()
+
+        const { slug } = await params;
+        const deletedAIElement = await AIElementModel.findOneAndDelete({slug: slug});
+        if (!deletedAIElement) {
+        return NextResponse.json(
+            {
+            success: false,
+            error: "AI Element not found",
+            },
+            { status: 404 }
+        )
+        }
+        return NextResponse.json(
+        {
+            success: true,
+            message: "AI Element deleted successfully",
+        },
+        { status: 200 }
+        )
+  } catch (error) {
+        console.error(error)
+        return NextResponse.json(
+        {
+            success: false,
+            error: "Failed to delete AI Element",
+        },
+        { status: 500 }
+        )
+    }
+}
+
+
+====================================================================================================
+FILE: src\app\api\ai-lab\route.ts
+====================================================================================================
+
+import { NextResponse , NextRequest } from "next/server";
+import { connectDB } from "@/dbConfig/dbConfig";
+import { AIElementModel } from "@/models/AiLab";
+
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
+export async function POST( req: NextRequest){
+    try {
+        await connectDB();
+        const body = await req.json();
+        const aiElement = await AIElementModel.create({...body});
+        return NextResponse.json({
+            success: true,
+            data: aiElement
+            },
+            {
+                status: 201
+            }
+        );
+    } catch (error) {
+        console.log(error);
+        return NextResponse.json(
+            {
+                success: false,
+                error: "Failed to create the ai-experiment"
+            },
+            {
+                status: 500
+            }
+        );
+    }
+}
+
+export async function GET( req: NextRequest){
+    try {
+        await connectDB()
+
+        const limitParams = req.nextUrl.searchParams.get("limit");
+
+        const limit = Math.min(Number(limitParams), 50);
+        const showAll = req.nextUrl.searchParams.get("all");
+        const filter = showAll === "true" ? {} : { published: true}
+        const aiElement = await AIElementModel.find(filter)
+            .sort({ createdAt: -1 })
+            .limit(limit);
+        return NextResponse.json({
+            success: true,
+            count: aiElement.length,
+            data: aiElement,
+        });     
+    } catch (error) {
+        console.log(error);
+        return NextResponse.json(
+        {
+            success: false,
+            error: "Failed to fetch projects",
+        },
+        { status: 500 }
+        );
+    }
+}
+
+
+====================================================================================================
+FILE: src\app\api\blog\[slug]\route.ts
+====================================================================================================
+
+import { BlogModel } from "@/models/Blog";
+import { connectDB } from "@/dbConfig/dbConfig";
+import { NextResponse } from "next/server";
+
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
+export async function GET(req: Request , {params}:{params:Promise<{slug: string}>}){
+    try {
+        await connectDB();
+        const { slug } = await params;
+        const blog = await BlogModel.findOneAndUpdate({slug} , {$inc: {views: 1}} , {new: true})
+        if(!blog){
+            return NextResponse.json({ 
+                success: false,
+                error: "Blog not found" },
+                { status: 404 })
+        }
+        return NextResponse.json(
+            {
+                success: true,
+                data: blog
+            },
+            {
+                status: 200
+            }
+        )
+    } catch (error) {
+        console.error(error)
+        return NextResponse.json(
+            {
+                success: false,
+                error: "Error in finding the data"
+            },
+            {status: 500}
+        )
+    }
+}
+
+
+export async function PUT(req: Request , {params}:{params:Promise<{slug: string}>}){
+    try {
+        await connectDB();
+        const { slug } = await params;
+        const body = await req.json();
+        const updatedBlog = await BlogModel.findOneAndUpdate(
+            {slug},
+            body,
+            {new : true}
+        )
+        if(!updatedBlog){
+            return NextResponse.json(
+                {
+                    success: false,
+                    error: "Blog not found"
+                },
+                { status: 404 }
+            );
+        }
+        return NextResponse.json(
+            {
+                success: true,
+                data: updatedBlog
+            },
+            { status: 200 }
+        );
+    } catch (error) {
+        console.error(error)
+        return NextResponse.json(
+            {
+                success: false,
+                error: "Failed to update blog"
+            },
+            { status: 500 }
+        );
+        
+    }
+}
+
+
+export async function DELETE(req: Request,{ params }: { params: Promise<{ slug: string }> }) {
+  
+    try {
+        await connectDB()
+
+        const { slug } = await params;
+        const deletedBlog = await BlogModel.findOneAndDelete({slug: slug});
+        if (!deletedBlog) {
+        return NextResponse.json(
+            {
+            success: false,
+            error: "Blog not found",
+            },
+            { status: 404 }
+        )
+        }
+        return NextResponse.json(
+        {
+            success: true,
+            message: "Blog deleted successfully",
+        },
+        { status: 200 }
+        )
+  } catch (error) {
+        console.error(error)
+        return NextResponse.json(
+        {
+            success: false,
+            error: "Failed to delete blog",
+        },
+        { status: 500 }
+        )
+    }
+}
+
+
+====================================================================================================
+FILE: src\app\api\blog\route.ts
+====================================================================================================
+
+import { NextResponse , NextRequest } from "next/server";
+import { connectDB } from "@/dbConfig/dbConfig";
+import { BlogModel } from "@/models/Blog";
+import { calculateReadingTime } from "@/lib/ReadingTime";
+
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
+export async function POST( req: NextRequest){
+    try {
+        await connectDB();
+        const body = await req.json();
+        const readingTime = calculateReadingTime(body.content)
+        const blog = await BlogModel.create({...body, readingTime});
+        return NextResponse.json({
+            success: true,
+            data: blog
+            },
+            {
+                status: 201
+            }
+        );
+    } catch (error) {
+        console.error(error)
+        return NextResponse.json(
+            {
+                success: false,
+                error: "Failed to create blog"
+            },
+            {
+                status: 500
+            }
+        );
+    }
+}
+
+export async function GET( req: NextRequest){
+    try {
+        await connectDB()
+
+        const limitParams = req.nextUrl.searchParams.get("limit");
+        const showAll = req.nextUrl.searchParams.get("all");
+        const limit = Math.min(parseInt(limitParams || "50"), 50);
+
+        const filter = showAll === "true" ? {} : { published: true }
+
+        const blogs = await BlogModel.find(filter)
+            .sort({ createdAt: -1 })
+            .limit(limit);
+        return NextResponse.json({
+        success: true,
+        count: blogs.length,
+        data: blogs,
+        });     
+    } catch (error) {
+        console.error(error)
+        return NextResponse.json(
+        {
+            success: false,
+            error: "Failed to fetch blogs",
+        },
+        { status: 500 }
+        );
+    }
+}
+
+
+====================================================================================================
+FILE: src\app\api\contact\route.ts
+====================================================================================================
+
+import { NextResponse } from "next/server";
+import { connectDB } from "@/dbConfig/dbConfig";
+import Contact from "@/models/contact";
+import { rateLimit } from "@/lib/rateLimiter";
+
+export async function POST(req: Request) {
+  try {
+    const { email , source} = await req.json();
+
+    // ✅ Email Regex Validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!email || !emailRegex.test(email)) {
+      return NextResponse.json(
+        { success: false, message: "Invalid email" },
+        { status: 400 }
+      );
+    }
+
+    // ✅ Get IP & User Agent
+    const ip =
+      req.headers.get("x-forwarded-for") ||
+      req.headers.get("x-real-ip") ||
+      "unknown";
+
+    const userAgent = req.headers.get("user-agent") || "unknown";
+
+    // ✅ Rate Limit Check
+    if (!rateLimit(ip)) {
+      return NextResponse.json(
+        { success: false, message: "Too many requests. Try later." },
+        { status: 429 }
+      );
+    }
+
+    await connectDB();
+
+    // ✅ Prevent duplicates
+    const exists = await Contact.findOne({ email });
+    if (exists) {
+      return NextResponse.json(
+        { success: false, message: "Email already submitted" },
+        { status: 409 }
+      );
+    }
+
+    await Contact.create({
+      email,
+      source: source || "unknown",
+      ip,
+      userAgent,
+    });
+
+    return NextResponse.json({
+      success: true,
+      message: "Saved successfully",
+    });
+  } catch (error) {
+    return NextResponse.json(
+      { success: false, message: "Server error" },
+      { status: 500 }
+    );
+  }
+}
+
+
+====================================================================================================
+FILE: src\app\api\project\[slug]\route.ts
+====================================================================================================
+
+import { ProjectModel } from "@/models/Project";
+import { connectDB } from "@/dbConfig/dbConfig";
+import { NextResponse } from "next/server";
+
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
+export async function GET(req: Request , {params}:{params:Promise<{slug: string}>}){
+    try {
+        await connectDB();
+        const { slug } = await params;
+        const project = await ProjectModel.findOneAndUpdate({slug} , {$inc: {views: 1}} , {new: true})
+        if(!project){
+            return NextResponse.json({ 
+                success: false,
+                error: "Project not found" },
+                { status: 404 })
+        }
+        return NextResponse.json(
+            {
+                success: true,
+                data: project
+            },
+            {
+                status: 200
+            }
+        )
+    } catch (error) {
+        console.error(error)
+        return NextResponse.json(
+            {
+                success: false,
+                error: "Error in finding the data"
+            },
+            {status: 500}
+        )
+    }
+}
+
+
+export async function PUT(req: Request , {params}:{params:Promise<{slug: string}>}){
+    try {
+        await connectDB();
+        const { slug } = await params;
+        const body = await req.json();
+        const updatedproject = await ProjectModel.findOneAndUpdate(
+            {slug},
+            body,
+            {new : true}
+        )
+        if(!updatedproject){
+            return NextResponse.json(
+                {
+                    success: false,
+                    error: "project not found"
+                },
+                { status: 404 }
+            );
+        }
+        return NextResponse.json(
+            {
+                success: true,
+                data: updatedproject
+            },
+            { status: 200 }
+        );
+    } catch (error) {
+        console.error(error)
+        return NextResponse.json(
+            {
+                success: false,
+                error: "Failed to update project"
+            },
+            { status: 500 }
+        );
+        
+    }
+}
+
+
+export async function DELETE(req: Request,{ params }: { params: Promise<{ slug: string }> }) {
+  
+    try {
+        await connectDB()
+
+        const { slug } = await params;
+        const deletedproject = await ProjectModel.findOneAndDelete({slug: slug});
+        if (!deletedproject) {
+        return NextResponse.json(
+            {
+            success: false,
+            error: "project not found",
+            },
+            { status: 404 }
+        )
+        }
+        return NextResponse.json(
+        {
+            success: true,
+            message: "project deleted successfully",
+        },
+        { status: 200 }
+        )
+  } catch (error) {
+        console.error(error)
+        return NextResponse.json(
+        {
+            success: false,
+            error: "Failed to delete project",
+        },
+        { status: 500 }
+        )
+    }
+}
+
+
+====================================================================================================
+FILE: src\app\api\project\route.ts
+====================================================================================================
+
+import { NextResponse , NextRequest } from "next/server";
+import { connectDB } from "@/dbConfig/dbConfig";
+import { ProjectModel } from "@/models/Project";
+
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
+export async function POST( req: NextRequest){
+    try {
+        await connectDB();
+        const body = await req.json();
+        const project = await ProjectModel.create({...body});
+        return NextResponse.json({
+            success: true,
+            data: project
+            },
+            {
+                status: 201
+            }
+        );
+    } catch (error) {
+        console.error(error)
+        return NextResponse.json(
+            {
+                success: false,
+                error: "Failed to create a project"
+            },
+            {
+                status: 500
+            }
+        );
+    }
+}
+
+export async function GET( req: NextRequest){
+    try {
+        await connectDB()
+
+        const limitParams = req.nextUrl.searchParams.get("limit");
+        const showAll = req.nextUrl.searchParams.get("all");
+        const filter = showAll === "true" ? {} : { published: true}
+        const limit = Math.min(parseInt(limitParams || "50"), 50);
+        const projects = await ProjectModel.find( filter )
+            .sort({ createdAt: -1 })
+            .limit(limit);
+        return NextResponse.json({
+            success: true,
+            count: projects.length,
+            data: projects,
+        });     
+    } catch (error) {
+        console.error(error)
+        return NextResponse.json(
+        {
+            success: false,
+            error: "Failed to fetch projects",
+        },
+        { status: 500 }
+        );
+    }
+}
+
+
+====================================================================================================
+FILE: src\app\api\upload-image\route.ts
+====================================================================================================
+
+import cloudinary from "@/lib/cloudinary";
+
+type CloudinaryUploadResult = {
+  secure_url: string
+}
+
+export async function POST(req: Request){
+  try {
+    const formData = await req.formData()
+    const file = formData.get("file") as File | null;
+    if(!file){
+      return Response.json({
+        success: false,
+        error: "No file uploaded"
+      },{status: 400})
+    }
+    if(!file.type.startsWith("image/")){
+      return Response.json({
+          success: false,
+          error: "Invalid File Type"
+        },{status: 400})
+    }
+    const buffer = Buffer.from(await file.arrayBuffer())
+
+    const result  = await new Promise<CloudinaryUploadResult>((resolve , reject)=>{
+      cloudinary.uploader.upload_stream({folder: "new-site"} , (error , res)=>{
+        if (error) reject(error)
+        if (!res) {
+          reject(new Error("Upload failed"))
+          return
+        }
+        resolve({secure_url: res.secure_url})
+      }).end(buffer)
+    })
+    return Response.json({ url: result.secure_url });
+  } catch (error) {
+    console.error(error)
+      return Response.json({ 
+        status: false,
+        error: "Upload failed" }, 
+        { status: 500 })
+  }
+}
+
+
+====================================================================================================
+FILE: src\components\home\AiLabSection\aiLabData.ts
+====================================================================================================
+
+import { Brain, Bot, Mic, Sparkles } from "lucide-react";
+
+export const aiLabItems = [
+  {
+    title: "Multi-Agent System",
+    description:
+      "Collaborative AI agents solving complex reasoning tasks.",
+    icon: Bot,
+    status: "Research",
+  },
+  {
+    title: "RAG Knowledge Assistant",
+    description:
+      "Context-aware assistant powered by vector search.",
+    icon: Brain,
+    status: "Building",
+  },
+  {
+    title: "Voice AI Assistant",
+    description:
+      "Real-time speech-to-speech conversational agent.",
+    icon: Mic,
+    status: "Prototype",
+  },
+  {
+    title: "AI Automation Tools",
+    description:
+      "Autonomous workflows using LLM decision pipelines.",
+    icon: Sparkles,
+    status: "Experiment",
+  },
+];
+
+
+====================================================================================================
+FILE: src\components\home\FeaturedProjectSection\projectData.ts
+====================================================================================================
+
+export const projects = [
+  {
+    title: "Real-time Chat Application",
+    description:
+      "Scalable chat platform using WebSockets and Redis for real-time messaging.",
+    tech: ["Next.js", "Socket.IO", "Redis", "TypeScript"],
+    image: "/projects/chat.png",
+    github: "#",
+    demo: "#",
+    featured: true,
+  },
+  {
+    title: "AI Tool Platform",
+    description:
+      "Multi-model AI platform integrating chat, image generation and agents.",
+    tech: ["Next.js", "OpenAI", "Node.js"],
+    image: "/projects/ai.png",
+    github: "#",
+    demo: "#",
+  },
+  {
+    title: "Blog Platform",
+    description:
+      "Full-stack blogging system with authentication and admin dashboard.",
+    tech: ["Next.js", "MongoDB"],
+    image: "/projects/blog.png",
+    github: "#",
+    demo: "#",
+  },
+];
+
+
+====================================================================================================
+FILE: src\components\home\proofOfWorkSection\proofData.ts
+====================================================================================================
+
+import {
+  Cpu,
+  Brain,
+  Activity,
+  Server
+} from "lucide-react";
+
+export const proofItems = [
+  {
+    title: "Full-Stack Systems",
+    description:
+      "Building scalable applications using Next.js, Node.js and modern databases.",
+    icon: Cpu,
+  },
+  {
+    title: "AI Engineering",
+    description:
+      "Developing AI agents, LLM tools and intelligent automation systems.",
+    icon: Brain,
+  },
+  {
+    title: "Real-Time Applications",
+    description:
+      "Experience with WebSockets, Redis and live communication systems.",
+    icon: Activity,
+  },
+  {
+    title: "DevOps & Infrastructure",
+    description:
+      "Dockerized deployments, Linux environments and scalable backend setup.",
+    icon: Server,
+  },
+];
+
+
+====================================================================================================
+FILE: src\components\home\techStack\stackData.ts
+====================================================================================================
+
+export const techStack = [
+  {
+    category: "Languages",
+    items: ["JavaScript", "TypeScript", "Python", "Java", "C"],
+  },
+  {
+    category: "Frontend",
+    items: [
+      "Next.js",
+      "React",
+      "Tailwind CSS",
+      "Shadcn/UI",
+      "HTML",
+      "CSS",
+    ],
+  },
+  {
+    category: "Backend",
+    items: [
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "PostgreSQL", 
+      "Redis",
+      "REST APIs",
+      "JWT Auth",
+    ],
+  },
+  {
+    category: "AI / ML",
+    items: [
+      "LangChain",
+      "LangGraph", 
+      "RAG",
+      "AI Agents",
+      "Prompt Engineering",
+      "Gemini API", 
+      "Groq API", 
+      "OpenAI-style API Design",
+    ],
+  },
+  {
+    category: "DevOps & Tools",
+    items: [
+      "Docker",
+      "Linux",
+      "Nginx",
+      //"CI/CD",
+      "Git",
+      "Vercel",
+    ],
+  },
+];
+
+
+====================================================================================================
+FILE: src\components\utils\blogs\blogData.ts
+====================================================================================================
+
+import { BlogType } from "@/types/blog";
+
+export const blogs: BlogType[] = [
+{
+  _id: "68866660f85b6b63bd7e407f",
+  title: "Getting Started with React", 
+  slug: "getting-started-with-react",
+  content: "React is a powerful JavaScript library for building user interfaces. It breaks your UI into components.\r\n\r\n![React Logo](https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg)\r\n### Key Concepts:\n- **JSX**: JavaScript + XML\n- **Components**: Reusable UI blocks\n- **State & Props**: For dynamic behavior\n\nStart by creating a component like this:\n```jsx\nfunction Welcome() {\n  return <h1>Hello, React!</h1>;\n}\n```",
+  excerpt: "A beginner-friendly guide to building your first React application and understanding components, props, and state.",
+  cover: "https://res.cloudinary.com/dnc8k4jsv/image/upload/v1753638497/blog-covers/bitdogjfwvrwzxupssjr.jpg",
+  tags: ["react", "javascript", "frontend"],
+  createdAt: new Date("2025-07-27T17:48:16.786Z"),
+  authorName: "Sayan Dey",
+  featured: true,
+  published: true
+},
+
+{
+  _id: "68866858f85b6b63bd7e4083",
+  title: "Introduction to Next.js for Full Stack Development",
+  slug: "intro-to-nextjs-fullstack",
+  content: "Next.js is a full-stack framework built on React. It supports SSR, SSG, API routes, and more.\r\n\r\n![Next.js Diagram](https://res.cloudinary.com/dnc8k4jsv/image/upload/v1753638805/blog-images/cv3fosoj8wc60bnh3f69.png)\r\n### Features:\n- File-based routing\n- API routes for backend logic\n- Image optimization\n\nExample of a simple API route:\n```ts\nexport default function handler(req, res) {\n  res.status(200).json({ message: \"Hello API!\" });\n}\n```",
+  excerpt: "Learn how Next.js enables server-side rendering, routing, and full-stack capabilities with API routes.",
+  cover: "https://res.cloudinary.com/dnc8k4jsv/image/upload/v1753639000/blog-covers/vssrtsbie3l8jrdobfmx.jpg",
+  tags: ["nextjs", "fullstack", "javascript"],
+  createdAt: new Date("2025-07-27T17:56:40.291Z"),
+  authorName: "Sayan Dey",
+  featured: true,
+  published: true
+},
+
+{
+  _id: "688669b3f85b6b63bd7e4087",
+  title: "Understanding JavaScript Promises",
+  slug: "understanding-javascript-promises",
+  content: "Promises are used to handle asynchronous tasks in JavaScript.\r\n\r\n![Async Flow](https://res.cloudinary.com/dnc8k4jsv/image/upload/v1753639219/blog-images/lxy39mohwfr9idhshxyw.jpg)\r\n\n```js\nconst fetchData = () => {\n  return new Promise((resolve) => {\n    setTimeout(() => resolve(\"Data loaded\"), 1000);\n  });\n};\n\nfetchData().then(console.log);\n```",
+  excerpt: "Promises help manage asynchronous operations. Learn how to use them with `.then()`, `catch()`, and `async/await`.",
+  cover: "https://res.cloudinary.com/dnc8k4jsv/image/upload/v1753639347/blog-covers/o5b9ktchdyp5zpf0iwhk.jpg",
+  tags: ["javascript", "async", "promises"],
+  createdAt: new Date("2025-07-27T18:02:27.587Z"),
+  authorName: "Sayan Dey",
+  featured: false,
+  published: true
+},
+
+{
+  _id: "68866a8df85b6b63bd7e408f",
+  title: "Deploying Your App with Vercel",
+  slug: "deploy-with-vercel",
+  content: "Vercel is a platform for deploying frontend frameworks like Next.js...",
+  excerpt: "Vercel makes deployment seamless for frontend and full-stack apps.",
+  cover: "https://res.cloudinary.com/dnc8k4jsv/image/upload/v1753639565/blog-covers/qnxkzl3rpcgynkpywfo9.png",
+  tags: ["deployment", "vercel", "frontend"],
+  createdAt: new Date("2025-07-27T18:06:05.041Z"),
+  authorName: "Sayan Dey",
+  featured: false,
+  published: true
+},
+
+{
+  _id: "68866b46f85b6b63bd7e4093",
+  title: "Top 5 VS Code Extensions for Web Developers",
+  slug: "top-vscode-extensions",
+  content: "VS Code is a powerful editor...",
+  excerpt: "Enhance your productivity with these top VS Code extensions.",
+  cover: "https://res.cloudinary.com/dnc8k4jsv/image/upload/v1753639750/blog-covers/abxdvsoyfn2ss8tgwdp1.jpg",
+  tags: ["vscode", "productivity", "tools"],
+  createdAt: new Date("2025-07-27T18:09:10.059Z"),
+  authorName: "Sayan Dey",
+  featured: false,
+  published: true
+},
+
+{
+  _id: "68866c02f85b6b63bd7e4097",
+  title: "Building a Personal Blog with Markdown and Next.js",
+  slug: "personal-blog-with-markdown",
+  content: "You can build a blog with Markdown and Next.js...",
+  excerpt: "Create a fast and customizable personal blog.",
+  cover: "https://res.cloudinary.com/dnc8k4jsv/image/upload/v1753639939/blog-covers/yj4ymt3eefvcx3k2imi5.png",
+  tags: ["blog", "markdown", "nextjs"],
+  createdAt: new Date("2025-07-27T18:12:18.660Z"),
+  authorName: "Sayan Dey",
+  featured: false,
+  published: false
+},
+
+{
+  _id: "68866eb3f85b6b63bd7e40dc",
+  title: "Mastering Git and GitHub for Collaboration",
+  slug: "mastering-git-github",
+  content: "Git is a distributed version control system...",
+  excerpt: "Learn how to use Git and GitHub to manage code versions.",
+  cover: "https://res.cloudinary.com/dnc8k4jsv/image/upload/v1753640628/blog-covers/xwscr742lzizdoryzgqn.jpg",
+  tags: ["git", "github", "version-control"],
+  createdAt: new Date("2025-07-27T18:23:47.735Z"),
+  authorName: "Sayan Dey",
+  featured: false,
+  published: false
+},
+
+{
+  _id: "68867146f85b6b63bd7e40e0",
+  title: "How to Build a Chat App with WebSockets",
+  slug: "build-chat-app-websockets",
+  content: "WebSockets enable two-way communication...",
+  excerpt: "Real-time messaging made easy using WebSockets.",
+  cover: "https://res.cloudinary.com/dnc8k4jsv/image/upload/v1753641286/blog-covers/qyezuy93oe7xlgo25nqm.png",
+  tags: ["websockets", "real-time", "nodejs", "chat-app"],
+  createdAt: new Date("2025-07-27T18:34:46.075Z"),
+  authorName: "Sayan Dey",
+  featured: true,
+  published: true
+}
+];
+
+
+====================================================================================================
+FILE: src\data\ai-lab.ts
+====================================================================================================
+
+import { AIElement } from "@/types/ai-lab"
+
+export const aiElements: AIElement[] = [
+  {
+    _id: "ai-tool-platform",
+    slug: "ai-tool-platform",
+    title: "AI Tool Platform",
+    excerpt: "Unified AI platform combining assistants and tools.",
+    description:
+      "A unified AI platform combining chat assistants, image generation, and developer productivity tools.",
+    category: "experiment",
+    status: "building",
+    tech: ["Next.js", "OpenAI API", "Redis", "TypeScript"],
+    coverImage:
+      "https://images.pexels.com/photos/16027824/pexels-photo-16027824.jpeg",
+    tags: ["ai", "platform"],
+    github: "https://github.com/sayan-dey12",
+    demo: "#",
+    featured: true,
+    published: true,
+    createdAt: new Date("2026-02-10"),
+    updatedAt: new Date("2026-02-10"),
+  },
+
+  {
+    _id: "coding-agent",
+    slug: "coding-agent",
+    title: "AI Coding Agent",
+    excerpt: "Autonomous AI that analyzes and improves codebases.",
+    description:
+      "An autonomous agent that analyzes codebases and suggests improvements.",
+    category: "agent",
+    status: "building",
+    tech: ["LLM", "Node.js", "AST Analysis"],
+    coverImage: "/ai-lab/coding-agent.png",
+    tags: ["agent", "coding"],
+    featured: false,
+    published: true,
+    createdAt: new Date("2026-02-15"),
+    updatedAt: new Date("2026-02-15"),
+  },
+
+  {
+    _id: "research-agent",
+    slug: "research-agent",
+    title: "Research Agent",
+    excerpt: "AI agent that searches the web and summarizes research.",
+    description:
+      "An AI agent that searches the web and produces structured summaries.",
+    category: "agent",
+    status: "idea",
+    tech: ["OpenAI", "Search APIs", "RAG"],
+    coverImage: "/ai-lab/research-agent.png",
+    tags: ["agent", "research"],
+    featured: false,
+    published: true,
+    createdAt: new Date("2026-02-20"),
+    updatedAt: new Date("2026-02-20"),
+  },
+
+  {
+    _id: "rag-knowledge-base",
+    slug: "rag-knowledge-base",
+    title: "RAG Knowledge Base",
+    excerpt: "AI question answering using a custom knowledge base.",
+    description:
+      "An AI system that answers questions using a custom knowledge base powered by RAG.",
+    category: "experiment",
+    status: "idea",
+    tech: ["Vector DB", "Embeddings", "LangChain"],
+    coverImage:
+      "https://images.pexels.com/photos/15863103/pexels-photo-15863103.jpeg",
+    tags: ["rag", "knowledge"],
+    github: "#",
+    featured: false,
+    published: true,
+    createdAt: new Date("2026-02-18"),
+    updatedAt: new Date("2026-02-18"),
+  },
+
+  {
+    _id: "prompt-playground",
+    slug: "prompt-playground",
+    title: "Prompt Engineering Playground",
+    excerpt: "Experiment with prompts and compare AI outputs.",
+    description:
+      "A tool to experiment with prompt engineering strategies and compare outputs.",
+    category: "tool",
+    status: "building",
+    tech: ["Next.js", "OpenAI API"],
+    coverImage:
+      "https://images.pexels.com/photos/1749303/pexels-photo-1749303.jpeg",
+    tags: ["prompt", "tool"],
+    featured: false,
+    published: true,
+    createdAt: new Date("2026-02-12"),
+    updatedAt: new Date("2026-02-12"),
+  },
+
+  {
+    _id: "ai-meeting-summarizer",
+    slug: "ai-meeting-summarizer",
+    title: "AI Meeting Summarizer",
+    excerpt: "Convert meetings into summaries with action items.",
+    description:
+      "Automatically converts meeting recordings into structured summaries with action items.",
+    category: "experiment",
+    status: "idea",
+    tech: ["Whisper", "OpenAI API", "Next.js"],
+    coverImage: "/ai-lab/meeting-summarizer.png",
+    tags: ["ai", "meeting"],
+    featured: false,
+    published: true,
+    createdAt: new Date("2026-03-02"),
+    updatedAt: new Date("2026-03-02"),
+  },
+
+  {
+    _id: "ai-code-review-system",
+    slug: "ai-code-review-system",
+    title: "AI Code Review System",
+    excerpt: "AI reviews pull requests for quality and security.",
+    description:
+      "An AI-powered tool that reviews pull requests and provides feedback on code quality and security.",
+    category: "experiment",
+    status: "building",
+    tech: ["LLM", "GitHub API", "Node.js"],
+    coverImage: "/ai-lab/code-review.png",
+    tags: ["ai", "code-review"],
+    github: "#",
+    featured: false,
+    published: true,
+    createdAt: new Date("2026-03-01"),
+    updatedAt: new Date("2026-03-01"),
+  },
+
+  {
+    _id: "multi-agent-coordinator",
+    slug: "multi-agent-coordinator",
+    title: "Multi-Agent Coordinator",
+    excerpt: "Orchestrates multiple AI agents for complex tasks.",
+    description:
+      "A system that orchestrates multiple AI agents to collaborate on complex tasks.",
+    category: "experiment",
+    status: "idea",
+    tech: ["Agents", "LangChain", "Task Graph"],
+    coverImage: "/ai-lab/multi-agent.png",
+    tags: ["agents", "coordination"],
+    featured: false,
+    published: true,
+    createdAt: new Date("2026-02-28"),
+    updatedAt: new Date("2026-02-28"),
+  },
+
+  {
+    _id: "documentation-agent",
+    slug: "documentation-agent",
+    title: "Documentation Agent",
+    excerpt: "Generate project documentation automatically.",
+    description:
+      "Generates documentation automatically from source code and project structure.",
+    category: "agent",
+    status: "idea",
+    tech: ["LLM", "Code Parsing"],
+    coverImage: "/ai-lab/documentation-agent.png",
+    tags: ["documentation"],
+    featured: false,
+    published: true,
+    createdAt: new Date("2026-03-03"),
+    updatedAt: new Date("2026-03-03"),
+  },
+
+  {
+    _id: "debugging-agent",
+    slug: "debugging-agent",
+    title: "Debugging Agent",
+    excerpt: "AI assistant for debugging stack traces.",
+    description:
+      "Analyzes stack traces and logs to suggest possible bug fixes.",
+    category: "agent",
+    status: "idea",
+    tech: ["LLM", "Log Analysis"],
+    coverImage: "/ai-lab/debugging-agent.png",
+    tags: ["debugging"],
+    featured: false,
+    published: true,
+    createdAt: new Date("2026-03-03"),
+    updatedAt: new Date("2026-03-03"),
+  },
+
+  {
+    _id: "ai-text-refiner",
+    slug: "ai-text-refiner",
+    title: "AI Text Refiner",
+    excerpt: "Improve grammar and tone of written content.",
+    description:
+      "Improves grammar, tone, and clarity of written content using AI.",
+    category: "tool",
+    status: "completed",
+    tech: ["OpenAI API", "Next.js"],
+    coverImage: "/ai-lab/text-refiner.png",
+    tags: ["text", "ai"],
+    featured: false,
+    published: true,
+    createdAt: new Date("2026-02-25"),
+    updatedAt: new Date("2026-02-25"),
+  },
+
+  {
+    _id: "dataset-labeling-tool",
+    slug: "dataset-labeling-tool",
+    title: "AI Dataset Labeling Tool",
+    excerpt: "Assist dataset labeling with AI predictions.",
+    description:
+      "Assists in labeling datasets using AI predictions to speed up annotation workflows.",
+    category: "tool",
+    status: "idea",
+    tech: ["ML", "Active Learning"],
+    coverImage: "/ai-lab/dataset-tool.png",
+    tags: ["dataset", "ml"],
+    featured: false,
+    published: true,
+    createdAt: new Date("2026-02-27"),
+    updatedAt: new Date("2026-02-27"),
+  },
+
+  {
+    _id: "agent-collaboration-research",
+    slug: "agent-collaboration-research",
+    title: "Agent Collaboration Research",
+    excerpt: "Researching coordination strategies for agents.",
+    description:
+      "Exploring coordination strategies for multi-agent systems solving complex tasks.",
+    category: "research",
+    status: "idea",
+    tech: ["Multi-Agent Systems", "Planning Algorithms"],
+    coverImage: "/ai-lab/agent-research.png",
+    tags: ["research", "agents"],
+    featured: false,
+    published: true,
+    createdAt: new Date("2026-03-04"),
+    updatedAt: new Date("2026-03-04"),
+  },
+]
+
+
+====================================================================================================
+FILE: src\data\blogData.ts
+====================================================================================================
+
+import { BlogType } from "@/types/blog";
+
+export const blogs: BlogType[] = [
+{
+  _id: "68866660f85b6b63bd7e407f",
+  title: "Getting Started with React",
+  slug: "getting-started-with-react",
+  content: "React is a powerful JavaScript library for building user interfaces. It breaks your UI into components.\r\n\r\n![React Logo](https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg)\r\n### Key Concepts:\n- **JSX**: JavaScript + XML\n- **Components**: Reusable UI blocks\n- **State & Props**: For dynamic behavior\n\nStart by creating a component like this:\n```jsx\nfunction Welcome() {\n  return <h1>Hello, React!</h1>;\n}\n```",
+  excerpt: "A beginner-friendly guide to building your first React application and understanding components, props, and state.",
+  cover: "https://res.cloudinary.com/dnc8k4jsv/image/upload/v1753638497/blog-covers/bitdogjfwvrwzxupssjr.jpg",
+  tags: ["react", "javascript", "frontend"],
+  createdAt: new Date("2025-07-27T17:48:16.786Z"),
+  authorName: "Sayan Dey",
+  featured: true,
+  published: true
+},
+
+{
+  _id: "68866858f85b6b63bd7e4083",
+  title: "Introduction to Next.js for Full Stack Development",
+  slug: "intro-to-nextjs-fullstack",
+  content: "Next.js is a full-stack framework built on React. It supports SSR, SSG, API routes, and more.\r\n\r\n![Next.js Diagram](https://res.cloudinary.com/dnc8k4jsv/image/upload/v1753638805/blog-images/cv3fosoj8wc60bnh3f69.png)\r\n### Features:\n- File-based routing\n- API routes for backend logic\n- Image optimization\n\nExample of a simple API route:\n```ts\nexport default function handler(req, res) {\n  res.status(200).json({ message: \"Hello API!\" });\n}\n```",
+  excerpt: "Learn how Next.js enables server-side rendering, routing, and full-stack capabilities with API routes.",
+  cover: "https://res.cloudinary.com/dnc8k4jsv/image/upload/v1753639000/blog-covers/vssrtsbie3l8jrdobfmx.jpg",
+  tags: ["nextjs", "fullstack", "javascript"],
+  createdAt: new Date("2025-07-27T17:56:40.291Z"),
+  authorName: "Sayan Dey",
+  featured: true,
+  published: true
+},
+
+{
+  _id: "688669b3f85b6b63bd7e4087",
+  title: "Understanding JavaScript Promises",
+  slug: "understanding-javascript-promises",
+  content: "Promises are used to handle asynchronous tasks in JavaScript.\r\n\r\n![Async Flow](https://res.cloudinary.com/dnc8k4jsv/image/upload/v1753639219/blog-images/lxy39mohwfr9idhshxyw.jpg)\r\n\n```js\nconst fetchData = () => {\n  return new Promise((resolve) => {\n    setTimeout(() => resolve(\"Data loaded\"), 1000);\n  });\n};\n\nfetchData().then(console.log);\n```",
+  excerpt: "Promises help manage asynchronous operations. Learn how to use them with `.then()`, `catch()`, and `async/await`.",
+  cover: "https://res.cloudinary.com/dnc8k4jsv/image/upload/v1753639347/blog-covers/o5b9ktchdyp5zpf0iwhk.jpg",
+  tags: ["javascript", "async", "promises"],
+  createdAt: new Date("2025-07-27T18:02:27.587Z"),
+  authorName: "Sayan Dey",
+  featured: false,
+  published: true
+},
+
+{
+  _id: "68866a8df85b6b63bd7e408f",
+  title: "Deploying Your App with Vercel",
+  slug: "deploy-with-vercel",
+  content: "Vercel is a platform for deploying frontend frameworks like Next.js...",
+  excerpt: "Vercel makes deployment seamless for frontend and full-stack apps.",
+  cover: "https://res.cloudinary.com/dnc8k4jsv/image/upload/v1753639565/blog-covers/qnxkzl3rpcgynkpywfo9.png",
+  tags: ["deployment", "vercel", "frontend"],
+  createdAt: new Date("2025-07-27T18:06:05.041Z"),
+  authorName: "Sayan Dey",
+  featured: false,
+  published: true
+},
+
+{
+  _id: "68866b46f85b6b63bd7e4093",
+  title: "Top 5 VS Code Extensions for Web Developers",
+  slug: "top-vscode-extensions",
+  content: "VS Code is a powerful editor...",
+  excerpt: "Enhance your productivity with these top VS Code extensions.",
+  cover: "https://res.cloudinary.com/dnc8k4jsv/image/upload/v1753639750/blog-covers/abxdvsoyfn2ss8tgwdp1.jpg",
+  tags: ["vscode", "productivity", "tools"],
+  createdAt: new Date("2025-07-27T18:09:10.059Z"),
+  authorName: "Sayan Dey",
+  featured: false,
+  published: true
+},
+
+{
+  _id: "68866c02f85b6b63bd7e4097",
+  title: "Building a Personal Blog with Markdown and Next.js",
+  slug: "personal-blog-with-markdown",
+  content: "You can build a blog with Markdown and Next.js...",
+  excerpt: "Create a fast and customizable personal blog.",
+  cover: "https://res.cloudinary.com/dnc8k4jsv/image/upload/v1753639939/blog-covers/yj4ymt3eefvcx3k2imi5.png",
+  tags: ["blog", "markdown", "nextjs"],
+  createdAt: new Date("2025-07-27T18:12:18.660Z"),
+  authorName: "Sayan Dey",
+  featured: false,
+  published: false
+},
+
+{
+  _id: "68866eb3f85b6b63bd7e40dc",
+  title: "Mastering Git and GitHub for Collaboration",
+  slug: "mastering-git-github",
+  content: "Git is a distributed version control system...",
+  excerpt: "Learn how to use Git and GitHub to manage code versions.",
+  cover: "https://res.cloudinary.com/dnc8k4jsv/image/upload/v1753640628/blog-covers/xwscr742lzizdoryzgqn.jpg",
+  tags: ["git", "github", "version-control"],
+  createdAt: new Date("2025-07-27T18:23:47.735Z"),
+  authorName: "Sayan Dey",
+  featured: false,
+  published: false
+},
+
+{
+  _id: "68867146f85b6b63bd7e40e0",
+  title: "How to Build a Chat App with WebSockets",
+  slug: "build-chat-app-websockets",
+  content: "WebSockets enable two-way communication...",
+  excerpt: "Real-time messaging made easy using WebSockets.",
+  cover: "https://res.cloudinary.com/dnc8k4jsv/image/upload/v1753641286/blog-covers/qyezuy93oe7xlgo25nqm.png",
+  tags: ["websockets", "real-time", "nodejs", "chat-app"],
+  createdAt: new Date("2025-07-27T18:34:46.075Z"),
+  authorName: "Sayan Dey",
+  featured: true,
+  published: true
+}
+];
+
+
+====================================================================================================
+FILE: src\data\project.ts
+====================================================================================================
+
+import { Project } from "@/types/project"
+
+export const projects: Project[] = [
+{
+  _id: "chat-app",
+  slug: "chat-app",
+  title: "Real-time Chat Application",
+  excerpt: "Scalable real-time chat system using WebSockets and Redis.",
+  description:
+    "A scalable real-time chat system built using WebSockets and Redis Pub/Sub to enable fast messaging across multiple clients.",
+  coverImage: "https://images.pexels.com/photos/5426403/pexels-photo-5426403.jpeg",
+  category: "backend",
+  status: "completed",
+  tags: ["Next.js", "Socket.io", "Redis", "TypeScript"],
+  github: "https://github.com/yourusername/chat-app",
+  demo: "https://chat.yourdomain.com",
+  featured: true,
+  highlight: "Real-time messaging using Redis Pub/Sub architecture",
+  createdAt: new Date("2025-07-15"),
+  published: true
+},
+
+{
+  _id: "video-calling-app",
+  slug: "video-calling-app",
+  title: "Video Calling Platform",
+  excerpt: "Peer-to-peer video communication platform using WebRTC.",
+  description:
+    "A real-time video communication platform with room-based calling using WebRTC and a signaling server.",
+  coverImage: "https://images.pexels.com/photos/5876447/pexels-photo-5876447.jpeg",
+  category: "systems",
+  status: "in-progress",
+  tags: ["WebRTC", "Node.js", "Socket.io", "Next.js"],
+  github: "https://github.com/yourusername/video-call",
+  featured: true,
+  highlight: "Peer-to-peer video streaming using WebRTC",
+  createdAt: new Date("2025-09-02"),
+  published: true
+},
+
+{
+  _id: "ai-tool-platform",
+  slug: "ai-tool-platform",
+  title: "AI Tool Platform",
+  excerpt: "Unified platform combining multiple AI tools.",
+  description:
+    "A platform combining multiple AI tools including text generation, prompt assistants, and automation agents.",
+  coverImage: "https://images.pexels.com/photos/16027824/pexels-photo-16027824.jpeg",
+  category: "ai",
+  status: "in-progress",
+  tags: ["Next.js", "OpenAI API", "LangChain", "TypeScript"],
+  github: "https://github.com/yourusername/ai-tools",
+  featured: false,
+  highlight: "Multi-model AI tool integration with unified UI",
+  createdAt: new Date("2025-10-10"),
+  published: true
+},
+
+{
+  _id: "airbnb-clone",
+  slug: "airbnb-clone",
+  title: "Airbnb Clone",
+  excerpt: "Full-stack accommodation booking platform.",
+  description:
+    "A full-stack accommodation booking platform featuring authentication, listings, and booking management.",
+  coverImage: "/projects/airbnb.png",
+  category: "fullstack",
+  status: "completed",
+  tags: ["MongoDB", "Express", "React", "Node.js"],
+  github: "https://github.com/yourusername/airbnb-clone",
+  demo: "https://airbnb-demo.com",
+  featured: false,
+  highlight: "Full booking system with user authentication",
+  createdAt: new Date("2024-12-20"),
+  published: true
+},
+
+{
+  _id: "personal-blog-platform",
+  slug: "personal-blog-platform",
+  title: "Personal Blog Platform",
+  excerpt: "Markdown-based blogging platform with admin moderation.",
+  description:
+    "A markdown-based blogging platform with authentication, admin moderation, and content publishing.",
+  coverImage: "/projects/blog-platform.png",
+  category: "fullstack",
+  status: "completed",
+  tags: ["Next.js", "MongoDB", "JWT", "Markdown"],
+  github: "https://github.com/yourusername/blog-platform",
+  demo: "https://blog.yourdomain.com",
+  featured: false,
+  highlight: "Admin approval workflow for blog publishing",
+  createdAt: new Date("2025-06-12"),
+  published: true
+},
+
+{
+  _id: "devops-monitoring",
+  slug: "devops-monitoring",
+  title: "DevOps Monitoring Setup",
+  excerpt: "Monitoring stack with Prometheus and Grafana.",
+  description:
+    "A monitoring stack using Prometheus and Grafana to track application performance and system metrics.",
+  coverImage: "/projects/devops-monitoring.png",
+  category: "devops",
+  status: "planned",
+  tags: ["Docker", "Prometheus", "Grafana", "Linux"],
+  github: "https://github.com/yourusername/devops-monitoring",
+  featured: false,
+  highlight: "Real-time system monitoring dashboard",
+  createdAt: new Date("2026-01-05"),
+  published: false
+}
+]
+
+
+====================================================================================================
+FILE: src\dbConfig\dbConfig.ts
+====================================================================================================
+
+import mongoose from "mongoose";
+
+type ConnectionObject = {
+    isConnected?: number,
+}
+
+const connected:ConnectionObject = {};
+
+const mongo_url = process.env.MONGO_URI as string;
+
+if(!mongo_url){
+    throw new Error("Please define the MONGO_URI environment variable");
+}
+
+
+export async function connectDB():Promise<typeof mongoose | void>{
+    if(connected.isConnected){
+        console.log("Already connected to the database");
+        return;
+    }
+    try {
+        const db = await mongoose.connect(mongo_url,{});
+        connected.isConnected = db.connections[0].readyState;
+        console.log("Database connected successfully");
+        return db;
+        
+    } catch (error) {
+        console.log("Database connection failed ",error);
+        //process.exit(1);   
+    }
+}
+
+
+====================================================================================================
+FILE: src\hooks\use-mobile.ts
+====================================================================================================
+
+import * as React from "react"
+
+const MOBILE_BREAKPOINT = 768
+
+export function useIsMobile() {
+  const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined)
+
+  React.useEffect(() => {
+    const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`)
+    const onChange = () => {
+      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
+    }
+    mql.addEventListener("change", onChange)
+    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
+    return () => mql.removeEventListener("change", onChange)
+  }, [])
+
+  return !!isMobile
+}
+
+
+
+====================================================================================================
+FILE: src\lib\ai-lab.ts
+====================================================================================================
+
+import { AIElement } from "@/types/ai-lab"
+
+export async function getAI(slug: string): Promise<AIElement | null> {
+  try {
+
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+
+    const res = await fetch(`${baseUrl}/api/ai-lab/${slug}`, {
+      cache: "no-store"
+    })
+
+    if (!res.ok) {
+      console.error("Failed to fetch blog:", res.status)
+      return null
+    }
+
+    const data = await res.json()
+
+    if (!data.success) {
+      console.error("API returned failure")
+      return null
+    }
+
+    return data.data as AIElement
+
+  } catch (error) {
+    console.error("getAI error:", error)
+    return null
+  }
+}
+
+
+====================================================================================================
+FILE: src\lib\auth.ts
+====================================================================================================
+
+import jwt from "jsonwebtoken"
+import { cookies } from "next/headers"
+
+export async function isAdmin(): Promise<boolean> {
+  try {
+
+    const cookieStore = await cookies()
+    const token = cookieStore.get("admin-token")?.value
+
+    if (!token) return false
+
+    const decoded = jwt.verify(
+      token,
+      process.env.JWT_SECRET!
+    ) as { role: string }
+
+    return decoded.role === "admin"
+
+  } catch (error) {
+    console.log(error);
+    return false
+  }
+}
+
+
+====================================================================================================
+FILE: src\lib\blog.ts
+====================================================================================================
+
+import { BlogType } from "@/types/blog"
+
+export async function getBlog(slug: string): Promise<BlogType | null> {
+  try {
+
+    const baseUrl =
+      process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+
+    const res = await fetch(`${baseUrl}/api/blog/${slug}`, {
+      cache: "no-store"
+    })
+
+    if (!res.ok) {
+      console.error("Failed to fetch blog:", res.status)
+      return null
+    }
+
+    const data = await res.json()
+
+    if (!data.success) {
+      console.error("API returned failure")
+      return null
+    }
+
+    return data.data as BlogType
+
+  } catch (error) {
+    console.error("getBlog error:", error)
+    return null
+  }
+}
+
+
+====================================================================================================
+FILE: src\lib\cloudinary.ts
+====================================================================================================
+
+import { v2 as cloudinary } from 'cloudinary';
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+export default cloudinary;
+
+
+
+====================================================================================================
+FILE: src\lib\handleCommingSoon.ts
+====================================================================================================
+
+import { toast } from "react-hot-toast";
+
+export default function handleComingSoon() {
+    toast("🚧 Coming Soon!");
+}
+
+
+====================================================================================================
+FILE: src\lib\hashed.ts
+====================================================================================================
+
+import bcrypt from "bcryptjs";
+
+const password ="yourPass";
+
+async function generateHash() {
+    const hash = await bcrypt.hash(password,10);
+    console.log("Hashed password : ", hash);
+}
+
+generateHash();
+
+
+====================================================================================================
+FILE: src\lib\project.ts
+====================================================================================================
+
+import { Project } from "@/types/project"
+
+export async function getProject(slug: string): Promise<Project | null> {
+  try {
+
+    const baseUrl =
+      process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+
+    const res = await fetch(`${baseUrl}/api/project/${slug}`, {
+      cache: "no-store"
+    })
+
+    if (!res.ok) {
+      console.error("Failed to fetch blog:", res.status)
+      return null
+    }
+
+    const data = await res.json()
+
+    if (!data.success) {
+      console.error("API returned failure")
+      return null
+    }
+
+    return data.data as Project
+
+  } catch (error) {
+    console.error("getProject error:", error)
+    return null
+  }
+}
+
+
+====================================================================================================
+FILE: src\lib\rateLimiter.ts
+====================================================================================================
+
+type RateLimitRecord = {
+  count: number;
+  lastRequest: number;
+};
+
+const RATE_LIMIT_WINDOW = 60 * 1000; // 1 min
+const MAX_REQUESTS = 5;
+
+const ipStore = new Map<string, RateLimitRecord>();
+
+export function rateLimit(ip: string) {
+  const now = Date.now();
+
+  const record = ipStore.get(ip);
+
+  if (!record) {
+    ipStore.set(ip, { count: 1, lastRequest: now });
+    return true;
+  }
+
+  if (now - record.lastRequest > RATE_LIMIT_WINDOW) {
+    ipStore.set(ip, { count: 1, lastRequest: now });
+    return true;
+  }
+
+  if (record.count >= MAX_REQUESTS) {
+    return false;
+  }
+
+  record.count += 1;
+  return true;
+}
+
+
+====================================================================================================
+FILE: src\lib\ReadingTime.ts
+====================================================================================================
+
+export function calculateReadingTime(content: string) {
+  const wordsPerMinute = 200
+
+  const text = content.replace(/[#_*>\-\n]/g, " ")
+  const words = text.trim().split(/\s+/).length
+
+  const minutes = Math.ceil(words / wordsPerMinute)
+
+  return `${minutes} min read`
+}
+
+
+====================================================================================================
+FILE: src\lib\utils.ts
+====================================================================================================
+
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
+
+
+====================================================================================================
+FILE: src\models\AiLab.ts
+====================================================================================================
+
+import mongoose from "mongoose"
+import { AIElement } from "@/types/ai-lab"
+
+const AIElementSchema = new mongoose.Schema<AIElement>(
+  {
+    title: {
+      type: String,
+      required: true
+    },
+
+    slug: {
+      type: String,
+      required: true,
+      unique: true
+    },
+
+    excerpt: {
+      type: String,
+      required: true
+    },
+
+    description: {
+      type: String,
+      required: true
+    },
+
+    category: {
+      type: String,
+      enum: ["experiment", "agent", "tool", "research"],
+      required: true
+    },
+
+    status: {
+      type: String,
+      enum: ["idea", "building", "completed", "archived"],
+      required: true
+    },
+
+    tech: {
+      type: [String],
+      default: []
+    },
+
+    coverImage: {
+      type: String,
+      required: true
+    },
+
+    images: {
+      type: [String],
+      default: []
+    },
+
+    tags: {
+      type: [String],
+      default: []
+    },
+
+    github: {
+      type: String
+    },
+
+    demo: {
+      type: String
+    },
+
+    blog: {
+      type: String
+    },
+
+    featured: {
+      type: Boolean,
+      default: false
+    },
+    
+    published : {
+      type: Boolean,
+      default: false
+    }
+  },
+  {
+    timestamps: true
+  }
+)
+
+AIElementSchema.index({ slug: 1 })
+
+export const AIElementModel =
+  mongoose.models.AIElement ||
+  mongoose.model("AIElement", AIElementSchema)
+
+
+====================================================================================================
+FILE: src\models\Blog.ts
+====================================================================================================
+
+import mongoose from "mongoose";
+
+import {BlogType} from "@/types/blog";
+
+
+const BlogSchema = new mongoose.Schema<BlogType>({
+        title: {
+            type: String,
+            required: true
+        },
+        slug:{
+            type: String,
+            required: true,
+            unique: true,
+            index:true
+        },
+        excerpt:{
+            type: String,
+            required: true
+        },
+        content:{
+            type: String,
+            required: true
+        },
+        cover:{
+            type: String,
+        },
+        tags:{
+            type: [String],
+            default: []
+        },
+        readingTime:{
+            type: String,
+            default: "5 min read"
+        },
+        published:{
+            type: Boolean,
+            default: false
+        },
+        views:{
+            type: Number,
+            default: 0
+        },
+        authorName:{
+            type: String,
+            default: "Sayan Dey"
+        },
+        featured:{
+            type:Boolean,
+            default: false
+        },
+        catagory:{
+            type: String
+        }
+    },
+    {
+        timestamps: true
+    }
+)
+
+export const BlogModel = mongoose.models.Blog  || mongoose.model("Blog" , BlogSchema) ; 
+
+
+====================================================================================================
+FILE: src\models\contact.ts
+====================================================================================================
+
+import mongoose from "mongoose";
+
+const ContactSchema = new mongoose.Schema(
+  {
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    source: {
+      type: String,
+      default: "homepage",
+    },
+    ip: String,
+    userAgent: String,
+  },
+  { timestamps: true }
+);
+
+export default mongoose.models.Contact ||
+  mongoose.model("Contact", ContactSchema);
+
+
+====================================================================================================
+FILE: src\models\Project.ts
+====================================================================================================
+
+import mongoose from "mongoose"
+import { Project } from "@/types/project"
+ 
+const ProjectSchema = new mongoose.Schema<Project>(
+  {
+    title: {
+      type: String,
+      required: true
+    },
+
+    excerpt: {
+      type: String,
+      required: true
+    },
+
+    description: {
+      type: String,
+      required: true
+    },
+
+    slug: {
+      type: String,
+      required: true,
+      unique: true
+    },
+
+    coverImage: {
+      type: String,
+      required: true
+    },
+
+    images: {
+      type: [String],
+      default: []
+    },
+
+    category: {
+      type: String,
+      enum: [
+        "fullstack",
+        "backend",
+        "frontend",
+        "ai",
+        "devops",
+        "systems",
+        "others"
+      ],
+      required: true
+    },
+
+    status: {
+      type: String,
+      enum: [
+        "completed",
+        "in-progress",
+        "planned"
+      ],
+      required: true
+    },
+
+    tags: {
+      type: [String],
+      default: []
+    },
+
+    github: {
+      type: String
+    },
+
+    demo: {
+      type: String
+    },
+
+    video: {
+      type: String
+    },
+
+    featured: {
+      type: Boolean,
+      default: false
+    },
+
+    highlight: {
+      type: String
+    },
+
+    published: {
+      type: Boolean,
+      default: false
+    }
+  },
+  {
+    timestamps: true
+  }
+)
+
+ProjectSchema.index({ slug: 1 })
+
+export const ProjectModel =
+  mongoose.models.Project ||
+  mongoose.model("Project", ProjectSchema)
+
+
+====================================================================================================
+FILE: src\proxy.ts
+====================================================================================================
+
+import { NextRequest, NextResponse } from "next/server"
+import jwt from "jsonwebtoken"
+
+export function proxy(req:NextRequest) {
+
+    const { pathname } = req.nextUrl
+
+   if (pathname.startsWith("/admin/login")) {
+    return NextResponse.next()
+  }
+
+ const token = req.cookies.get("admin-token")?.value
+
+ if(!token){
+   return NextResponse.redirect(new URL("/admin/login", req.url))
+ }
+
+ try{
+   jwt.verify(token, process.env.JWT_SECRET!)
+   return NextResponse.next()
+ } catch {
+   return NextResponse.redirect(new URL("/admin/login", req.url))
+ }
+
+}
+
+export const config = {
+ matcher: ["/admin/:path*"]
+}
+
+
+====================================================================================================
+FILE: src\types\ai-lab.ts
+====================================================================================================
+
+export type AIElementCategory = | "experiment" | "agent" | "tool" | "research"
+
+export type AIElementStatus = | "idea" | "building" | "completed" | "archived"
+ 
+export type AIElement = {
+  _id: string
+  title: string
+  slug: string
+  excerpt: string
+  description: string
+
+  category: AIElementCategory
+  status: AIElementStatus
+
+  tech: string[]
+  coverImage: string
+  images?: string[]
+
+  tags: string[]
+
+  github?: string
+  demo?: string
+  blog?: string
+
+  featured: boolean
+
+  published: boolean
+
+  createdAt: Date
+  updatedAt: Date
+}
+
+
+====================================================================================================
+FILE: src\types\blog.ts
+====================================================================================================
+
+  export type BlogType = {
+    _id: string;
+    title: string;
+    slug: string;
+    content: string;
+    excerpt: string;
+    cover?: string;
+    tags?: string[];
+    createdAt: Date | string;
+    updatedAt?: Date | string
+    readingTime?: string;
+    catagory?: string;
+    authorName?: string;
+    featured: boolean
+    published: boolean
+    views?: number
+  }
+
+  
+
+
+====================================================================================================
+FILE: src\types\project.ts
+====================================================================================================
+
+export type ProjectStatus = | "completed" | "in-progress" | "planned"
+
+export type ProjectCategory = | "fullstack" | "backend" | "frontend" | "ai" | "devops" | "systems" | "others"
+ 
+export type Project = {
+  _id: string
+  title: string
+  excerpt: string
+  description: string
+  slug:string
+  coverImage: string
+
+  images?: string[]
+  category: ProjectCategory
+  status: ProjectStatus
+
+  tags: string[]
+
+  github?: string
+  demo?: string
+  video?: string
+
+  featured: boolean
+
+  highlight?: string
+
+  createdAt: Date
+  updatedAt?: Date
+  published: boolean
+} 
+
+
