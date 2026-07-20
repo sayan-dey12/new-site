@@ -1,5 +1,6 @@
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
+import rehypeRaw from "rehype-raw"
 import rehypeHighlight from "rehype-highlight"
 import { BlogType } from "@/types/blog"
 import Image from "next/image"
@@ -29,7 +30,7 @@ export default function BlogContent({ blog }: { blog: BlogType }) {
 
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
-        rehypePlugins={[rehypeHighlight]}
+        rehypePlugins={[rehypeRaw,rehypeHighlight]}
         components={{
           pre({ children }) {
             return (
