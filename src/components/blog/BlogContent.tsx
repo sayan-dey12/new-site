@@ -43,22 +43,22 @@ export default function BlogContent({ blog }: { blog: BlogType }) {
             )
           },
           code({ className, children, ...props }) {
-            const isBlock = className?.includes("hljs") || className?.includes("language-")
-            if (isBlock) {
-              return (
-                <code className={className} {...props}>
-                  {children}
-                </code>
-              )
-            }
+          const isBlock = className?.includes("hljs") || className?.includes("language-")
+          if (isBlock) {
             return (
-              <code
-                className="px-1.5 py-0.5 rounded bg-zinc-200 dark:bg-zinc-800 text-pink-600 dark:text-pink-400 font-mono text-[0.875em]"
-                {...props}
-              >
+              <code className={className} {...props}>
                 {children}
               </code>
             )
+          }
+          return (
+            <code
+              className="font-mono text-[0.875em] bg-zinc-900 text-zinc-100 px-1.5 py-0.5 rounded"
+              {...props}
+            >
+              {children}
+            </code>
+          )
           },
         }}
       >
