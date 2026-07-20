@@ -4,6 +4,7 @@ import rehypeRaw from "rehype-raw"
 import rehypeHighlight from "rehype-highlight"
 import { BlogType } from "@/types/blog"
 import Image from "next/image"
+import BorderModern from "../utils/BorderModern"
 
 export default function BlogContent({ blog }: { blog: BlogType }) {
   //console.log("RAW BLOG CONTENT:", JSON.stringify(blog.content))
@@ -28,6 +29,8 @@ export default function BlogContent({ blog }: { blog: BlogType }) {
           {blog.excerpt}
         </p>
       )}
+      
+      <BorderModern />
       
       {/* cover image, excerpt, etc */}
 
