@@ -4,15 +4,16 @@ import rehypeRaw from "rehype-raw"
 import rehypeHighlight from "rehype-highlight"
 import { BlogType } from "@/types/blog"
 import Image from "next/image"
+import BorderModern from "../utils/BorderModern"
 
 export default function BlogContent({ blog }: { blog: BlogType }) {
-  console.log("RAW BLOG CONTENT:", JSON.stringify(blog.content))
+  //console.log("RAW BLOG CONTENT:", JSON.stringify(blog.content))
 
   return (
     <div className="prose dark:prose-invert max-w-none prose-code:before:content-none prose-code:after:content-none">
       
       {blog.cover && (
-      <div className="relative w-full h-100 mb-8">
+      <div className="relative w-full h-56 sm:h-72 md:h-96 lg:h-100 mb-8">
         <Image
           src={blog.cover}
           alt={blog.title || "Blog cover"}
@@ -28,6 +29,8 @@ export default function BlogContent({ blog }: { blog: BlogType }) {
           {blog.excerpt}
         </p>
       )}
+      
+      <BorderModern />
       
       {/* cover image, excerpt, etc */}
 
