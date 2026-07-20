@@ -31,7 +31,7 @@ export default function BlogContent({ blog }: { blog: BlogType }) {
       
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
-        rehypePlugins={[rehypeRaw,rehypeHighlight]}
+        rehypePlugins={[rehypeRaw, rehypeHighlight]}
         components={{
           pre({ children }) {
             return (
@@ -39,12 +39,31 @@ export default function BlogContent({ blog }: { blog: BlogType }) {
                 {children}
               </pre>
             )
-          }
+          },
+          code({ className, children, ...props }) {
+            const isBlock = className?.includes("hljs") || className?.includes("language-")
+            if (isBlock) {
+              // fenced code block - let it render plain, pre already styles the wrapper
+              return (
+                <code className={className} {...props}>
+                  {children}
+                </code>
+              )
+            }
+            // inline code
+            return (
+              <code
+                className="px-1.5 py-0.5 rounded bg-zinc-200 dark:bg-zinc-800 text-pink-600 dark:text-pink-400 font-mono text-[0.875em]"
+                {...props}
+              >
+                {children}
+              </code>
+            )
+          },
         }}
       >
         {blog.content}
       </ReactMarkdown>
-
     </div>
   )
 }
