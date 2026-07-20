@@ -12,7 +12,7 @@ export default function BlogContent({ blog }: { blog: BlogType }) {
     <div className="prose dark:prose-invert max-w-none prose-code:before:content-none prose-code:after:content-none">
       
       {blog.cover && (
-      <div className="relative w-full h-100 mb-8">
+      <div className="relative w-full h-56 sm:h-72 md:h-96 lg:h-100 mb-8">
         <Image
           src={blog.cover}
           alt={blog.title || "Blog cover"}
