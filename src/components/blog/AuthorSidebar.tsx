@@ -1,5 +1,5 @@
-import Image from "next/image";
 import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
+import ProtectedImage from "./ProtectedImage";
 
 export default function AuthorSidebar() {
   return (
@@ -15,13 +15,7 @@ export default function AuthorSidebar() {
       "
     >
       {/* Profile */}
-      <Image
-        src="/me-photo.jpg"
-        alt="Sayan Dey"
-        width={96}
-        height={96}
-        className="rounded-2xl object-cover"
-      />
+      <ProtectedImage/>
 
       {/* Bio */}
       <p className="text-sm text-muted-foreground leading-relaxed">
