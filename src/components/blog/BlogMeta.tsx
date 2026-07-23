@@ -1,5 +1,6 @@
 import { BlogType } from "@/types/blog"
 import Image from "next/image"
+import ProtectedMetaAvatar from "./ProtectedMetaAvatar"
 
 function formatDate(date: Date | string) {
   const d = new Date(date)
@@ -24,13 +25,7 @@ export default function BlogMeta({ blog }: { blog: BlogType }) {
 
       {blog.authorName && (
         <>
-          <Image
-            src="/me-photo.jpg"
-            alt={blog.authorName}
-            width={32}
-            height={32}
-            className="rounded-full"
-          />
+          <ProtectedMetaAvatar name={blog.authorName}/>
 
           <span className="font-medium text-foreground">
             {blog.authorName}
