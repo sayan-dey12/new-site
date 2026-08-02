@@ -60,7 +60,7 @@ export default function ExperimentCard({
       <CardContent className="space-y-4">
 
         <p className="text-sm text-muted-foreground">
-          {aiElement.description}
+          {aiElement.excerpt}
         </p>
 
         <div className="flex flex-wrap gap-2">
