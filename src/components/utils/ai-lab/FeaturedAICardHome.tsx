@@ -82,7 +82,7 @@ export default function FeaturedAIProjectCard({
               </Link>
 
               <CardDescription className="mt-3 text-sm">
-                {aiElement.description}
+                {aiElement.excerpt}
               </CardDescription>
 
             </CardHeader>
