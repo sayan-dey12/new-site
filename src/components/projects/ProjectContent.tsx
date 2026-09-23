@@ -82,11 +82,13 @@ export default function ProjectContent({ project }: { project: Project }) {
           },
 
           a({ href = "", children }) {
+            const isInternalAnchor = href.startsWith("#")
+
             return (
               <a
                 href={href}
-                target="_blank"
-                rel="noopener noreferrer"
+                target={isInternalAnchor ? undefined : "_blank"}
+                rel={isInternalAnchor ? undefined : "noopener noreferrer"}
                 className="text-blue-500 underline"
               >
                 {children}
