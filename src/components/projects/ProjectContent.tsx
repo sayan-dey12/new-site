@@ -5,6 +5,7 @@ import "highlight.js/styles/github-dark.css"
 import { Project } from "@/types/project"
 import Image from "next/image"
 import type { ComponentPropsWithoutRef } from "react"
+import rehypeSlug from "rehype-slug"
 
 export default function ProjectContent({ project }: { project: Project }) {
   return (
@@ -42,7 +43,7 @@ export default function ProjectContent({ project }: { project: Project }) {
     >
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
-        rehypePlugins={[rehypeHighlight]}
+        rehypePlugins={[rehypeHighlight, rehypeSlug]}
         components={{
           pre({ children }) {
             return (
@@ -82,11 +83,13 @@ export default function ProjectContent({ project }: { project: Project }) {
           },
 
           a({ href = "", children }) {
+            const isInternalAnchor = href.startsWith("#")
+
             return (
               <a
                 href={href}
-                target="_blank"
-                rel="noopener noreferrer"
+                target={isInternalAnchor ? undefined : "_blank"}
+                rel={isInternalAnchor ? undefined : "noopener noreferrer"}
                 className="text-blue-500 underline"
               >
                 {children}
