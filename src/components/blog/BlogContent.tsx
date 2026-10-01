@@ -40,6 +40,15 @@ export default function BlogContent({ blog }: { blog: BlogType }) {
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeRaw, rehypeSlug, [rehypeHighlight, { detect: false }]]}
         components={{
+          table({ children }) {
+            return (
+              <div className="w-full overflow-x-auto">
+                <table className="min-w-max">
+                  {children}
+                </table>
+              </div>
+            )
+          },
           pre({ children }) {
             return (
               <pre className="rounded-lg p-4 m-2 mt-4 overflow-x-auto text-white bg-zinc-900">
