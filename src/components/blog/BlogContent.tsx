@@ -6,6 +6,8 @@ import { BlogType } from "@/types/blog"
 import Image from "next/image"
 import BorderModern from "../utils/BorderModern"
 
+import rehypeSlug from "rehype-slug"
+
 export default function BlogContent({ blog }: { blog: BlogType }) {
   //console.log("RAW BLOG CONTENT:", JSON.stringify(blog.content))
 
@@ -36,7 +38,7 @@ export default function BlogContent({ blog }: { blog: BlogType }) {
 
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
-        rehypePlugins={[rehypeRaw, [rehypeHighlight, { detect: false }]]}
+        rehypePlugins={[rehypeRaw, rehypeSlug, [rehypeHighlight, { detect: false }]]}
         components={{
           pre({ children }) {
             return (
