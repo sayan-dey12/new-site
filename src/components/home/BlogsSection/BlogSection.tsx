@@ -2,8 +2,10 @@ import BlogCard from "../../utils/blogs/BlogCard";
 import { BlogType } from "@/types/blog";
 import SectionHeader from "../SectionHeader";
 import ViewAllButton from "@/components/utils/ViewAllButton";
-import BlogCarousel from "./BlogCarousal";
+// import BlogCarousel from "./BlogCarousal";
 import { getLatestBlogs } from "@/lib/featuredPost";
+import { CarouselItem } from "@/components/ui/carousel";
+import FeaturedCarousel from "@/components/utils/carousel/FeaturedCarousel";
 
 export default async function BlogSection() {
   // const res = await fetch(
@@ -26,7 +28,16 @@ export default async function BlogSection() {
 
         {/* 📱 Mobile Carousel */}
         <div className="lg:hidden">
-          <BlogCarousel blogs={blogs} />
+          <FeaturedCarousel autoplayDelay={1700}>
+            {blogs.map((blog) => (
+              <CarouselItem
+                key={blog._id}
+                className="basis-full"
+              >
+                <BlogCard blog={blog} />
+              </CarouselItem>
+            ))}
+          </FeaturedCarousel>
         </div>
 
         {/* 💻 Desktop Grid */}
