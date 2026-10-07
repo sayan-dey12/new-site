@@ -1,5 +1,5 @@
 import { BlogType } from "@/types/blog"
-import Image from "next/image"
+// import Image from "next/image"
 import ProtectedMetaAvatar from "./ProtectedMetaAvatar"
 
 function formatDate(date: Date | string) {
