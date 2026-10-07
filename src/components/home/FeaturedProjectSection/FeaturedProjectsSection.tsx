@@ -2,19 +2,22 @@ import SectionHeader from "../SectionHeader";
 import { Project } from "@/types/project";
 import ViewAllButton from "@/components/utils/ViewAllButton";
 import FeaturedProjectsCarousel from "./FeaturedProjectCarousel";
+import {getFeaturedProjects} from "@/lib/featuredPost"
 
 export default async function FeaturedProjectsSection() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/project?`,
-    { cache: "no-store" }
-  );
+  // const res = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_URL}/api/project?`,
+  //   { cache: "no-store" }
+  // );
 
-  const result = await res.json();
-  const projects: Project[] = result?.data ?? [];
+  // const result = await res.json();
+  // const projects: Project[] = result?.data ?? [];
 
-  const featuredProjects = projects.filter(
-    (p) => p.featured === true
-  );
+  // const featuredProjects = projects.filter(
+  //   (p) => p.featured === true
+  // );
+
+  const featuredProjects = await getFeaturedProjects();
 
   if (featuredProjects.length === 0) return null;
 
