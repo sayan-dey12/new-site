@@ -1,8 +1,7 @@
-"use client";
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import handleComingSoon from "@/lib/handleCommingSoon";
+// import handleComingSoon from "@/lib/handleCommingSoon";
 
 export default function HeroCTA() {
   return (
@@ -30,7 +29,7 @@ export default function HeroCTA() {
 
       {/* AI Lab - Coming Soon */}
       <Button
-        onClick={handleComingSoon}
+        asChild
         className="rounded-full border border-border bg-accent text-foreground hover:opacity-90 transition-colors"
       >
         <Link href="/ai-lab">

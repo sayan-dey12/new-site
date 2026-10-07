@@ -2,17 +2,21 @@ import BlogCard from "../../utils/blogs/BlogCard";
 import { BlogType } from "@/types/blog";
 import SectionHeader from "../SectionHeader";
 import ViewAllButton from "@/components/utils/ViewAllButton";
-import BlogCarousel from "./BlogCarousal";
+// import BlogCarousel from "./BlogCarousal";
+import { getLatestBlogs } from "@/lib/featuredPost";
+import { CarouselItem } from "@/components/ui/carousel";
+import FeaturedCarousel from "@/components/utils/carousel/FeaturedCarousel";
 
 export default async function BlogSection() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/blog?limit=3`,
-    { cache: "no-store" }
-  );
+  // const res = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_URL}/api/blog?limit=3`,
+  //   { cache: "no-store" }
+  // );
 
-  const result = await res.json();
-  const blogs: BlogType[] = result?.data ?? [];
+  // const result = await res.json();
+  // const blogs: BlogType[] = result?.data ?? [];
 
+  const blogs: BlogType[] = await getLatestBlogs(3);
   return (
     <section className="pb-2">
       <div className="max-w-6xl mx-auto px-5">
@@ -24,7 +28,16 @@ export default async function BlogSection() {
 
         {/* 📱 Mobile Carousel */}
         <div className="lg:hidden">
-          <BlogCarousel blogs={blogs} />
+          <FeaturedCarousel autoplayDelay={1700}>
+            {blogs.map((blog) => (
+              <CarouselItem
+                key={blog._id}
+                className="basis-full"
+              >
+                <BlogCard blog={blog} />
+              </CarouselItem>
+            ))}
+          </FeaturedCarousel>
         </div>
 
         {/* 💻 Desktop Grid */}

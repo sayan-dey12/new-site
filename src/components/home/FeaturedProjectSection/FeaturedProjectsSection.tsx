@@ -1,20 +1,26 @@
 import SectionHeader from "../SectionHeader";
 import { Project } from "@/types/project";
 import ViewAllButton from "@/components/utils/ViewAllButton";
-import FeaturedProjectsCarousel from "./FeaturedProjectCarousel";
+// import FeaturedProjectsCarousel from "./FeaturedProjectCarousel";
+import {getFeaturedProjects} from "@/lib/featuredPost"
+import { CarouselItem } from "@/components/ui/carousel";
+import FeaturedCarousel from "@/components/utils/carousel/FeaturedCarousel";
+import FeaturedProjectCard from "@/components/utils/project/FeaturedProjectCard";
 
 export default async function FeaturedProjectsSection() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/project?`,
-    { cache: "no-store" }
-  );
+  // const res = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_URL}/api/project?`,
+  //   { cache: "no-store" }
+  // );
 
-  const result = await res.json();
-  const projects: Project[] = result?.data ?? [];
+  // const result = await res.json();
+  // const projects: Project[] = result?.data ?? [];
 
-  const featuredProjects = projects.filter(
-    (p) => p.featured === true
-  );
+  // const featuredProjects = projects.filter(
+  //   (p) => p.featured === true
+  // );
+
+  const featuredProjects : Project[] = await getFeaturedProjects();
 
   if (featuredProjects.length === 0) return null;
 
@@ -26,8 +32,16 @@ export default async function FeaturedProjectsSection() {
           subtitle="Selected projects demonstrating real-world engineering and product development."
         />
 
-        {/* 🔥 Carousel */}
-        <FeaturedProjectsCarousel projects={featuredProjects} />
+        <FeaturedCarousel autoplayDelay={1500}>
+          {featuredProjects.map((project) => (
+            <CarouselItem
+              key={project._id}
+              className="basis-full"
+            >
+              <FeaturedProjectCard project={project} />
+            </CarouselItem>
+          ))}
+        </FeaturedCarousel>
       </div>
 
       <ViewAllButton href="/projects" label="View All Projects" />

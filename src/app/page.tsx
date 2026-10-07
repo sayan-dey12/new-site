@@ -1,3 +1,5 @@
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 import AiLabSection from "@/components/home/AiLabSection/AiLabSection";
 import BlogSection from "@/components/home/BlogsSection/BlogSection";

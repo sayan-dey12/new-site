@@ -1,7 +1,10 @@
 import SectionHeader from "../SectionHeader";
 import ProofCard from "./ProofCard";
 import { proofItems } from "./proofData";
-import ProofCarousel from "./ProofCarousel";
+// import ProofCarousel from "./ProofCarousel";
+
+import { CarouselItem } from "@/components/ui/carousel";
+import FeaturedCarousel from "@/components/utils/carousel/FeaturedCarousel";
 
 export default function ProofOfWorkSection() {
   return (
@@ -15,7 +18,16 @@ export default function ProofOfWorkSection() {
 
         {/* 📱 MOBILE → CAROUSEL */}
         <div className="sm:hidden">
-          <ProofCarousel />
+          <FeaturedCarousel autoplayDelay={3000}>
+            {proofItems.map((item) => (
+              <CarouselItem
+                key={item.title}
+                className="basis-full"
+              >
+                <ProofCard {...item} />
+              </CarouselItem>
+            ))}
+          </FeaturedCarousel>
         </div>
 
         {/* 💻 DESKTOP → GRID */}
