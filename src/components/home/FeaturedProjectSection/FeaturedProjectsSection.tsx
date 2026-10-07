@@ -17,7 +17,7 @@ export default async function FeaturedProjectsSection() {
   //   (p) => p.featured === true
   // );
 
-  const featuredProjects = await getFeaturedProjects();
+  const featuredProjects : Project[] = await getFeaturedProjects();
 
   if (featuredProjects.length === 0) return null;
 

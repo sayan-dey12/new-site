@@ -1,3 +1,5 @@
+import "server-only";
+
 import { connectDB } from "@/dbConfig/dbConfig";
 import { AIElementModel } from "@/models/AiLab";
 import { ProjectModel } from "@/models/Project";

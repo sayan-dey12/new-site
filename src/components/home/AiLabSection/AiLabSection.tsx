@@ -1,5 +1,5 @@
 import SectionHeader from "../SectionHeader";
-//import { AIElement } from "@/types/ai-lab";
+import { AIElement } from "@/types/ai-lab";
 import ViewAllButton from "@/components/utils/ViewAllButton";
 import FeaturedAICarousel from "./FeaturedAICarousel";
 import { getFeaturedAIElements } from "@/lib/featuredPost"
@@ -15,7 +15,7 @@ export default async function AiLabSection() {
 
   // const featured = aiElements.filter((e) => e.featured === true);
 
-  const featured = await getFeaturedAIElements();
+  const featured : AIElement[] = await getFeaturedAIElements();
 
   if (featured.length === 0) return null;
 

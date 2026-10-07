@@ -1,31 +1,60 @@
+// import dns from "node:dns"; 
+import "server-only";
 import mongoose from "mongoose";
 
-type ConnectionObject = {
-    isConnected?: number,
+// dns.setServers(["8.8.8.8", "8.8.4.4"]);
+
+const MONGO_URI = process.env.MONGO_URI;
+
+if (!MONGO_URI) {
+  throw new Error("Please define the MONGO_URI environment variable");
 }
 
-const connected:ConnectionObject = {};
+type MongooseCache = {
+  conn: typeof mongoose | null;
+  promise: Promise<typeof mongoose> | null;
+};
 
-const mongo_url = process.env.MONGO_URI as string;
-
-if(!mongo_url){
-    throw new Error("Please define the MONGO_URI environment variable");
+declare global {
+  // eslint-disable-next-line no-var
+  var mongooseCache: MongooseCache | undefined;
 }
 
+const cached =
+  global.mongooseCache ?? {
+    conn: null,
+    promise: null,
+  };
 
-export async function connectDB():Promise<typeof mongoose | void>{
-    if(connected.isConnected){
-        console.log("Already connected to the database");
-        return;
-    }
-    try {
-        const db = await mongoose.connect(mongo_url,{});
-        connected.isConnected = db.connections[0].readyState;
-        console.log("Database connected successfully");
-        return db;
-        
-    } catch (error) {
-        console.log("Database connection failed ",error);
-        //process.exit(1);   
-    }
+if (!global.mongooseCache) {
+  global.mongooseCache = cached;
+}
+
+export async function connectDB(): Promise<typeof mongoose> {
+  // Already connected
+  if (cached.conn && mongoose.connection.readyState === 1) {
+    return cached.conn;
+  }
+
+  // Connection is already being established
+  if (cached.promise) {
+    return cached.promise;
+  }
+
+  cached.promise = mongoose.connect(MONGO_URI as string);
+
+  try {
+    cached.conn = await cached.promise;
+
+    console.log("Database connected successfully");
+
+    return cached.conn;
+  } catch (error) {
+    console.error("Database connection failed:", error);
+
+    cached.promise = null;
+    cached.conn = null;
+
+    throw error;
+  }
 }
