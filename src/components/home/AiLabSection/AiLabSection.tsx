@@ -1,7 +1,7 @@
 import SectionHeader from "../SectionHeader";
 import { AIElement } from "@/types/ai-lab";
 import ViewAllButton from "@/components/utils/ViewAllButton";
-import FeaturedAICarousel from "./FeaturedAICarousel";
+// import FeaturedAICarousel from "./FeaturedAICarousel";
 import { getFeaturedAIElements } from "@/lib/featuredPost"
 import { CarouselItem } from "@/components/ui/carousel";
 import FeaturedCarousel from "@/components/utils/carousel/FeaturedCarousel";
