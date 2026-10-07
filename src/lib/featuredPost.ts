@@ -35,3 +35,18 @@ export async function getFeaturedProjects() {
   }));
 }
 
+export async function getLatestBlogs(limit = 3) {
+  await connectDB();
+
+  const blogs = await BlogModel.find({
+    published: true,
+  })
+    .sort({ createdAt: -1 })
+    .limit(limit)
+    .lean();
+
+  return blogs.map((blog) => ({
+    ...blog,
+    _id: blog._id.toString(),
+  }));
+}
