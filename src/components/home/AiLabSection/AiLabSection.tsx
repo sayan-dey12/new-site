@@ -1,18 +1,21 @@
 import SectionHeader from "../SectionHeader";
-import { AIElement } from "@/types/ai-lab";
+//import { AIElement } from "@/types/ai-lab";
 import ViewAllButton from "@/components/utils/ViewAllButton";
 import FeaturedAICarousel from "./FeaturedAICarousel";
+import { getFeaturedAIElements } from "@/lib/featuredPost"
 
 export default async function AiLabSection() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/ai-lab`,
-    { cache: "no-store" }
-  );
+  // const res = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_URL}/api/ai-lab`,
+  //   { cache: "no-store" }
+  // );
 
-  const result = await res.json();
-  const aiElements: AIElement[] = result.data || [];
+  // const result = await res.json();
+  // const aiElements: AIElement[] = result.data || [];
 
-  const featured = aiElements.filter((e) => e.featured === true);
+  // const featured = aiElements.filter((e) => e.featured === true);
+
+  const featured = await getFeaturedAIElements();
 
   if (featured.length === 0) return null;
 
