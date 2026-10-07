@@ -1,3 +1,6 @@
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
 import StatsSection from "@/components/admin/dashboard/StatsSection"
 import QuickActionsSection from "@/components/admin/dashboard/QuickActionsSection"
 
