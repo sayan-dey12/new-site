@@ -1,3 +1,4 @@
+export const runtime = "nodejs";
 
 import AiLabSection from "@/components/home/AiLabSection/AiLabSection";
 import BlogSection from "@/components/home/BlogsSection/BlogSection";
