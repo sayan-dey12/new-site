@@ -81,7 +81,7 @@ export default function ContactForm() {
       <Button
         type="submit"
         disabled={loading}
-        className="bg-accent text-accent-foreground"
+        className="bg-purple-600 text-white hover:bg-purple-700 hover:text-white focus-visible:ring-purple-500"
       >
         {loading ? "Sending..." : "Connect"}
       </Button>
