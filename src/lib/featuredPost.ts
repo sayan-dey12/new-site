@@ -19,3 +19,19 @@ export async function getFeaturedAIElements() {
   }));
 }
 
+export async function getFeaturedProjects() {
+  await connectDB();
+
+  const projects = await ProjectModel.find({
+    featured: true,
+    published: true,
+  })
+    .sort({ createdAt: -1 })
+    .lean();
+
+  return projects.map((project) => ({
+    ...project,
+    _id: project._id.toString(),
+  }));
+}
+
