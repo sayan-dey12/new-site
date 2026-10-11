@@ -1,13 +1,18 @@
 import LatestPreview from "./LatestPreview";
+import { BlogType } from "@/types/blog";
 
-export default async function HeroBlogs(){
+type HeroBlogsProps = {
+  latest?: BlogType;
+};
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/blog?limit=1`, {
-    cache: "no-store"
-  });
+export default async function HeroBlogs({latest} : HeroBlogsProps){
 
-  const result = await res.json();
-  const blogs = result.data;
+//     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/blog?limit=1`, {
+//     cache: "no-store"
+//   });
+
+//   const result = await res.json();
+//   const blogs = result.data;
 
 
     return(
@@ -23,7 +28,7 @@ export default async function HeroBlogs(){
                     Discover insights in Web Development, AI & Engineering</h1>
                 <p
                 className="text-sm sm:text-base text-secondary-foreground">Tutorials, deep dives, and practical engineering content crafted for builders.</p>
-                <LatestPreview latest={blogs[0]}/>
+                <LatestPreview latest={latest}/>
             </div>
         </section>
     )

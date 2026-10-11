@@ -84,7 +84,7 @@ export default async function BlogsPage() {
         {/* Hero Section */}
         <section className="text-center mb-16">
 
-          <HeroBlogs/>
+          <HeroBlogs latest = {blogs[0]}/>
 
           {/* Search */}
           <div className="mt-8">
