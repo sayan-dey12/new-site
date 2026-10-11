@@ -28,6 +28,7 @@ export default function BlogCard({blog}:{blog:BlogType}) {
             src={blog.cover || "/images/fallback.png"}
             alt={blog.title}
             fill
+            sizes="(max-width: 639px) calc(100vw - 3rem), (max-width: 1023px) calc((100vw - 4rem) / 2), (max-width: 1279px) calc((100vw - 4rem) / 3), 384px"
             className="object-cover px-1 rounded-2xl"
           />
         </div>
