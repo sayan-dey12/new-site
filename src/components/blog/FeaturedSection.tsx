@@ -1,9 +1,9 @@
 import FeaturedBlog from "./FeaturedBlog";
 import AuthorSidebar from "./AuthorSidebar";
-import { BlogType } from "@/types/blog";
+import { BlogListItem } from "@/types/blog";
 
 type Props = {
-  blog?: BlogType & { authorName?: string }
+  blog?: BlogListItem & { authorName?: string }
 }
 
 export default function FeaturedSection({blog}:Props){

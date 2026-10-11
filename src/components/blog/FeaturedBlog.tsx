@@ -1,8 +1,8 @@
 import Link from "next/link";
-import type { BlogType } from "@/types/blog";
+import type { BlogListItem } from "@/types/blog";
 import Image from "next/image";
 
-export default function FeaturedBlog({ blog }: { blog: BlogType }) {
+export default function FeaturedBlog({ blog }: { blog: BlogListItem }) {
   return (
     <Link href={`/blog/${blog.slug}`} className="group block w-full">
       <article
