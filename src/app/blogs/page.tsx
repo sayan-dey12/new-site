@@ -1,11 +1,18 @@
+export const runtime = "nodejs";
+
 import FeaturedSection from "@/components/blog/FeaturedSection";
 import HeroBlogs from "@/components/blog/HeroSection";
-import BlogCard from "@/components/utils/blogs/BlogCard";
-import ShowMore from "@/components/utils/ShowMore";
-import { BlogListItem, BlogType } from "@/types/blog";
+//import BlogCard from "@/components/utils/blogs/BlogCard";
+//import ShowMore from "@/components/utils/ShowMore";
+//import { BlogListItem} from "@/types/blog";
 //import { BlogType } from "@/types/blog";
 import { Metadata } from "next"
 import { getPublishedBlogs, getFeaturedBlog, getPublishedBlogCount } from "@/lib/blogs";
+import ShowMoreBlogs from "@/components/utils/blogs/ShowMoreBlogs";
+
+// export const dynamic = "force-dynamic";
+
+
 
 const baseUrl =
   process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
@@ -124,16 +131,10 @@ export default async function BlogsPage() {
 
         {/* Blog Grid */}
         <section>
-          
-
-            <ShowMore initialCount={6}>
-
-              {blogs.map((blog: BlogListItem) => (
-                <BlogCard key={blog._id} blog={blog} />
-              ))}
-
-            </ShowMore>
-
+            <ShowMoreBlogs
+              initialBlogs={blogs}
+              totalBlogs={totalBlogs}
+            />
         </section>
 
       </div>
