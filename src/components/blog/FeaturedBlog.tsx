@@ -20,7 +20,8 @@ export default function FeaturedBlog({ blog }: { blog: BlogListItem }) {
             src={blog.cover || "/images/fallback.png"}
             alt={blog.title || ""}
             fill
-            sizes="(max-width: 768px) 100vw, 768px"
+            preload
+            sizes="(max-width: 768px) calc(100vw - 32px), 498px"
             className="object-cover"
           />
 
