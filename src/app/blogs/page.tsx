@@ -1,4 +1,4 @@
-export const runtime = "nodejs";
+//export const runtime = "nodejs";
 
 import FeaturedSection from "@/components/blog/FeaturedSection";
 import HeroBlogs from "@/components/blog/HeroSection";
