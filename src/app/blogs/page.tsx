@@ -2,9 +2,10 @@ import FeaturedSection from "@/components/blog/FeaturedSection";
 import HeroBlogs from "@/components/blog/HeroSection";
 import BlogCard from "@/components/utils/blogs/BlogCard";
 import ShowMore from "@/components/utils/ShowMore";
-import { BlogType } from "@/types/blog";
+import { BlogListItem, BlogType } from "@/types/blog";
 //import { BlogType } from "@/types/blog";
 import { Metadata } from "next"
+import { getPublishedBlogs, getFeaturedBlog, getPublishedBlogCount } from "@/lib/blogs";
 
 const baseUrl =
   process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
@@ -63,15 +64,21 @@ export const metadata: Metadata = {
 }
 
 export default async function BlogsPage() {
-  
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/blog`, {
-    cache: "no-store"
-  });
 
-  const result = await res.json();
-  const blogs: BlogType[] = result.data || [];
+  const [blogs, featuredBlog, totalBlogs] = await Promise.all([
+    getPublishedBlogs({ skip: 0, limit: 6 }),
+    getFeaturedBlog(),
+    getPublishedBlogCount(),
+  ]);
   
-  const featuredBlog = blogs.find( (blog)=> blog.featured===true)
+  // const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/blog`, {
+  //   cache: "no-store"
+  // });
+
+  // const result = await res.json();
+  // const blogs: BlogType[] = result.data || [];
+  
+  // const featuredBlog = blogs.find( (blog)=> blog.featured===true)
   // console.log("featured blog: ",featuredBlog);
 
 
@@ -121,7 +128,7 @@ export default async function BlogsPage() {
 
             <ShowMore initialCount={6}>
 
-              {blogs.map((blog: BlogType) => (
+              {blogs.map((blog: BlogListItem) => (
                 <BlogCard key={blog._id} blog={blog} />
               ))}
 
