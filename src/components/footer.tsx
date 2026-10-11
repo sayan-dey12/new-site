@@ -18,6 +18,7 @@ export default function Footer(){
                             href="https://github.com/sayan-dey12"
                             target="_blank"
                             rel="noopener noreferrer"
+                            aria-label="Visit Sayan Dey's GitHub profile"
                             className="hover:text-foreground transition-colors"
                         >
                             <FaGithub />
@@ -26,6 +27,7 @@ export default function Footer(){
                             href="https://www.instagram.com/sayan_.dey_"
                             target="_blank"
                             rel="noopener noreferrer"
+                            aria-label="Visit Sayan Dey's Instagram profile"
                             className="hover:text-pink-500 transition-colors"
                         >
                             <FaInstagram />
@@ -34,6 +36,7 @@ export default function Footer(){
                             href="https://x.com/sayan_dey12"
                             target="_blank"
                             rel="noopener noreferrer"
+                            aria-label="Visit Sayan Dey's X profile"
                             className="hover:text-blue-400 transition-colors"
                         >
                             <FaXTwitter />
@@ -42,6 +45,7 @@ export default function Footer(){
                             href="https://www.linkedin.com/in/sayan-dey-b37843378/"
                             target="_blank"
                             rel="noopener noreferrer"
+                            aria-label="Visit Sayan Dey's LinkedIn profile"
                             className="hover:text-blue-600 transition-colors"
                         >
                             <FaLinkedin />

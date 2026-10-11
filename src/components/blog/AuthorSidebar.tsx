@@ -31,6 +31,8 @@ export default function AuthorSidebar() {
         <a
           href="https://x.com/sayan_dey12"
           target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Visit Sayan Dey's X profile"
           className="p-2 rounded-md border border-border hover:bg-muted transition"
         >
           <FaXTwitter size={16} />
@@ -39,6 +41,8 @@ export default function AuthorSidebar() {
         <a
           href="https://www.linkedin.com/in/sayan-dey-b37843378/"
           target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Visit Sayan Dey's LinkedIn profile"
           className="p-2 rounded-md border border-border hover:bg-muted transition"
         >
           <FaLinkedin size={16} />
@@ -47,6 +51,8 @@ export default function AuthorSidebar() {
         <a
           href="https://github.com/sayan-dey12"
           target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Visit Sayan Dey's GitHub profile"
           className="p-2 rounded-md border border-border hover:bg-muted transition"
         >
           <FaGithub size={16} />
