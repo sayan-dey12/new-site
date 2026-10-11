@@ -21,6 +21,7 @@ export default function FeaturedBlog({ blog }: { blog: BlogListItem }) {
             alt={blog.title || ""}
             fill
             preload
+            fetchPriority="high"
             sizes="(max-width: 768px) calc(100vw - 32px), 498px"
             className="object-cover"
           />
