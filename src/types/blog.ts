@@ -17,3 +17,17 @@
   }
 
   
+
+  
+export type BlogListItem = {
+  _id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  cover?: string;
+  createdAt: Date | string;
+  readingTime?: string;
+  featured: boolean;
+  published: boolean;
+  authorName?: string;
+};

@@ -1,10 +1,18 @@
+//export const runtime = "nodejs";
+
 import FeaturedSection from "@/components/blog/FeaturedSection";
 import HeroBlogs from "@/components/blog/HeroSection";
-import BlogCard from "@/components/utils/blogs/BlogCard";
-import ShowMore from "@/components/utils/ShowMore";
-import { BlogType } from "@/types/blog";
+//import BlogCard from "@/components/utils/blogs/BlogCard";
+//import ShowMore from "@/components/utils/ShowMore";
+//import { BlogListItem} from "@/types/blog";
 //import { BlogType } from "@/types/blog";
 import { Metadata } from "next"
+import { getPublishedBlogs, getFeaturedBlog, getPublishedBlogCount } from "@/lib/blogs";
+import ShowMoreBlogs from "@/components/utils/blogs/ShowMoreBlogs";
+
+// export const dynamic = "force-dynamic";
+
+
 
 const baseUrl =
   process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
@@ -63,15 +71,21 @@ export const metadata: Metadata = {
 }
 
 export default async function BlogsPage() {
-  
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/blog`, {
-    cache: "no-store"
-  });
 
-  const result = await res.json();
-  const blogs: BlogType[] = result.data || [];
+  const [blogs, featuredBlog, totalBlogs] = await Promise.all([
+    getPublishedBlogs({ skip: 0, limit: 6 }),
+    getFeaturedBlog(),
+    getPublishedBlogCount(),
+  ]);
   
-  const featuredBlog = blogs.find( (blog)=> blog.featured===true)
+  // const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/blog`, {
+  //   cache: "no-store"
+  // });
+
+  // const result = await res.json();
+  // const blogs: BlogType[] = result.data || [];
+  
+  // const featuredBlog = blogs.find( (blog)=> blog.featured===true)
   // console.log("featured blog: ",featuredBlog);
 
 
@@ -117,16 +131,10 @@ export default async function BlogsPage() {
 
         {/* Blog Grid */}
         <section>
-          
-
-            <ShowMore initialCount={6}>
-
-              {blogs.map((blog: BlogType) => (
-                <BlogCard key={blog._id} blog={blog} />
-              ))}
-
-            </ShowMore>
-
+            <ShowMoreBlogs
+              initialBlogs={blogs}
+              totalBlogs={totalBlogs}
+            />
         </section>
 
       </div>

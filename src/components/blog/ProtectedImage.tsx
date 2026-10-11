@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 
 export default function ProtectedImage(){
@@ -9,11 +7,10 @@ export default function ProtectedImage(){
         alt="Sayan Dey"
         width={96}
         height={96}
+        sizes="96px"
         priority
         draggable={false}
-        onDragStart={(e) => e.preventDefault()}
-        onContextMenu={(e) => e.preventDefault()}
-        className="rounded-2xl object-cover"
+        className="h-24 w-24 rounded-2xl object-cover"
       />
     );
 }

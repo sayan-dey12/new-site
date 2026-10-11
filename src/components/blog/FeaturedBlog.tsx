@@ -1,8 +1,8 @@
 import Link from "next/link";
-import type { BlogType } from "@/types/blog";
+import type { BlogListItem } from "@/types/blog";
 import Image from "next/image";
 
-export default function FeaturedBlog({ blog }: { blog: BlogType }) {
+export default function FeaturedBlog({ blog }: { blog: BlogListItem }) {
   return (
     <Link href={`/blog/${blog.slug}`} className="group block w-full">
       <article
@@ -20,23 +20,26 @@ export default function FeaturedBlog({ blog }: { blog: BlogType }) {
             src={blog.cover || "/images/fallback.png"}
             alt={blog.title || ""}
             fill
+            preload
+            fetchPriority="high"
+            sizes="(max-width: 768px) calc(100vw - 32px), 498px"
             className="object-cover"
           />
 
-          <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/40 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/45 to-transparent" />
         </div>
 
         <div className="absolute bottom-0 left-0 p-6 z-20 w-full">
-          <h2 className="text-2xl sm:text-3xl font-bold text-foreground leading-tight line-clamp-2">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white leading-tight line-clamp-2">
             {blog.title}
           </h2>
 
-          <div className="mt-2 text-sm text-muted-foreground">
+          <div className="mt-2 text-sm text-white/80">
             {blog.authorName || "Admin"} • {blog.readingTime || "5 min read"} •{" "}
             {new Date(blog.createdAt).toLocaleDateString()}
           </div>
 
-          <p className="mt-2 text-foreground text-sm line-clamp-2">
+          <p className="mt-2 text-white/90 text-sm line-clamp-2">
             {blog.excerpt}
           </p>
         </div>
