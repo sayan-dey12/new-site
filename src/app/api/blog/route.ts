@@ -45,8 +45,13 @@ export async function GET( req: NextRequest){
         const filter = showAll === "true" ? {} : { published: true }
 
         const blogs = await BlogModel.find(filter)
+            .select(
+                "_id title slug excerpt cover createdAt readingTime category tags featured published authorName"
+            )
             .sort({ createdAt: -1 })
-            .limit(limit);
+            .limit(limit)
+            .lean();
+            
         return NextResponse.json({
         success: true,
         count: blogs.length,
