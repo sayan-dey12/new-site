@@ -15,7 +15,8 @@ export default function LatestPreview({latest}: {latest?: { title: string; slug:
               src={latest.cover || "/images/fallback.png"}
               width={36}
               height={36}
-              className="rounded-full object-cover"
+              sizes="36px"
+              className="w-9 h-9 shrink-0 rounded-full object-cover"
               alt={latest.title}  
             />
             <div className="text-left">

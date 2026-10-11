@@ -7,10 +7,10 @@ export default function ProtectedImage(){
         alt="Sayan Dey"
         width={96}
         height={96}
+        sizes="96px"
         priority
         draggable={false}
-        className="rounded-2xl object-cover"
-        sizes="96px"
+        className="h-24 w-24 rounded-2xl object-cover"
       />
     );
 }
