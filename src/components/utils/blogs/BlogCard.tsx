@@ -6,9 +6,9 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { BlogType } from "@/types/blog";
+import { BlogListItem } from "@/types/blog";
 
-export default function BlogCard({blog}:{blog:BlogType}) {
+export default function BlogCard({blog}:{blog:BlogListItem}) {
   return (
     <Link href={`/blog/${blog.slug}`}>
 
