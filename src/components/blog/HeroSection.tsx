@@ -1,8 +1,8 @@
 import LatestPreview from "./LatestPreview";
-import { BlogType } from "@/types/blog";
+import type { BlogListItem } from "@/types/blog";
 
 type HeroBlogsProps = {
-  latest?: BlogType;
+  latest?: BlogListItem;
 };
 
 export default async function HeroBlogs({latest} : HeroBlogsProps){
